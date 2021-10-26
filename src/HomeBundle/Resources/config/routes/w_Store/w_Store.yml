@@ -1,0 +1,89 @@
+add_to_shopping_cart_form:
+    path:     /addToShoppingCart
+    defaults: { _controller: StoreBundle:Default:addToShoppingCart }
+    methods:  POST
+    
+delete_selected_product_form:
+    path:     /deleteSelectedProduct
+    defaults: { _controller: StoreBundle:Default:deleteSelectedProduct }
+    methods:  POST
+    
+get_selected_products_form:
+    path:     /getSelectedProducts
+    defaults: { _controller: StoreBundle:Default:getSelectedProducts }
+    methods:  POST
+    
+identify_keyword_form:
+    path:     /identifyKeyword
+    defaults: { _controller: StoreBundle:Default:identifyKeyword }
+    methods:  POST
+    
+pruebasdf_form:
+    path:     /pruebasdf
+    defaults: { _controller: StoreBundle:Default:pruebasdf }
+    methods:  POST
+    
+get_product_details_form:
+    path:     /getProductDetails
+    defaults: { _controller: StoreBundle:Default:getProductDetails }
+    methods:  POST
+        
+edit_window_store_form:
+    path:     /editWindowStore
+    defaults: { _controller: StoreBundle:Default:editWindowStore }
+    methods:  POST
+    
+#############
+    
+get_topic_form:
+    path:     /getTopic
+    defaults: { _controller: StoreBundle:Topic:getTopic }
+    methods:  POST
+    
+insert_topic_product_form:
+    path:     /insertTopicProduct
+    defaults: { _controller: StoreBundle:TopicProduct:insertTopicProduct }
+    methods:  POST
+    
+exchange_currency_form:
+    path:     /exchangeCurrency
+    defaults: { _controller: StoreBundle:Tax:exchangeCurrency }
+    methods:  POST
+    
+    
+    
+        
+get_products_form:
+    path:     /getProducts
+    defaults: { _controller: StoreBundle:Products:getProducts }
+    methods:  POST
+    
+insert_object_form:
+    path:     /insertObject
+    defaults: { _controller: StoreBundle:Products:insertObject }
+    methods:  POST
+    
+get_userType_form:
+    path:     /getUserType
+    defaults: { _controller: StoreBundle:Products:getUserType }
+    methods:  POST
+    
+search_topic_product_form:
+    path:     /searchTopicProduct
+    defaults: { _controller: StoreBundle:SearchTopicProduct:SearchTopicProduct }
+    methods:  POST
+    
+get_product_data_form:
+    path:     /getProductData
+    defaults: { _controller: StoreBundle:ProductData:getProductData }
+    methods:  POST
+    
+get_saleDetail_form:
+    path:     /getSaleDetail
+    defaults: { _controller: StoreBundle:ProductData:getSaleDetail }
+    methods:  POST
+    
+pay_selected_products_form:
+    path:     /paySelectedProducts
+    defaults: { _controller: StoreBundle:ProductData:paySelectedProducts }
+    methods:  POST

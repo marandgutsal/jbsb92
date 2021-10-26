@@ -1,0 +1,32 @@
+<style>
+</style>
+
+<script>
+{#    window.onload = loadStoreDivs();#}
+    
+    function loadStoreDivs()
+    {
+        {#alert("3");#}
+        document.getElementById("availableRoutes").style.display = "none";
+            document.getElementById("reach_div").style.display = "block";
+            document.getElementById("shipping_div").style.display = "block";
+        
+        
+        
+        {#alert("1");#}
+        document.getElementById("paymentArea-storeBundle").style.display = "none";
+        {#alert("2");#}
+        document.getElementById("productMenu-storeBundle").style.display = "none";
+        {#alert("4");#}
+        document.getElementById("storeArea-storeBundle").style.display = "block";
+            document.getElementById("searchMenu-storeBundle").style.display = "block";
+            document.getElementById("searchArea-storeBundle").style.display = "none";
+            document.getElementById("locationArea-storeBundle").style.display = "none";
+            document.getElementById("homeArea-storeBundle").style.display = "block";
+            document.getElementById("userArea-storeBundle").style.display = "none";
+            document.getElementById("artistArea-storeBundle").style.display = "none";
+        {#alert("5");#}
+            
+        getProducts("home", "homeList-storeBundle", "");
+    }
+</script>

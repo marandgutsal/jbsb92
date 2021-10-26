@@ -1,0 +1,240 @@
+<style>
+    
+</style>
+
+{{ form_start(shippingBundle1.shippingBundle2.get_shipment_from_saleDetail_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-shipment-from-saleDetail-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.get_shipment_from_saleDetail_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.get_reach_from_saleDetail_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-reach-from-saleDetail-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.get_reach_from_saleDetail_form_ajax) }}
+
+<div id="vcyudu_2">
+</div>
+
+    {#
+    var shipment_id = data[i].shipment_id;
+    var saleDetail_id = data[i].saleDetail_id;
+    var store_id = data[i].store_id;
+    var saleDetail_amount = data[i].saleDetail_amount;
+    var node_id = data[i].node_id;
+    var departure_date = data[i].departure_date;
+    var delivery_date = data[i].delivery_date;
+    var agreement_date = data[i].agreement_date;
+    var product_id = data[i].product_id;
+    var product_name = data[i].product_name;
+    var product_description = data[i].product_description;
+    var product_image = data[i].product_image;
+    var price_id = data[i].price_id;
+    var price_amount = data[i].price_amount;
+    var currency_id = data[i].currency_id;
+    var currency_name = data[i].currency_name;
+    var currency_value = data[i].currency_value;
+    var checked_price = data[i].checked_price;
+    var amountRecords = data[i].amountRecords;
+    #}
+
+<script>
+    function draw_saleDetail_shipment_menu(interaction_id, environment, productId, kindOfList, productImage, topicId, data)
+    {
+        var saleDetail_shipment_btn = document.createElement("img");
+        saleDetail_shipment_btn.id = "saleDetail_shipment_btn" + interaction_id + environment + productId;
+        saleDetail_shipment_btn.className = "saleDetail_shipment_btn boton_personalizado relativePosition";
+        saleDetail_shipment_btn.src = "files/images/icons/more.png";
+        saleDetail_shipment_btn.alt = "_"+productImage+"_";
+        saleDetail_shipment_btn.disabled = true;
+        saleDetail_shipment_btn.setAttribute('first_click', 0);
+        saleDetail_shipment_btn.addEventListener("click", function (e) {
+            {#alert("12349");#}
+            var identity = new Array();
+            identity[0] = interaction_id;
+            identity[1] = environment;
+            identity[2] = productId;
+
+            var object = document.getElementById("product_panel" + interaction_id + environment + productId);
+            var code = "stuffed_b";
+            manage_panelEnvironment(identity, saleDetail_shipment_btn, object, code);
+            
+            $("#saleDetail_shipment_btn" + interaction_id + environment + productId).attr('first_click', 1);
+            var sheet = document.getElementById("sheet_environment" + interaction_id + environment + productId + code);
+            
+            if ($("#"+sheet.id).attr(code) != 1)
+            {
+                $("#"+sheet.id).attr(code, 1);
+                fvd3(identity, interaction_id, environment, productId, productImage, data, sheet);
+            }
+        });
+        document.getElementById("product_menu" + interaction_id + environment + productId).appendChild(saleDetail_shipment_btn);
+        
+        var reach = document.createElement("div");
+        reach.id = "reach_btn" + interaction_id + environment + productId;
+        reach.style.position = "relative";
+        reach.style.display = "inline-block";
+        reach.style.zIndex = "20";
+        reach.textContent = " - sale detail id: "+data.saleDetail_id;
+        reach.addEventListener("click", function (e) {
+{#          
+            var saleDetail_id = data.saleDetail_id;
+            get_reach_from_saleDetail(saleDetail_id);#}
+            
+            var identity = new Array();
+            identity[0] = interaction_id;
+            identity[1] = environment;
+            identity[2] = productId;
+            
+            var object = document.getElementById("product_panel" + interaction_id + environment + productId);
+            {#var code = "reach";#}
+            var code = "stuffed_a";
+            manage_panelEnvironment(identity, reach, object, code);
+            
+            $("#reach_btn" + interaction_id + environment + productId).attr('first_click', 1);
+            var sheet = document.getElementById("sheet_environment" + interaction_id + environment + productId + code);
+            
+            if ($("#"+sheet.id).attr(code) != 1)
+            {
+                $("#"+sheet.id).attr(code, 1);
+                var price = data.price_amount;
+                var departure = data.store_location_id;
+                var delivery = data.customer_location_id;
+                alert(" - - - - price " + price + " - departure " + departure + " - delivery " + delivery);
+                assignRoute(sheet, code, price, departure, delivery);
+            }
+        });
+        document.getElementById("product_menu" + interaction_id + environment + productId).appendChild(reach);
+    }
+    
+    function get_reach_from_saleDetail(saleDetail_id)
+    {
+        {#$sale_detailId = $_POST['sale_detailId'];#}
+        var form = $('#get-reach-from-saleDetail-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {sale_detailId: saleDetail_id}, function (data)
+        {
+            {#
+            $sendata[$i] = array(
+                'reach_id' => $curso["reach_id"],
+                'departure_id' => $curso["departure_id"],
+                'delivery_id' => $curso["delivery_id"],
+                'amountRecords' => $amountRecords
+            );
+            #}
+            
+            {#
+            var amount = data[0].amountRecords;
+            for(i=0; i<amount; i++)
+            {
+                var reach_id = data[i].reach_id;
+                var departure_id = data[i].departure_id;
+                var delivery_id = data[i].delivery_id;
+                
+                alert(
+                    "\nreach_id "+reach_id+
+                    "\ndeparture_id "+departure_id+
+                    "\ndelivery_id "+delivery_id
+                );
+            }
+            #}
+            
+            {#$saleDetail_2[] = array(
+                'origin' => $origin,
+                'destiny' => $destiny
+            );#}
+            
+            var origin = data[0].origin;
+            var destiny = data[0].destiny;
+            
+            alert('#get-reach-from-saleDetail-ajax origin '+origin+" destiny "+destiny);
+        }).fail(function () {
+            alert('ERROR #get-reach-from-saleDetail-ajax');
+        });
+    }
+    
+    function fvd3(identity, interaction_id, environment, productId, productImage, data, sheet)
+    {
+        var interaction_id = identity[0];
+        var environment = identity[1];
+        var productId = identity[2];
+        
+        var shipment_id = data.shipment_id;
+        var saleDetail_id = data.saleDetail_id;
+        
+        var saleDetail_shipment_div = document.createElement("div");
+        saleDetail_shipment_div.id = "saleDetail_shipment_div" + interaction_id + environment + productId;
+        saleDetail_shipment_div.className = "saleDetail_shipment_div";
+        saleDetail_shipment_div.style.overflow = "scroll";
+        saleDetail_shipment_div.textContent = " - - - - saleDetail_id "+saleDetail_id + " - "+shipment_id;
+        sheet.appendChild(saleDetail_shipment_div);
+        
+        get_shipment_from_saleDetail(saleDetail_id, saleDetail_shipment_div);
+    }
+    
+    function get_shipment_from_saleDetail(saleDetail_id, saleDetail_shipment_div)
+    {
+        var form = $('#get-shipment-from-saleDetail-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {sale_detailId: saleDetail_id}, function (data)
+        {
+            var amount = data[0].amountRecords;
+            for(i=0; i<amount; i++)
+            {
+                var shipment_id = data[i].shipment_id;
+                var saleDetail_id = data[i].saleDetail_id;
+                var store_id = data[i].store_id;
+                var saleDetail_amount = data[i].saleDetail_amount;
+                var node_id = data[i].node_id;
+                var departure_date = data[i].departure_date;
+                var delivery_date = data[i].delivery_date;
+                var agreement_date = data[i].agreement_date;
+                var product_id = data[i].product_id;
+                var product_name = data[i].product_name;
+                var product_description = data[i].product_description;
+                var product_image = data[i].product_image;
+                var price_id = data[i].price_id;
+                var price_amount = data[i].price_amount;
+                var currency_id = data[i].currency_id;
+                var currency_name = data[i].currency_name;
+                var currency_value = data[i].currency_value;
+                var checked_price = data[i].checked_price;
+                var amountRecords = data[i].amountRecords;
+                
+                alert(" - "+shipment_id);
+                
+                var parameter_1 = saleDetail_shipment_div.id;
+                
+                cbdshj(
+                    shipment_id, 
+                    parameter_1
+                );
+                
+                {#drawProduct_List(
+                    saleDetail_id, 
+                    shipment_id, 
+                    product_name, 
+                    checked_price + " " + currency_name, 
+                    data[i], 
+                    product_image, 
+                    0, 
+                    "shipment_from_saleDetail", 
+                    saleDetail_amount, 
+                    parameter_1 
+                );#}
+            }
+            alert('#get-shipment-from-saleDetail-ajax');
+        }).fail(function () {
+            alert('ERROR #get-shipment-from-saleDetail-ajax');
+        });
+    }
+    
+    function cbdshj(
+                    shipment_id, 
+                    parameter_1
+                    )
+    {
+        var addProduct_btn = document.createElement("div");
+        addProduct_btn.id = "addProduct_btn" + shipment_id;
+        addProduct_btn.className = "relativePosition";
+        addProduct_btn.textContent = " + " + shipment_id;
+        document.getElementById(parameter_1).appendChild(addProduct_btn);
+    }
+</script>

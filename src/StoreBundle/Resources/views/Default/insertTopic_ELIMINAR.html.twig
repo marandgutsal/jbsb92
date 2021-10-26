@@ -1,0 +1,423 @@
+{{ form_start(insert_object_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'insert-object-ajax'|default('form')} }) }}
+{{ form_end(insert_object_form_ajax) }}
+
+{{ form_start(get_userType_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-userType-ajax'|default('form')} }) }}
+{{ form_end(get_userType_form_ajax) }}
+
+<style>
+    .topicMember_frame {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        {#height: auto;
+        width: auto;#}
+        height: 65px;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.1);
+        position: relative;
+        transition-duration: 0.5s;
+        transition-property: all;
+    }
+    
+    .keywordTopic_inputDiv {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        height: 30px;
+        {#background-color: pink;#}
+    }
+    
+    .objectTopic_selectDiv {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        top: 30px;
+        height: 30px;
+        {#background-color: gray;#}
+    }
+    
+    
+    .addTopicMember_img {
+        right: 40px;
+        top: 0px;
+    }
+    
+    .editTopicMember_img {
+        right: 20px;
+        top: 0px;
+    }
+    
+    .deleteTopicMember_img {
+        right: 0px;
+        top: 0px;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        
+    
+    .editTopic_btn {
+        top: 0px;
+        right: 0px;
+        display: none;
+    }
+    
+    #finishTopic_btn {
+        top: 0px;
+        left: 85px;
+        width: 30px;
+        height: 30px;
+    }
+    
+    #topicResult_div {
+        position: absolute; 
+        top: 35px; 
+        height: 300px;
+        width: 100%;
+        overflow-y: scroll;
+        {#background-color: red;#}
+        display: inline-block;
+    }
+    
+    
+    
+    
+    .fixing_input {
+        display: inline-block;
+        font-stretch: expanded;
+        white-space: nowrap;
+        size: auto;
+        width: auto;
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+    
+        
+
+    .topic_frame {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        height: auto;
+        width: auto;
+        position: relative;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        transition-duration: 0.5s;
+        transition-property: all;
+        /*background-color: green;*/
+    }
+    
+    .topic_header {
+        height: 30px;
+        width: 100%;
+        /*background-color: green;*/
+        color: white;
+        cursor: pointer;
+/*    pointer-events: none;*/
+    }
+        
+    .topic_panel {
+        height: 0px;
+        width: 100%;
+        /*background-color: bisque;*/
+        transition-duration: 0.5s;
+        transition-property: all;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+</style>
+
+<div id="topicResult_div" topicAmount=0>
+</div>
+
+<label style="position: absolute; top: 0px; left: 0px;">Insert topic</label>
+
+<img id='finishTopic_btn' class="boton_personalizado" 
+src="files/images/icons/store/saveTopic.png" alt="Mountain View">
+    
+<script>
+
+    $('#topicResult_div')
+    .scroll(function () {
+
+    })
+    .mouseover(function () {
+        var topicResult_div = document.getElementById('topicResult_div');
+        topicResult_div.classList.add("visibleScroll");
+    })
+    .mouseout(function () {
+        var topicResult_div = document.getElementById('topicResult_div');
+        topicResult_div.classList.remove("visibleScroll");
+    });
+    
+    
+    $('#finishTopic_btn')
+    .click(function () {
+        addTopic();
+    });
+    
+    
+    
+    
+    function addTopic()
+    {
+        var topicAmount = $("#topicResult_div").attr('topicAmount');
+        var newtopicAmount = parseInt(topicAmount) + 1;
+        $("#topicResult_div").attr('topicAmount', newtopicAmount);
+
+        var topic_frame = document.createElement("div");
+        topic_frame.id = "topic_frame" + topicAmount;
+        topic_frame.className = "topic_frame";
+        topic_frame.setAttribute('topicId', topicAmount);
+        topic_frame.setAttribute('topicMemberAmount', 0);
+        topic_frame.setAttribute('panel_visuality', 'closed');
+        topic_frame.setAttribute('first_click', 0);
+        var topic_header = document.createElement("div");
+        topic_header.id = "topic_header" + topicAmount;
+        topic_header.className = "topic_header";
+        topic_header.style.height = "30px";
+        var topic_panel = document.createElement("div");
+        topic_panel.id = "topic_panel" + topicAmount;
+        topic_panel.className = "topic_panel";
+        topic_panel.style.height = "0px";
+        {#topic_panel.style.backgroundColor = "blue";#}
+        var product_image = document.createElement("img"); 
+        product_image.id = "editTopic_btn" + topicAmount;
+        product_image.className = "boton_personalizado editTopic_btn";
+        product_image.src = "files/images/icons/store/addTopicMember.png";
+        product_image.alt = "";
+        var topicName_input = document.createElement("input"); 
+        topicName_input.id = "topic_name" + topicAmount;
+        topicName_input.name = "topic_name" + topicAmount;
+        topicName_input.type = "text";
+        topicName_input.className = "standar_input";
+        topicName_input.style.height = "30px";
+        topicName_input.style.top = "0";
+        {#topicName_input.value = "fghjklkbgvfgh";#}
+        topicName_input.style.cursor = "cursor";
+        topicName_input.disabled = true;
+        
+        
+
+{#        var keywordTopic_input = document.createElement("input"); 
+        keywordTopic_input.id = "keywordTopic_input" + topicAmount + "_" + topicMemberAmount;
+        keywordTopic_input.name = "keywordTopic_input" + topicAmount + "_" + topicMemberAmount;
+        keywordTopic_input.className = "standar_input";
+        keywordTopic_input.type = "text";
+        keywordTopic_input.style.cursor = "text";#}
+        
+        
+        
+        document.getElementById("topicResult_div").appendChild(topic_frame);
+        document.getElementById("topic_frame" + topicAmount).appendChild(topic_header);
+        document.getElementById("topic_frame" + topicAmount).appendChild(topic_panel);
+        document.getElementById("topic_header" + topicAmount).appendChild(product_image);
+        document.getElementById("topic_header" + topicAmount).appendChild(topicName_input);
+        
+        $("#topic_frame" + topicAmount)
+        .mouseover(function () {
+            product_image.style.display = "block";
+            var topic_panel_div = document.getElementById("topic_panel" + topicAmount);
+            topic_panel_div.classList.add("visibleScroll");
+        })
+        .mouseout(function () {
+            product_image.style.display = "none";
+            var topic_panel_div = document.getElementById("topic_panel" + topicAmount);
+            topic_panel_div.classList.remove("visibleScroll");
+        });
+
+        $('#editTopic_btn' + topicAmount)
+        .click(function () {
+            var topic_frame_visuality = $("#topic_frame" + topicAmount).attr('panel_visuality');
+            if (topic_frame_visuality == 'closed')
+            {
+                var nextId = "topic_panel" + topicAmount;
+                var nextElement = document.getElementById(nextId);
+                $("#topic_frame" + topicAmount).attr('panel_visuality', 'opened');
+                nextElement.style.height = "150px";
+                {#alert("closed 5");#}
+            } else if (topic_frame_visuality == 'opened')
+            {
+                var nextId = "topic_panel" + topicAmount;
+                var nextElement = document.getElementById(nextId);
+                $("#topic_frame" + topicAmount).attr('panel_visuality', 'closed');
+                nextElement.style.height = "0px";
+                {#alert("opened 5");#}
+            }
+            
+            var first_click = $("#topic_frame" + topicAmount).attr('first_click');
+            if (first_click == 0)
+            {
+                $("#topic_frame" + topicAmount).attr('first_click', 1);
+                var topicId = $("#topic_frame" + topicAmount).attr('topicId');
+                draw_topicMember(topicId);
+            }
+        });
+        
+    }
+    
+    function draw_topicMember(topicAmount)
+    {
+        var topicMemberAmount = $("#topic_frame" + topicAmount).attr('topicMemberAmount');
+        var new_topicMemberAmount = parseInt(topicMemberAmount) + 1;
+        $("#topic_frame" + topicAmount).attr('topicMemberAmount', new_topicMemberAmount);
+        
+        var topicMember_frame = document.createElement("div");
+        topicMember_frame.id = "topicMember_frame" + topicAmount + "_" + topicMemberAmount;
+        topicMember_frame.className = "topicMember_frame";
+        // topicMember_frame.setAttribute('topicMemberAmount', 0); // maybe this could be the id
+        
+        var keywordTopic_inputDiv = document.createElement("div");
+        keywordTopic_inputDiv.id = "keywordTopic_inputDiv" + topicAmount + "_" + topicMemberAmount;
+        keywordTopic_inputDiv.className = "keywordTopic_inputDiv";
+        
+        var keywordTopic_input = document.createElement("input"); 
+        keywordTopic_input.id = "keywordTopic_input" + topicAmount + "_" + topicMemberAmount;
+        keywordTopic_input.name = "keywordTopic_input" + topicAmount + "_" + topicMemberAmount;
+        keywordTopic_input.className = "standar_input";
+        keywordTopic_input.type = "text";
+        keywordTopic_input.style.cursor = "text";
+        
+        var objectTopic_selectDiv = document.createElement("div");
+        objectTopic_selectDiv.id = "objectTopic_selectDiv" + topicAmount + "_" + topicMemberAmount;
+        objectTopic_selectDiv.className = "objectTopic_selectDiv";
+        
+        var objectTopic_select = document.createElement("select");
+        objectTopic_select.id = "objectTopic_select" + topicAmount + "_" + topicMemberAmount;
+        objectTopic_select.name = "objectTopic_select" + topicAmount + "_" + topicMemberAmount;
+        objectTopic_select.className = "standar_input";
+        objectTopic_select.style.cursor = "pointer";
+        objectTopic_select.setAttribute('usertype_class', "null");
+        
+        var addTopicMember_img = document.createElement("img"); 
+        addTopicMember_img.id = "addTopicMember_img" + topicAmount + "_" + topicMemberAmount;
+        addTopicMember_img.className = "addTopicMember_img boton_personalizado";
+        addTopicMember_img.src = "files/images/icons/store/addTopicMember.png";
+        
+        var editTopicMember_img = document.createElement("img"); 
+        editTopicMember_img.id = "editTopicMember_img" + topicAmount + "_" + topicMemberAmount;
+        editTopicMember_img.className = "editTopicMember_img boton_personalizado";
+        editTopicMember_img.src = "files/images/icons/store/editTopicMember.png";
+        
+        var deleteTopicMember_img = document.createElement("img"); 
+        deleteTopicMember_img.id = "deleteTopicMember_img" + topicAmount + "_" + topicMemberAmount;
+        deleteTopicMember_img.className = "deleteTopicMember_img boton_personalizado";
+        deleteTopicMember_img.src = "files/images/icons/store/deleteTopicMember.png";
+        
+        document.getElementById("topic_panel" + topicAmount).appendChild(topicMember_frame);
+        document.getElementById("topicMember_frame" + topicAmount + "_" + topicMemberAmount).appendChild(keywordTopic_inputDiv);
+        document.getElementById("keywordTopic_inputDiv" + topicAmount + "_" + topicMemberAmount).appendChild(keywordTopic_input);
+        document.getElementById("topicMember_frame" + topicAmount + "_" + topicMemberAmount).appendChild(objectTopic_selectDiv);
+        document.getElementById("objectTopic_selectDiv" + topicAmount + "_" + topicMemberAmount).appendChild(objectTopic_select);
+        document.getElementById("topicMember_frame" + topicAmount + "_" + topicMemberAmount).appendChild(addTopicMember_img);
+        document.getElementById("topicMember_frame" + topicAmount + "_" + topicMemberAmount).appendChild(editTopicMember_img);
+        document.getElementById("topicMember_frame" + topicAmount + "_" + topicMemberAmount).appendChild(deleteTopicMember_img);
+                
+        $("#addTopicMember_img" + topicAmount + "_" + topicMemberAmount)
+        .click(function () {
+            draw_topicMember(topicAmount);
+        });
+        
+        $("#editTopicMember_img" + topicAmount + "_" + topicMemberAmount)
+        .click(function () {
+            var keywordTopic_input = document.getElementById("keywordTopic_input" + topicAmount + "_" + topicMemberAmount).value;
+            var objectTopic_select = document.getElementById("objectTopic_select" + topicAmount + "_" + topicMemberAmount).value;
+            
+            if(keywordTopic_input && objectTopic_select)
+            {
+                insert_object(topicAmount, topicMemberAmount);    
+            }
+        });
+        
+
+        $("#deleteTopicMember_img" + topicAmount + "_" + topicMemberAmount)
+        .click(function () {
+            erase_topicMember(topicAmount, topicMemberAmount);
+        });
+        
+        $("#objectTopic_select" + topicAmount + "_" + topicMemberAmount)
+        .change(function () {
+            get_userType(topicAmount, topicMemberAmount);
+        })
+        .click(function () {
+            get_userType(topicAmount, topicMemberAmount);
+        });
+    }
+    
+    function get_userType(topicAmount, topicMemberAmount)
+    {
+            var usertype_class = $("#objectTopic_select" + topicAmount + "_" + topicMemberAmount).attr('usertype_class');
+            
+            if (usertype_class == "null")
+            {
+                {#alert(" usertype_class "+usertype_class+" ... null");#}
+                var form = $('#get-userType-ajax');
+                var url = form.attr('action');
+
+                $.post(url, function (data)
+                {
+                    var i = 0;
+                    var amountUsertypes = data[i].amountUsertypes;
+                    while (i < amountUsertypes)
+                    {
+                        var usertypeId = data[i].usertypeId;
+                        var usertypeClass = data[i].usertypeClass;
+                        
+                        $("#objectTopic_select" + topicAmount + "_" + topicMemberAmount).append(
+                            "<option id='objectTopic_option" + topicAmount + "_" + topicMemberAmount + "_" + usertypeId 
+                            + "' name='objectTopic_option" + topicAmount + "_" + topicMemberAmount + "_" + usertypeId 
+                            + "' value=" + usertypeClass + ">" + usertypeClass + "</option>"
+                        );
+        {#                document.getElementById("objectTopic_select" + topicAmount + "_" + topicMemberAmount).appendChild(objectTopic_option);#}
+                        i++;
+        {#                alert('GET usertype '+usertypeClass);#}
+                    }
+                    var selection = document.getElementById("objectTopic_select" + topicAmount + "_" + topicMemberAmount);
+                    var option = selection.options[selection.selectedIndex].text;
+                    $("#objectTopic_select" + topicAmount + "_" + topicMemberAmount).attr('usertype_class', option);
+{#                    alert("selected option "+option);#}
+                }).fail(function () {
+                    alert('ERROR... GET usertype');
+                });
+            }
+            var selection = document.getElementById("objectTopic_select" + topicAmount + "_" + topicMemberAmount);
+            var option = selection.options[selection.selectedIndex].text;
+            $("#objectTopic_select" + topicAmount + "_" + topicMemberAmount).attr('usertype_class', option);
+{#            alert("selected option "+option);#}
+    }
+    
+    function insert_object(topicAmount, topicMemberAmount)
+    {
+        var form = $('#insert-object-ajax');
+        var url = form.attr('action');
+        
+        var keywordValue = document.getElementById("keywordTopic_input" + topicAmount + "_" + topicMemberAmount).value;
+{#        var userTypeValue = document.getElementById("objectTopic_option" + topicAmount + "_" + topicMemberAmount).value;#}
+        var userTypeValue = $("#objectTopic_select" + topicAmount + "_" + topicMemberAmount).attr('usertype_class');
+        
+{#        alert(" keywordValue " + keywordValue + " userTypeValue " + userTypeValue);#}
+        $.post(url, {keyword: keywordValue, userType: userTypeValue}, function (data)
+        {
+{#            alert('insert-object-ajax');#}
+            document.getElementById("topicMember_frame" + topicAmount + "_" + topicMemberAmount).
+                style.backgroundColor = "rgba(60, 60, 60, 0.4)";
+        
+        }).fail(function () {
+            alert('ERROR insert-object-ajax');
+        });
+    }
+    
+    
+    function erase_topicMember(topicAmount, topicMemberAmount)
+    {
+        var topicMember_frame = document.getElementById("topicMember_frame" + topicAmount + "_" + topicMemberAmount);
+        document.getElementById("topic_panel" + topicAmount).removeChild(topicMember_frame);
+    }
+    
+</script>

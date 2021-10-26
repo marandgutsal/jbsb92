@@ -1,0 +1,10 @@
+services:
+#    sign_up.example:
+#        class: SignUpBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+    app.set_keywordLocation:
+        class: SignUpBundle\Helper\set_keywordLocation
+
+    app.get_location:
+        class: SignUpBundle\Helper\get_location

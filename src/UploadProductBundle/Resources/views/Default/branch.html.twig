@@ -1,0 +1,153 @@
+{{ form_start(upload_branch_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'upload-branch-ajax'|default('form')} }) }}
+{{ form_end(upload_branch_form_ajax) }}
+
+{{ form_start(uploadproductBundle1.uploadproductBundle2.load_commercial_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'load-commercial-ajax'|default('form')} }) }}
+{{ form_end(uploadproductBundle1.uploadproductBundle2.load_commercial_form_ajax) }}
+
+<div id="formUploadBranch">
+    <div id="contentUploadBranch">
+        <div id="branchName_uploadBranchDiv">
+            Branch's Name:
+        </div>
+        <input type="text" id="branchName_uploadBranchInput" name="branchName_uploadBranchInput" placeholder=""/>
+
+        <div id="branchCellphone_uploadBranchDiv">
+            Branch's Cellphone:
+        </div>
+        <input type="number" id="branchCellphone_uploadBranchInput" name="branchCellphone_uploadBranchInput" placeholder=""/>
+
+        <div id="branchTelephone_uploadBranchDiv">
+            Branch's Telephone:
+        </div>
+        <input type="number" id="branchTelephone_uploadBranchInput" name="branchTelephone_uploadBranchInput" placeholder=""/>
+
+        <div id="branchlocation_uploadBranchDiv">
+            
+        </div>
+        
+        
+        <div id="branchCommercial_uploadBranchDiv">
+            Branch's commercial:
+        </div>
+        <select id="branchCommercial_uploadBranchSelect">
+            {#<option id='startTimeMenu" + i + "' value=" + configuratedTime + ">" + configuratedTime + "</option>#}
+        </select>
+        
+        <div id="branchDescription_uploadBranchDiv">
+            Branch's Description:
+        </div>
+        <textarea 
+        id='branchDescription_uploadBranchTextarea' name='branchDescription_uploadBranchTextarea'></textarea>
+
+        
+        <div id='branchUploadButton'>
+            UPLOAD
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#branchUploadButton').click(function () {
+        uploadBranch();
+    });
+    
+    function uploadBranch()
+    {
+        branchName_uploadBranchInput = document.getElementById("branchName_uploadBranchInput").value;
+        branchCellphone_uploadBranchInput = document.getElementById("branchCellphone_uploadBranchInput").value;
+        branchTelephone_uploadBranchInput = document.getElementById("branchTelephone_uploadBranchInput").value;
+        branchDescription_uploadBranchTextarea = document.getElementById("branchDescription_uploadBranchTextarea").value;
+        branchCommercial_uploadBranchSelect = document.getElementById("branchCommercial_uploadBranchSelect").value;
+        
+        var location = $("#invocations_signUp").attr("final_location");
+        
+        if (! branchName_uploadBranchInput || 
+            ! branchCellphone_uploadBranchInput || 
+            ! branchTelephone_uploadBranchInput || 
+            ! branchDescription_uploadBranchTextarea || 
+            ! branchCommercial_uploadBranchSelect
+            )
+        {
+            alert("You need to introduce all information");
+        } else {
+            var form = $('#upload-branch-ajax');
+            var url = form.attr('action');
+            $.post(url,
+            {
+                branchName: branchName_uploadBranchInput, 
+                branchCellphone: branchCellphone_uploadBranchInput, 
+                branchTelephone: branchTelephone_uploadBranchInput, 
+                branchDescription: branchDescription_uploadBranchTextarea, 
+                commercial: branchCommercial_uploadBranchSelect, 
+                location: location
+            },
+            function (data)
+            {
+                alert('#upload-branch-ajax');
+            }).fail(function () {
+                alert('ERROR #upload-branch-ajax');
+            });
+        }
+        
+        {#
+        var form = $('#upload-branch-ajax');
+        var url = form.attr('action');
+
+        var formData = new FormData($("#uploadBranch")[0]);
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false
+        }).done(function (resp) {
+            alert("branch succesfully uploaded");
+            document.getElementById("branchName_uploadBranchInput").value = "";
+            document.getElementById("branchCellphone_uploadBranchInput").value = "";
+            document.getElementById("branchTelephone_uploadBranchInput").value = "";
+            document.getElementById("branchDescription_uploadBranchTextarea").value = "";
+
+            alert("branch succesfully uploaded");
+        });
+        #}
+    }
+    
+    $('#branchCommercial_uploadBranchSelect').click(function () {
+        if ($('#branchCommercial_uploadBranchSelect').attr("first_click") != 1)
+        {
+            $('#branchCommercial_uploadBranchSelect').attr("first_click", 1);
+            loadCommercial();
+        }
+    });
+    
+    function loadCommercial()
+    {
+        var form = $('#load-commercial-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            var amountcommercials = data[0].amountcommercials;
+            for (i = 0; i < amountcommercials; i++)
+            {
+                var commercialId = data[i].commercialId;
+                var commercialName = data[i].commercialName;
+                var commercialTin = data[i].commercialTin;
+                var usertypeClass = data[i].usertypeClass;
+                
+                var commercial_option = document.createElement("option");
+                commercial_option.id = "commercial_option" + commercialId;
+                commercial_option.name = "commercial_option" + commercialId;
+                commercial_option.value = commercialId;
+                commercial_option.textContent = commercialId + " - " + commercialName + " - " + commercialTin + " - " + usertypeClass;
+                document.getElementById("branchCommercial_uploadBranchSelect").appendChild(commercial_option);
+            }
+            
+            {#alert('#load-commercial-ajax');#}
+        }).fail(function () {
+            alert('ERROR #load-commercial-ajax');
+        });
+    }
+</script>

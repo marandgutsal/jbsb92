@@ -1,0 +1,52 @@
+<style>
+    
+</style>
+
+{{ form_start(signupBundle1.signupBundle2.search_shipping_category_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'search-shipping-category-ajax'|default('form')} }) }}
+{{ form_end(signupBundle1.signupBundle2.search_shipping_category_form_ajax) }}
+
+<div>
+    
+    
+    
+</div>
+
+<script>
+    
+    function searchShipping_category(placeId, attemptsAmount)
+    {
+        var form = $('#search-shipping-category-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+                {#
+                'shippingCategory_id' => 0,
+                'shippingCategory_name' => "",
+                'shippingCategory_description' => "",
+                'amountRecords' => $amountRecords
+                #}
+
+            var amountRecords = data[0].amountRecords;
+            for (i = 0; i < amountRecords; i++)
+            {
+                var shippingCategory_id = data[i].shippingCategory_id;
+                var shippingCategory_name = data[i].shippingCategory_name;
+                var shippingCategory_description = data[i].shippingCategory_description;
+
+                var userType_value = shippingCategory_id;
+                var option_userType = document.createElement("option");
+                option_userType.id = "usertype_option" + userType_value;
+                option_userType.value = shippingCategory_id;
+                option_userType.textContent = shippingCategory_id + " - " + 
+                        shippingCategory_description + " - " + shippingCategory_name;
+                document.getElementById("select_userType" + placeId + attemptsAmount).appendChild(option_userType);
+            }
+            
+            alert('#search-shipping-category-ajax');
+        }).fail(function () {
+            alert('ERROR #search-shipping-category-ajax');
+        });
+    }
+    
+</script>

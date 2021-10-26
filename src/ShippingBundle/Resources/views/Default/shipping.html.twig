@@ -1,0 +1,460 @@
+{{ form_start(shippingBundle1.shippingBundle2.get_shipping_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-shipping-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.get_shipping_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.get_shippingMessenger_list_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-shippingMessenger-list-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.get_shippingMessenger_list_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.get_shipmentDetail_list_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-shipmentDetail-list-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.get_shipmentDetail_list_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.edit_shipment_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'edit-shipment-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.edit_shipment_form_ajax) }}
+
+<style>
+    #waiting_shipping {
+        background-color: yellowgreen;
+    }
+</style>
+
+<div id="vcyudu">
+    {#add shipping #
+        -shipment....n
+    #shipping 
+        -shipment....n
+    #shipping 
+        -shipment....n
+    #shipping #
+        -shipment....n#}
+</div>
+
+<div id="waiting_shipping" interactions=0>
+    table:shipment (SHIPPING)
+</div>
+
+<script>
+    $("#waiting_shipping").click(function () {
+        var new_env = "vcyudu";
+        var environment = "idfs_6";
+        change_location_environment(new_env, environment);
+        load_shipping();
+    });
+</script>
+
+<script>
+    function draw_shipping_menu(interaction_id, environment, productId, kindOfList, productImage, topicId, data)
+    {
+        var shipmentProduct_btn = document.createElement("img");
+        shipmentProduct_btn.id = "shipmentProduct_btn" + interaction_id + environment + productId;
+        shipmentProduct_btn.className = "shipmentProduct_btn boton_personalizado relativePosition";
+        shipmentProduct_btn.src = "files/images/icons/confirm.png";
+        shipmentProduct_btn.alt = "_"+productImage+"_";
+        shipmentProduct_btn.disabled = true;
+        shipmentProduct_btn.setAttribute('first_click', 0);
+        shipmentProduct_btn.addEventListener("click", function (e) {
+
+            var identity = new Array();
+            identity[0] = interaction_id;
+            identity[1] = environment;
+            identity[2] = productId;
+            
+            var object = document.getElementById("product_panel" + interaction_id + environment + productId);
+            var code = "shipping";
+            manage_panelEnvironment(identity, shipmentProduct_btn, object, code);
+            
+            $("#shipmentProduct_btn" + interaction_id + environment + productId).attr('first_click', 1);
+            var sheet = document.getElementById("sheet_environment" + interaction_id + environment + productId + code);
+            
+            if($("#"+sheet.id).attr(code) != 1)
+            {
+                $("#"+sheet.id).attr(code, 1);
+                draw_shipping_panel(identity, productImage, data, sheet);
+            }
+        });
+        document.getElementById("product_menu" + interaction_id + environment + productId).appendChild(shipmentProduct_btn);
+    }
+    
+    function draw_shipping_panel(identity, productImage, data, sheet)
+    {
+        var interaction_id = identity[0];
+        var environment = identity[1];
+        var productId = identity[2];
+        
+        
+        
+        var shipping_panel_div = document.createElement("div");
+        shipping_panel_div.id = "shipping_panel_div" + interaction_id + environment + productId;
+        shipping_panel_div.className = "shipping_panel_div";
+        shipping_panel_div.style.overflow = "scroll";
+        sheet.appendChild(shipping_panel_div);
+        
+        
+        
+        
+        
+            
+        var shipment_detail_div = document.createElement("div");
+        shipment_detail_div.id = "shipment_detail_div" + interaction_id + environment + productId;
+        shipment_detail_div.className = "shipment_detail_div";
+        shipment_detail_div.style.overflow = "scroll";
+        sheet.appendChild(shipment_detail_div);    
+        
+        get_shipment_detail(identity, shipment_detail_div, data);
+    }
+    
+    function draw_select(label, label_value, row, storeDetail_div, identity)
+    {
+        var interaction_id = identity[0];
+        var environment = identity[1];
+        var productId = identity[2];
+        
+        var field_frame = document.createElement("div");
+        field_frame.id = label;
+        field_frame.className = "relativePosition row_signUpDiv";
+        field_frame.style.backgroundColor = "white";
+        storeDetail_div.appendChild(field_frame);
+        
+        var field_div = document.createElement("div");
+        field_div.id = label;
+        field_div.className = "firstColumn_signUpDiv";
+        field_div.textContent = label_value;
+        field_frame.appendChild(field_div);
+        
+        var fieldInput_div = document.createElement("div");
+        fieldInput_div.id = label;
+        fieldInput_div.className = "secondColumn_signUpDiv";
+        fieldInput_div.style.backgroundColor = "yellow";
+        field_frame.appendChild(fieldInput_div);
+        
+        
+        
+        var shipping_select_list_div = document.createElement("select");
+        shipping_select_list_div.id = row;
+        shipping_select_list_div.className = "content_secondColumn_signUpDiv";
+        shipping_select_list_div.style.overflow = "scroll";
+        shipping_select_list_div.setAttribute("first_click", 0);
+        shipping_select_list_div.addEventListener("click", function (e) {
+            var first_click = $(this).attr('first_click');
+            if (first_click == 0)
+            {
+                $(this).attr('first_click', 1);
+                get_shipping_list_crud(identity, shipping_select_list_div);
+            }
+        });
+        fieldInput_div.appendChild(shipping_select_list_div);
+    }
+    
+    function get_shipping_list_crud(identity, shipping_select_list_div)
+    {
+        {#alert('#get-shippingMessenger-list-ajax .... ');#}
+        var interaction_id = identity[0];
+        var environment = identity[1];
+        var productId = identity[2];
+
+        var form = $('#get-shippingMessenger-list-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+
+            {#
+            'shipping_id_1' => 0,
+            'driver_id_1' => 0,
+            'vehicle_id_1' => 0,
+            'packageMessenger_id_1' => 0,
+            'amountRecords' => $amountRecords
+            #}
+
+            var amountRecords = data[0].amountRecords;
+            var i = 0;
+            while (i < amountRecords)
+            {
+                var shipping_id_1 = data[i].shipping_id_1;
+                var driver_id_1 = data[i].driver_id_1;
+
+                var user_name_1 = data[i].user_name_1;
+                var vehicle_plate_1 = data[i].vehicle_plate_1;
+
+    {#
+                'user_profilePhoto_1' => $curso["user_profilePhoto_1"],
+                'user_name_1' => $curso["user_name_1"],
+                'user_firstGivenName_1' => $curso["user_firstGivenName_1"],
+                'user_secondGivenName_1' => $curso["user_secondGivenName_1"],
+                'user_firstFamilyName_1' => $curso["user_firstFamilyName_1"],
+                'user_secondFamilyName_1' => $curso["user_secondFamilyName_1"],
+                'user_email_1' => $curso["user_email_1"],
+                'user_password_1' => $curso["user_password_1"],
+                'user_biography_1' => $curso["user_biography_1"],
+                'user_score_1' => $curso["user_score_1"],
+                'vehicle_plate_1' => $curso["vehicle_plate_1"],
+    #}
+
+    {#            alert("shipping_id_1 "+shipping_id_1);#}
+
+                var select_location = document.createElement("option");
+                select_location.id = "location_option" + interaction_id + environment + productId;
+                select_location.name = "location_option" + interaction_id + environment + productId;
+                select_location.value = shipping_id_1;
+                select_location.selected = true;
+                select_location.textContent = shipping_id_1+" "+user_name_1+" "+vehicle_plate_1;
+                shipping_select_list_div.appendChild(select_location);
+
+                i++;
+            }
+
+            {#alert('#get-shippingMessenger-list-ajax');#}
+        }).fail(function () {
+            alert('ERROR #get-shippingMessenger-list-ajax');
+        });
+    }
+    
+    function get_shipment_detail(identity, shipping_panel_div, data_3)
+    {
+        var interaction_id = identity[0];
+        var environment = identity[1];
+        var productId = identity[2];
+
+        var form = $('#get-shipmentDetail-list-ajax');
+        var url = form.attr('action');
+
+        {#var saleDetail = 6;#}
+        {#alert("productId "+productId);#}
+
+    //                $sendata[$i] = array(
+    //                    'sale_id_1' => $curso["sale_id_1"],
+    //                    'customer_id_1' => $curso["customer_id_1"],
+    //                    'sale_date_1' => $curso["sale_date_1"],
+    //                    'sale_total_1' => $curso["sale_total_1"],
+    //                    'sale_status_1' => $curso["sale_status_1"],
+    //                    'saleDetail_id_1' => $curso["saleDetail_id_1"],
+    //                    'product_id_1' => $curso["product_id_1"],
+    //                    'saleDetail_amount_1' => $curso["saleDetail_amount_1"],
+    //                    'product_name_1' => $curso["product_name_1"],
+    //                    'product_description_1' => $curso["product_description_1"],
+    //                    'product_image_1' => $curso["product_image_1"],
+    //                    'branch_location_1' => $curso["branch_location_1"],
+    //                    'customer_location_1' => $curso["customer_location_1"],
+    //                    'shipment_id_1' => $curso["shipment_id_1"],
+    //                    'shipment_setUpDate_1' => $curso["shipment_setUpDate_1"],
+    //                    'amountRecords' => $amountRecords
+    //                );
+
+        data_3.saleDetail_id_1;
+
+        alert("productId ... "+data_3.saleDetail_id_1);
+
+        {#
+            'shipment_id' => 0,
+            'delivery' => "_",
+            'setUpDate' => "_",
+            'catched' => "_",
+            'state' => "_"
+        #}
+
+        $.post(url, {saleDetail: data_3.saleDetail_id_1}, function (data)
+        {
+            var shipment_id = data[0].shipment_id;
+            var shipping_id = data[0].shipping_id;
+            var delivery = data[0].delivery;
+            var setUpDate = data[0].setUpDate;
+            var catched = data[0].catched;
+            var state = data[0].state;
+
+            {#
+            'shipment_id' => $curso["shipment_id"],
+            'delivery' => $curso["delivery"],
+            'setUpDate' => $curso["setUpDate"]
+            #}
+
+            var complement = interaction_id + environment + productId;
+
+            var label = "shipment_id_label" + complement;
+            var label_value = "shipment id: ";
+            var row = "shipment_id_input" + complement;
+            draw_raw(label, label_value, shipment_id, row, shipping_panel_div);
+
+            var label = "delivery_label" + complement;
+            var label_value = "shipment delivery: ";
+            var row = "delivery_input" + complement;
+            draw_raw(label, label_value, delivery, row, shipping_panel_div);
+
+            var label = "setUpDate_label" + complement;
+            var label_value = "shipment set Up Date: ";
+            var row = "setUpDate_input" + complement;
+            draw_raw(label, label_value, setUpDate, row, shipping_panel_div);
+
+            var label = "catched_label" + complement;
+            var label_value = "shipment catched date: ";
+            var row = "catched_input" + complement;
+            draw_raw(label, label_value, catched, row, shipping_panel_div);
+
+            var label = "state_label" + complement;
+            var label_value = "shipment state: ";
+            var row = "state_input" + complement;
+            draw_raw(label, label_value, state, row, shipping_panel_div);
+
+
+
+
+
+
+            var label = "shipping_label" + complement;
+            var label_value = "shipping: ";
+            var row = "shipping_input" + complement;
+            draw_raw(label, label_value, shipping_id, row, shipping_panel_div);
+            
+            if (state!=0)
+            {
+                var complement = interaction_id + environment + productId;
+                
+                var label = "shipping_select_list_label" + complement;
+                var label_value = "new shipping: ";
+                var row = "shipping_select_list_select" + complement;
+                draw_select(label, label_value, row, shipping_panel_div, identity);
+                
+                var choose_shipping_btn = document.createElement("button");
+                choose_shipping_btn.id = "choose_shipping_btn" + interaction_id + environment + productId;
+                choose_shipping_btn.className = "choose_shipping_btn relativePosition";
+                choose_shipping_btn.textContent = "change";
+                choose_shipping_btn.style.top = "40px";
+                choose_shipping_btn.addEventListener("click", function (e) {
+                    var new_shipping = document.getElementById("shipping_select_list_select" + interaction_id + environment + productId).value;
+                    edit_shipment(data.shipment_id_1, new_shipping);
+                });
+                document.getElementById(label).appendChild(choose_shipping_btn);
+                document.getElementById(label).style.height = "80px";
+            }
+            {#alert('#get-shipmentDetail-list-ajax');#}
+        }).fail(function () {
+            alert('ERROR #get-shipmentDetail-list-ajax');
+        });
+    }
+    
+    function edit_shipment(shipment, new_shipping)
+    {
+        var form = $('#edit-shipment-ajax');
+        var url = form.attr('action');
+        
+        $.post(url, {
+            shipment: shipment, 
+            new_shipping: new_shipping 
+        }, function (data)
+        {
+            {#alert('#edit-shipment-ajax');#}
+        }).fail(function () {
+            alert('ERROR #edit-shipment-ajax');
+        });
+    }
+    
+    {#window.onload = get_shipping();#}
+    
+    function get_shipping(shippingUser)
+    {
+        var form = $('#get-shipping-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {shippingUser: shippingUser}, function (data)
+        {
+            document.getElementById("waiting_shipping").innerHTML = "";
+            var amountRecords = data[0].amountRecords;
+            var parameter_1 = "waiting_shipping";
+            
+            alert('#get-shipping-ajax '+amountRecords+" --- "+parameter_1);
+            
+            for (i = 0; i<amountRecords; i++)
+            {
+                var shipment_id = data[i].shipment_id;
+                var saleDetail_id = data[i].saleDetail_id;
+                var product_id = data[i].product_id;
+                var store_id = data[i].store_id;
+                var saleDetail_amount = data[i].saleDetail_amount;
+                var node_id = data[i].node_id;
+                var departure_date = data[i].departure_date;
+                var delivery_date = data[i].delivery_date;
+                var agreement_date = data[i].agreement_date;
+                var product_name = data[i].product_name;
+                var product_description = data[i].product_description;
+                var product_image = data[i].product_image;
+                var amountRecords = data[i].amountRecords;
+                
+                drawProduct_List(
+                    saleDetail_id, 
+                    shipment_id, 
+                    agreement_date, 
+                    " ", 
+                    data[i], 
+                    product_image, 
+                    " ", 
+                    "shipping", 
+                    "user", 
+                    parameter_1 
+                );
+            }
+            
+            {#
+            drawProduct_List(
+                saleDetail_id_1, 
+                shipment_id_1, 
+                shipment_setUpDate_1, 
+                commercial_store_name + " " + commercial_customer_name, 
+                data[i], 
+                product_image_1, 
+                location_origin + " " + location_destiny, 
+                "shipping", 
+                "user", 
+                parameter_1 
+            );
+            
+            drawProduct_List(
+                saleDetail_id_1, 
+                saleDetail_id_1, 
+                sale_date_1, 
+                commercial_store_name + " " + commercial_customer_name, 
+                data[i], 
+                product_image_1, 
+                location_origin + " " + location_destiny, 
+                "reach", 
+                "user", 
+                parameter_1 
+            );
+            #}
+            
+            
+            {#foreach($cursos2 as $curso)
+            {
+                $sendata[$i] = array(
+                    'shipment_id' => $curso["shipment_id"],
+                    'saleDetail_id' => $curso["saleDetail_id"],
+                    'product_id' => $curso["product_id"],
+                    'store_id' => $curso["store_id"],
+                    'saleDetail_amount' => $curso["saleDetail_amount"],
+                    'amountRecords' => $amountRecords
+                );
+                $i++;
+            }#}
+                    
+            {#drawSaleDetail(data, parameter_1);#}
+            
+//                $sendata[$i] = array(
+//                    'sale_id_1' => $curso["sale_id_1"],
+//                    'customer_id_1' => $curso["customer_id_1"],
+//                    'sale_date_1' => $curso["sale_date_1"],
+//                    'sale_total_1' => $curso["sale_total_1"],
+//                    'sale_status_1' => $curso["sale_status_1"],
+//                    'saleDetail_id_1' => $curso["saleDetail_id_1"],
+//                    'product_id_1' => $curso["product_id_1"],
+//                    'saleDetail_amount_1' => $curso["saleDetail_amount_1"],
+//                    'product_name_1' => $curso["product_name_1"],
+//                    'product_description_1' => $curso["product_description_1"],
+//                    'product_image_1' => $curso["product_image_1"],
+//                    'branch_location_1' => $curso["branch_location_1"],
+//                    'customer_location_1' => $curso["customer_location_1"],
+//                    'shipment_id_1' => $curso["shipment_id_1"],
+//                    'shipment_setUpDate_1' => $curso["shipment_setUpDate_1"],
+//                    'amountRecords' => $amountRecords
+//                );
+            
+        }).fail(function () {
+            alert('ERROR #get-shipping-ajax');
+        });
+    }
+</script>

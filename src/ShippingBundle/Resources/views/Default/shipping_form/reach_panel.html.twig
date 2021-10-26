@@ -1,0 +1,231 @@
+<style>
+    .reachDetail_div {
+        {#background-color: orange;#}
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+
+    .reachDetail_panel_div {
+        position: relative;
+        transition-duration: 0.5s;
+        transition-property: all;
+        {#background-color: purple;#}
+        {#z-index: 50;#}
+        width: 100%;
+        height: auto;
+    }
+    
+    .customerDetail_div, .storeDetail_div {
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: auto;
+        width: 100%;
+        z-index: 5;
+        padding: 5px;
+    }
+</style>
+
+<script>
+    function draw_reach_menu(interaction_id, environment, productId, kindOfList, productImage, topicId, data)
+    {
+        {#alert("draw_reach_menu ... ");#}
+        var reachDetail_btn = document.createElement("img");
+        reachDetail_btn.id = "reachDetail_btn" + interaction_id + environment + productId;
+        reachDetail_btn.className = "reachDetail_btn boton_personalizado relativePosition";
+        reachDetail_btn.src = "files/images/icons/ok.png";
+        reachDetail_btn.alt = "_"+productImage+"_";
+        reachDetail_btn.disabled = true;
+        reachDetail_btn.setAttribute('first_click', 0);
+        reachDetail_btn.addEventListener("click", function (e) {
+            var identity = new Array();
+            identity[0] = interaction_id;
+            identity[1] = environment;
+            identity[2] = productId;
+            
+            var object = document.getElementById("product_panel" + interaction_id + environment + productId);
+            var code = "reach";
+            manage_panelEnvironment(identity, reachDetail_btn, object, code);
+            
+            $("#reachDetail_btn" + interaction_id + environment + productId).attr('first_click', 1);
+            var sheet = document.getElementById("sheet_environment" + interaction_id + environment + productId + code);
+        
+            if ($("#"+sheet.id).attr(code) != 1)
+            {
+                $("#"+sheet.id).attr(code, 1);
+                draw_reach_panel(interaction_id, environment, productId, productImage, data, sheet);
+            }
+        });
+        document.getElementById("product_menu" + interaction_id + environment + productId).appendChild(reachDetail_btn);
+    }
+    
+    function draw_reach_panel(interaction_id, environment, productId, productImage, data, sheet_div)
+    {
+        var reachDetail_panel_div = document.createElement("div");{#alert("1");#}
+        reachDetail_panel_div.id = "reachDetail_panel_div" + interaction_id + environment + productId;
+        reachDetail_panel_div.className = "reachDetail_panel_div";{#alert("13");#}
+        {#reachDetail_panel_div.textContent = "2";#}
+        reachDetail_panel_div.style.overflow = "scroll";{#alert("15");#}
+        sheet_div.appendChild(reachDetail_panel_div);
+        draw_customerDetail(reachDetail_panel_div, data, interaction_id, environment, productId);
+        draw_storeDetail(reachDetail_panel_div, data, interaction_id, environment, productId);
+    }
+    
+    function draw_customerDetail(reachDetail_panel_div, data, interaction_id, environment, productId)
+    {
+        var customerDetail_div = document.createElement("div");
+        customerDetail_div.id = "customerDetail_div" + interaction_id + environment + productId;
+        customerDetail_div.className = "customerDetail_div relativePosition";
+        customerDetail_div.style.backgroundColor = "red";
+        /*customerDetail_div.addEventListener("mouseout", function (e) {
+            
+            {#var object = customerDetail_div;#}
+            var result = set_invisible(customerDetail_div);
+            
+            if (result == 1)
+            {
+                {#alert("1 se salio");#}
+                {#customerDetail_div.style.backgroundColor = "blue";#}
+                customerDetail_div.classList.remove("visibleScroll");
+            } else
+            {
+                {#alert("0 no se salio");#}
+            }
+            
+        });*/
+        reachDetail_panel_div.appendChild(customerDetail_div);
+        
+        var customerDetail_title = document.createElement("div");
+        customerDetail_title.id = "customerDetail_title" + interaction_id + environment + productId;
+        customerDetail_title.className = "relativePosition";
+        customerDetail_title.style.backgroundColor = "red";
+        customerDetail_title.textContent = "CUSTOMER";
+        customerDetail_div.appendChild(customerDetail_title);
+        
+        
+        
+        
+        
+        
+        
+        
+        var complement = interaction_id + environment + productId;
+                
+        var label = "customer_branch_location_label" + complement;
+        var label_value = "branch location: ";
+        var row = "customer_branch_location_input" + complement;
+        draw_raw(label, label_value, data.customer_branch_location_1, row, customerDetail_div);
+        
+        var label = "customer_branch_id_label" + complement;
+        var label_value = "branch id: ";
+        var row = "customer_branch_id_input" + complement;
+        draw_raw(label, label_value, data.customer_branch_id_1, row, customerDetail_div);
+        
+        var label = "customer_branch_name_label" + complement;
+        var label_value = "branch name: ";
+        var row = "customer_branch_name_input" + complement;
+        draw_raw(label, label_value, data.customer_branch_name_1, row, customerDetail_div);
+        
+        var label = "customer_branch_telephone_label" + complement;
+        var label_value = "branch telephone: ";
+        var row = "customer_branch_telephone_input" + complement;
+        draw_raw(label, label_value, data.customer_branch_telephone_1, row, customerDetail_div);
+        
+        var label = "customer_branch_cellphone_label" + complement;
+        var label_value = "branch cellphone: ";
+        var row = "customer_branch_cellphone_input" + complement;
+        draw_raw(label, label_value, data.customer_branch_cellphone_1, row, customerDetail_div);
+        
+        var label = "customer_branch_aditional_information_label" + complement;
+        var label_value = "branch aditional_information: ";
+        var row = "customer_branch_aditional_information_input" + complement;
+        draw_raw(label, label_value, data.customer_branch_aditional_information_1, row, customerDetail_div);
+    }
+    
+    function draw_storeDetail(reachDetail_panel_div, data, interaction_id, environment, productId)
+    {
+        var storeDetail_div = document.createElement("div");
+        storeDetail_div.id = "storeDetail_div" + interaction_id + environment + productId;
+        storeDetail_div.className = "storeDetail_div relativePosition";
+        storeDetail_div.style.backgroundColor = "blue";
+        reachDetail_panel_div.appendChild(storeDetail_div);
+        
+        var storeDetail_title = document.createElement("div");
+        storeDetail_title.id = "storeDetail_title" + interaction_id + environment + productId;
+        storeDetail_title.className = "relativePosition";
+        storeDetail_title.textContent = "STORE";
+        storeDetail_div.appendChild(storeDetail_title);
+        
+        var complement = interaction_id + environment + productId;
+        
+        var label = "store_branch_location_label" + complement;
+        var label_value = "branch location: ";
+        var row = "store_branch_location_input" + complement;
+        draw_raw(label, label_value, data.store_branch_location_1, row, storeDetail_div);
+        
+        var label = "store_branch_id_label" + complement;
+        var label_value = "branch id: ";
+        var row = "store_branch_id_input" + complement;
+        draw_raw(label, label_value, data.store_branch_id_1, row, storeDetail_div);
+        
+        var label = "store_branch_name_label" + complement;
+        var label_value = "branch name: ";
+        var row = "store_branch_name_input" + complement;
+        draw_raw(label, label_value, data.store_branch_name_1, row, storeDetail_div);
+        
+        var label = "store_branch_telephone_label" + complement;
+        var label_value = "branch telephone: ";
+        var row = "store_branch_telephone_input" + complement;
+        draw_raw(label, label_value, data.store_branch_telephone_1, row, storeDetail_div);
+        
+        var label = "store_branch_cellphone_label" + complement;
+        var label_value = "branch cellphone: ";
+        var row = "store_branch_cellphone_input" + complement;
+        draw_raw(label, label_value, data.store_branch_cellphone_1, row, storeDetail_div);
+        
+        var label = "store_branch_aditional_information_label" + complement;
+        var label_value = "branch aditional_information: ";
+        var row = "store_branch_aditional_information_input" + complement;
+        draw_raw(label, label_value, data.store_branch_aditional_information_1, row, storeDetail_div);
+    }
+    
+    function draw_raw(label, label_value, row_value, row, storeDetail_div)
+    {
+        var field_frame = document.createElement("div");
+        field_frame.id = label;
+        field_frame.className = "relativePosition row_signUpDiv";
+        {#field_frame.style.backgroundColor = "pink";#}
+        storeDetail_div.appendChild(field_frame);
+        
+        var field_div = document.createElement("div");
+        field_div.id = label;
+        field_div.className = "firstColumn_signUpDiv";
+        field_div.textContent = label_value;
+        field_frame.appendChild(field_div);
+        
+        var fieldInput_div = document.createElement("div");
+        fieldInput_div.id = label;
+        fieldInput_div.className = "secondColumn_signUpDiv";
+        {#fieldInput_div.style.backgroundColor = "yellow";#}
+        field_frame.appendChild(fieldInput_div);
+        
+        var field_input = document.createElement("input");
+        field_input.id = row;
+        field_input.value = row_value;
+        field_input.className = "content_secondColumn_signUpDiv";
+        {#field_input.oninput = false;#}
+        field_input.addEventListener("keypress", function (e) {
+            
+            if (storeDetail_div.id == "div_new_vehicle" || 
+                storeDetail_div.id == "div_new_driver" || 
+                storeDetail_div.id == "div_2")
+            {
+                
+            } else
+            {
+                e.returnValue = false;
+            }
+            
+        });
+        fieldInput_div.appendChild(field_input);
+    }
+</script>

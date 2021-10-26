@@ -1,0 +1,162 @@
+available_routes_form:
+    path:     /availableRoutes
+    defaults: { _controller: ShippingBundle:AvailableRoutes:AvailableRoutes }
+    methods:  POST
+
+get_shipping_form:
+    path:     /getShipping
+    defaults: { _controller: ShippingBundle:Shipping:getShipping }
+    methods:  POST
+    
+add_shipping_form:
+    path:     /addShipping
+    defaults: { _controller: ShippingBundle:Reach:addShipping }
+    methods:  POST
+    
+get_shippingMessenger_list_form:
+    path:     /getShippingMessengerList
+    defaults: { _controller: ShippingBundle:Shipping:getShippingMessengerList }
+    methods:  POST
+    
+get_shipmentDetail_list_form:
+    path:     /getShipmentDetailList
+    defaults: { _controller: ShippingBundle:Shipping:getShipmentDetailList }
+    methods:  POST
+    
+edit_shipment_form:
+    path:     /editShipment
+    defaults: { _controller: ShippingBundle:Shipping:editShipment }
+    methods:  POST
+    
+get_location_detail_form:
+    path:     /getLocationDetail
+    defaults: { _controller: ShippingBundle:Shipping:getLocationDetail }
+    methods:  POST
+    
+get_packageMessenger_form:
+    path:     /getPackageMessenger
+    defaults: { _controller: ShippingBundle:Shipping:getPackageMessenger }
+    methods:  POST
+    
+get_reach_from_packageMessenger_form:
+    path:     /getReachFromPackageMessenger
+    defaults: { _controller: ShippingBundle:Shipping:getReachFromPackageMessenger }
+    methods:  POST
+    
+get_sale_packageMessenger_form:
+    path:     /getSalePackageMessenger
+    defaults: { _controller: ShippingBundle:Shipping:getSalePackageMessenger }
+    methods:  POST
+    
+assign_sale_form:
+    path:     /assignSale
+    defaults: { _controller: ShippingBundle:Assignment:assignSale }
+    methods:  POST
+    
+get_shipping_list_form:
+    path:     /getShippingList
+    defaults: { _controller: ShippingBundle:ShippingList:getShippingList }
+    methods:  POST
+    
+get_vehicle_list_form:
+    path:     /getVehicleList
+    defaults: { _controller: ShippingBundle:ShippingList:getVehicleList }
+    methods:  POST
+    
+get_driver_list_form:
+    path:     /getDriverList
+    defaults: { _controller: ShippingBundle:ShippingList:getDriverList }
+    methods:  POST
+    
+get_driver_form:
+    path:     /getDriver
+    defaults: { _controller: ShippingBundle:ShippingList:getDriver }
+    methods:  POST
+    
+get_vehicle_form:
+    path:     /getVehicle
+    defaults: { _controller: ShippingBundle:ShippingList:getVehicle }
+    methods:  POST
+    
+set_new_driver_form:
+    path:     /setNewDriver
+    defaults: { _controller: ShippingBundle:ShippingList:setNewDriver }
+    methods:  POST
+    
+set_new_vehicle_form:
+    path:     /setNewVehicle
+    defaults: { _controller: ShippingBundle:ShippingList:setNewVehicle }
+    methods:  POST
+    
+set_new_shipping_form:
+    path:     /setNewShipping
+    defaults: { _controller: ShippingBundle:ShippingList:setNewShipping }
+    methods:  POST
+    
+search_ownerVehicle_form:
+    path:     /searchOwnerVehicle
+    defaults: { _controller: ShippingBundle:ShippingList:searchOwnerVehicle }
+    methods:  POST
+    
+search_userDriver_form:
+    path:     /searchUserDriver
+    defaults: { _controller: ShippingBundle:ShippingList:searchUserDriver }
+    methods:  POST
+    
+search_userDriverCommercial_form:
+    path:     /searchUserDriverCommercial
+    defaults: { _controller: ShippingBundle:ShippingList:searchUserDriverCommercial }
+    methods:  POST
+    
+get_saleDetail_shipment_form:
+    path:     /getSaleDetailShipment
+    defaults: { _controller: ShippingBundle:ShippingList:getSaleDetailShipment }
+    methods:  POST
+    
+get_supplier_data_form:
+    path:     /getSupplierData
+    defaults: { _controller: ShippingBundle:ShippingList:getSupplierData }
+    methods:  POST
+    
+get_supplying_data_form:
+    path:     /getSupplyingData
+    defaults: { _controller: ShippingBundle:ShippingList:getSupplyingData }
+    methods:  POST
+    
+get_item_data_form:
+    path:     /getItemData
+    defaults: { _controller: ShippingBundle:ShippingList:getItemData }
+    methods:  POST
+    
+get_shipment_from_saleDetail_form:
+    path:     /getShipmentFromSaleDetail
+    defaults: { _controller: ShippingBundle:ShippingList:getShipmentFromSaleDetail }
+    methods:  POST
+    
+get_reach_from_saleDetail_form:
+    path:     /getReachFromSaleDetail
+    defaults: { _controller: ShippingBundle:ShippingList:getReachFromSaleDetail }
+    methods:  POST
+    
+match_nodes_taster_form:
+    path:     /matchNodesTaster
+    defaults: { _controller: ShippingBundle:ShippingList:matchNodesTaster }
+    methods:  POST
+    
+assign_route_form:
+    path:     /assignRoute
+    defaults: { _controller: ShippingBundle:ShippingList:assignRoute }
+    methods:  POST
+    
+calculate_price_form:
+    path:     /calculatePrice
+    defaults: { _controller: ShippingBundle:ShippingList:calculatePrice }
+    methods:  POST
+    
+update_shipping_founding_form:
+    path:     /updateShippingFounding
+    defaults: { _controller: ShippingBundle:ShippingList:updateShippingFounding }
+    methods:  POST
+    
+#$update_shipping_founding_form_ajax = $this->createCustomForm(
+#'HomeBundle\Form\TaskType', $taskEntity, 'POST', 'update_shipping_founding_form');

@@ -1,0 +1,23 @@
+<style>
+    
+</style>
+
+<script>
+    
+    function draw_deleteProduct_menu(interaction_id, environment, productId, kindOfList, productImage, topicId, data)
+    {
+        var deleteProduct_btn = document.createElement("img");
+        deleteProduct_btn.id = "deleteProduct_btn" + interaction_id + environment + productId;
+        deleteProduct_btn.className = "deleteProduct_btn boton_personalizado relativePosition";
+        deleteProduct_btn.src = "files/images/icons/delete.png";
+        deleteProduct_btn.alt = "_"+productImage+"_";
+        deleteProduct_btn.disabled = true;
+        deleteProduct_btn.setAttribute('first_click', 0);
+        deleteProduct_btn.addEventListener("click", function (e) {
+            delete_selectedProduct(interaction_id, environment, productId);
+        });
+
+        document.getElementById("product_menu" + interaction_id + environment + productId).appendChild(deleteProduct_btn);
+    }
+    
+</script>

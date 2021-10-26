@@ -1,0 +1,342 @@
+<style>
+    .frame_location {
+        height: 100%;
+        width: 100%;
+        max-height: 280px;
+        max-width: 100%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        background-color: green;
+    }
+    
+    .container_location {
+        background-color: purple;
+        height: 100%;
+        width: 100%;
+        max-height: 50px;
+        max-width: 100%;
+        margin-right: 30px;
+    }
+    
+    .newLocationContainer {
+        background-color: fuchsia;
+        height: 180px;
+        max-height: 180px;
+        {#height: 400px;
+        max-height: 400px;#}
+        {#max-width: 100%;#}
+        width: 400px;
+        max-width: 400px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+</style>
+
+<script>
+    function searchLocation()
+    { alert("third option");
+        var locationPosition = $("#user_location_signUpDiv").attr('locationPosition');
+        
+        var frame_location = document.createElement("div");
+        frame_location.id = "frame_location" + locationPosition;
+        frame_location.className = "frame_location relativePosition";
+        frame_location.setAttribute('parentId', locationPosition);
+        frame_location.setAttribute('keywordsAmount', 0);
+        
+        if (locationPosition == 1)
+        { alert("first option");
+            frame_location.style.backgroundColor = "pink";
+            {#document.getElementById("user_location_signUpDiv").appendChild(frame_location);#}
+            document.getElementById("locationTool").appendChild(frame_location);
+        } else
+        { alert("second option");
+            var ghjk = locationPosition - 1;alert("second b option");
+            frame_location.style.backgroundColor = "white";alert("second c option");
+            frame_location.style.borderWidth = "3px";
+            frame_location.style.borderStyle = "solid";
+            frame_location.style.borderColor = "black";
+            frame_location.style.padding = "5px";
+{#            document.getElementById("user_location_signUpDiv").appendChild(frame_location);#}
+            {#document.getElementById("frame_location"+ghjk).appendChild(frame_location);alert("second d option");#}
+            document.getElementById("locationTool").appendChild(frame_location);alert("second d option");
+        }
+        
+        var addLocationName = document.createElement("img"); 
+        addLocationName.id = "addLocationName" + locationPosition;
+        addLocationName.className = "boton_personalizado relativePosition";
+        addLocationName.src = "files/images/icons/more.png";
+        addLocationName.alt = "";
+        document.getElementById("frame_location" + locationPosition).appendChild(addLocationName);
+        
+        {#alert(
+              "\n keywords amount: "+keywordsAmount+
+              "\n this level: "+currentLocationPosition+
+              "\n levels amount: "+locationPosition);#}
+          
+        var keywordsAmount = $("#frame_location" + locationPosition).attr('keywordsAmount');
+        var intentsAmount_input = document.createElement("input");
+        intentsAmount_input.id = "intentsAmount_input" + locationPosition;
+        intentsAmount_input.name = "intentsAmount_input" + locationPosition;
+        intentsAmount_input.type = "text";
+        intentsAmount_input.className = "standar_input relativePosition";
+        intentsAmount_input.value = keywordsAmount;
+        intentsAmount_input.style.height = "30px";
+        intentsAmount_input.style.width = "50px";
+        intentsAmount_input.style.cursor = "cursor";
+        intentsAmount_input.style.position = "absolute";
+        intentsAmount_input.style.top = "0px";
+        intentsAmount_input.style.left = "40px";
+        intentsAmount_input.style.backgroundColor = "gray";
+        intentsAmount_input.placeholder = "intnts amount: ";
+        document.getElementById("frame_location" + locationPosition).appendChild(intentsAmount_input);
+        
+        var currentLocationPosition = $("#frame_location" + locationPosition).parent('div').attr('parentId');
+        var thisLevel_input = document.createElement("input");
+        thisLevel_input.id = "thisLevel_input" + locationPosition;
+        thisLevel_input.name = "thisLevel_input" + locationPosition;
+        thisLevel_input.type = "text";
+        thisLevel_input.className = "standar_input relativePosition";
+        thisLevel_input.value = currentLocationPosition;
+        thisLevel_input.style.height = "30px";
+        thisLevel_input.style.width = "50px";
+        thisLevel_input.style.cursor = "cursor";
+        thisLevel_input.style.position = "absolute";
+        thisLevel_input.style.top = "0px";
+        thisLevel_input.style.left = "100px";
+        thisLevel_input.style.backgroundColor = "gray";
+        thisLevel_input.placeholder = "this parent level: ";
+        document.getElementById("frame_location" + locationPosition).appendChild(thisLevel_input);
+    
+        var newLocationContainer = document.createElement("div");
+        newLocationContainer.id = "newLocationContainer" + locationPosition;
+        newLocationContainer.className = "newLocationContainer relativePosition";
+        document.getElementById("frame_location" + locationPosition).appendChild(newLocationContainer);
+        
+        var searchLocation = document.createElement("img");
+        searchLocation.id = "searchLocation" + locationPosition;
+        searchLocation.className = "boton_personalizado relativePosition";
+        searchLocation.src = "files/images/icons/search/search.png";
+        searchLocation.alt = "";
+        {#document.getElementById("container_location" + parentId + keywordsAmount).appendChild(searchLocation);#}
+        document.getElementById("frame_location" + locationPosition).appendChild(searchLocation);
+        
+        
+        
+        
+        
+        
+        
+        $("#addLocationName" + locationPosition)
+        .click(function () {
+            alert("75849-----");
+            {#document.getElementById("addLocationName" + locationPosition).style.display = "none";#}
+            var parentId = $(this).parents('div').attr('parentId');
+            drawNewLocation(parentId);
+            var keywordsAmount = $("#frame_location" + locationPosition).attr('keywordsAmount');
+            document.getElementById("intentsAmount_input" + locationPosition).value = keywordsAmount;
+        });
+        
+        
+        $("#searchLocation" + locationPosition)
+        .click(function () {
+            alert("75849302 a");
+    
+            {#frame_location.id = "frame_location" + locationPosition;
+            frame_location.className = "frame_location relativePosition";
+            frame_location.setAttribute('parentId', locationPosition);#}
+    
+            var currentLocationPosition = $(this).parent('div').attr('parentId');
+            var locationPosition = $("#user_location_signUpDiv").attr('locationPosition');
+            var keywordsAmount = $("#frame_location" + currentLocationPosition).attr('keywordsAmount');
+            
+            {#var keywordsAmount = 3;#}
+            alert(
+                  "\n keywords amount: "+keywordsAmount+
+                  "\n this level: "+currentLocationPosition+
+                  "\n levels amount: "+locationPosition);
+            var insertedLocations = new Array(keywordsAmount);
+            alert("75849302 c ");
+            
+            
+            {#$("#editLocationName" + parentId + keywordsAmount)#}
+            
+            {#var keywordsAmount = $("#frame_location" + locationPosition).attr('keywordsAmount');#}
+{#            var parentId = $(this).parents('div').attr('parentId');
+            var bvk = 0;
+            var bcd = 1;
+            while(bvk < bcd)
+            {
+                if(document.getElementById("locationName_input" + parentId + "" + bvk))
+                {
+                    bvk++;
+                    bcd++;
+                } else
+                {
+                    bvk=bcd;
+                }
+                alert(" - "+bvk);
+            }#}
+            
+            for (var i=0; i<keywordsAmount; i++)
+            { alert("keywordsAmount: "+keywordsAmount);
+                {#document.getElementById("locationName_input" + i)#}
+                {#container_location.id = "container_location" + parentId + keywordsAmount;#}
+                {#var keywordsAmount = $("#frame_location" + locationPosition).attr('keywordsAmount');#}
+        
+                var parentId = $(this).parents('div').attr('parentId');
+                
+                if (document.getElementById("locationName_input" + parentId + "" + i))
+                {
+                    insertedLocations[i] = document.getElementById("locationName_input" + parentId + "" + i).value;
+                } else
+                {
+                    insertedLocations[i] = "";
+                }
+                
+                {#alert("position " + i + " insertedLocations " + insertedLocations[i] + 
+                        "\n summary " + insertedLocations);#}
+                                        
+                {#frame_location.setAttribute('keywordsAmount', 0);#}
+                document.getElementById("user_location_signUpDiv").setAttribute("insertedLocation"+i, insertedLocations[i]);
+            }
+            
+            $("#user_location_signUpDiv").attr("keywordsAmount", keywordsAmount);
+            
+            //insert or select:
+            drawLocation();
+        });
+        
+        $("#frame_location" + locationPosition)
+        .mouseover(function () {
+            var content = document.getElementById("frame_location" + locationPosition);
+            content.classList.add("visibleScroll");
+        })
+        .mouseout(function () {
+            var content = document.getElementById("frame_location" + locationPosition);
+            content.classList.remove("visibleScroll");
+        });
+        
+        $("#newLocationContainer" + locationPosition)
+        .mouseover(function () {
+            var content = document.getElementById("newLocationContainer" + locationPosition);
+            content.classList.add("visibleScroll");
+        })
+        .mouseout(function () {
+            var content = document.getElementById("newLocationContainer" + locationPosition);
+            content.classList.remove("visibleScroll");
+        });
+    }
+    
+    // keyword: 
+    function drawNewLocation(parentId)
+    {
+        var locationPosition = $("#user_location_signUpDiv").attr('locationPosition');
+        
+        var keywordsAmount = $("#frame_location" + locationPosition).attr('keywordsAmount');
+        var keywordsAmount_2 = parseInt(keywordsAmount) + 1;
+        alert(
+            "\n - parentId "+parentId+
+            " \n - locationPosition "+locationPosition+
+            "  \n - keywordsAmount "+keywordsAmount);
+        $("#frame_location" + locationPosition).attr('keywordsAmount', keywordsAmount_2);
+        var container_location = document.createElement("div");
+        container_location.id = "container_location" + parentId + keywordsAmount;
+        container_location.className = "relativePosition container_location";
+        document.getElementById("newLocationContainer" + parentId).appendChild(container_location);
+        
+        {#container_location #}
+        
+        
+        var locationName_input = document.createElement("input"); 
+        locationName_input.id = "locationName_input" + parentId + keywordsAmount;
+        locationName_input.name = "locationName_input" + parentId + keywordsAmount;
+        locationName_input.type = "text";
+        locationName_input.className = "standar_input relativePosition";
+        locationName_input.style.height = "30px";
+        locationName_input.style.width = "130px";
+        locationName_input.style.cursor = "cursor";
+        locationName_input.style.position = "absolute";
+        locationName_input.style.top = "0px";
+        locationName_input.style.left = "0px";
+        locationName_input.placeholder = "location name";
+        document.getElementById("container_location" + parentId + keywordsAmount).appendChild(locationName_input);
+        
+        var deleteLocationName = document.createElement("img"); 
+        deleteLocationName.id = "deleteLocationName" + parentId + keywordsAmount;
+        deleteLocationName.className = "boton_personalizado";
+        deleteLocationName.src = "files/images/icons/delete.png";
+        deleteLocationName.alt = "";
+        deleteLocationName.style.display = "none";
+        deleteLocationName.style.position = "absolute";
+        deleteLocationName.style.top = "10px";
+        deleteLocationName.style.left = "150px";
+        document.getElementById("container_location" + parentId + keywordsAmount).appendChild(deleteLocationName);
+        
+        var okLocationName = document.createElement("img"); 
+        okLocationName.id = "okLocationName" + parentId + keywordsAmount;
+        okLocationName.className = "boton_personalizado";
+        okLocationName.src = "files/images/icons/ok.png";
+        okLocationName.alt = "";
+        okLocationName.style.display = "block";
+        okLocationName.style.position = "absolute";
+        okLocationName.style.top = "10px";
+        okLocationName.style.left = "150px";
+        document.getElementById("container_location" + parentId + keywordsAmount).appendChild(okLocationName);
+        
+        var editLocationName = document.createElement("img"); 
+        editLocationName.id = "editLocationName" + parentId + keywordsAmount;
+        editLocationName.className = "boton_personalizado"; {#relativePosition#}
+        editLocationName.src = "files/images/icons/edit.png";
+        editLocationName.alt = "";
+        editLocationName.style.display = "none";
+        editLocationName.style.position = "absolute";
+        editLocationName.style.top = "10px";
+        editLocationName.style.left = "170px";
+        document.getElementById("container_location" + parentId + keywordsAmount).appendChild(editLocationName);
+        
+        
+        $("#okLocationName" + parentId + keywordsAmount)
+        .click(function () {
+            var keywordLocation = document.getElementById("locationName_input" + parentId + keywordsAmount).value;
+            if (keywordLocation)
+            {
+                document.getElementById("addLocationName" + locationPosition).style.display = "block";
+    
+                document.getElementById("deleteLocationName" + parentId + keywordsAmount).style.display = "block";
+                document.getElementById("okLocationName" + parentId + keywordsAmount).style.display = "none";
+                document.getElementById("editLocationName" + parentId + keywordsAmount).style.display = "block";
+                document.getElementById("locationName_input" + parentId + keywordsAmount).disabled = true;
+                document.getElementById("container_location" + parentId + keywordsAmount).style.backgroundColor = "transparent";
+            }
+        });
+        
+        $("#editLocationName" + parentId + keywordsAmount)
+        .click(function () {
+            document.getElementById("addLocationName" + locationPosition).style.display = "none";
+    
+            document.getElementById("deleteLocationName" + parentId + keywordsAmount).style.display = "none";
+            document.getElementById("okLocationName" + parentId + keywordsAmount).style.display = "block";
+            document.getElementById("editLocationName" + parentId + keywordsAmount).style.display = "none";
+            document.getElementById("locationName_input" + parentId + keywordsAmount).disabled = false;
+            document.getElementById("container_location" + parentId + keywordsAmount).style.backgroundColor = "purple";
+        });
+        
+        $("#deleteLocationName" + parentId + keywordsAmount)
+        .click(function () {
+            alert("75849302 a");
+            var locationPosition = $("#user_location_signUpDiv").attr('locationPosition');
+            alert("75849302 b");
+{#            var keywordsAmount = $(this).attr('keywordsAmount');#}
+            
+            alert("75849302 c "+keywordsAmount);
+{#            document.getElementById("frame_location" + locationPosition).removeChild("container_location" + keywordsAmount);#}
+                    
+            {#document.getElementById("container_location" + keywordsAmount).appendChild(language_input);#}
+            
+            document.getElementById("container_location" + parentId + keywordsAmount).innerHTML = "";
+            document.getElementById("container_location" + parentId + keywordsAmount).style.height = "0px";
+        });
+        
+    }
+    
+</script>

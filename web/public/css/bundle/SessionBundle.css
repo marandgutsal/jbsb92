@@ -1,0 +1,63 @@
+/*logInUser.html.twig */
+#user_name
+{
+    position: absolute;
+    top: 5px;
+    right: 165px;
+    width: 80px;
+    height: 33px;
+    color: black;
+}
+
+#user_password
+{
+    position: absolute;
+    top: 5px;
+    right: 80px;
+    width: 80px;
+    height: 33px;
+    color: black;
+}
+
+#btnLogIn {
+    top: 5px;
+    right: 5px;
+}
+
+#btnSignUp, #btnHome {
+    top: 20px;
+    right: 5px;
+}
+
+
+#btnLogOut {
+    top: 5px;
+    right: 5px;
+}
+
+#btnProfile, #btnEditProfile {
+    top: 20px;
+    right: 5px;
+    /*display: block;*/
+}
+
+.btnSession {
+    position: absolute;
+    height: 15px;
+    width: 70px;
+    background-color: white;
+    color: black;
+    font-size: smaller;
+    cursor: pointer;
+    text-shadow: 0px 0px 0px;
+    text-align: center;
+    z-index: 3;
+}
+
+.btnSession:hover{
+    background-color: #1ab7ea;
+}
+
+#SignUpContent {
+    display: none;
+}

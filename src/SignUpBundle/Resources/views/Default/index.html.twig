@@ -1,0 +1,322 @@
+{{ form_start(sign_up_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'sign-up-ajax'|default('form')} }) }}
+{{ form_end(sign_up_form_ajax) }}
+
+<div id="signUpUser">
+
+    <div id='user_name_signUpDiv' class="relativePosition row_signUpDiv">
+    <div class="firstColumn_signUpDiv">User's Name: </div>
+    <div class="secondColumn_signUpDiv">
+        <input class="content_secondColumn_signUpDiv" id='user_name_signUpInput' onpaste='return false' type='text' name='user_name_signUpInput'/>
+    </div>
+    </div>
+
+
+    <div id='user_email_signUpDiv' class="relativePosition row_signUpDiv">
+    <div class="firstColumn_signUpDiv">User's Email: </div>
+    <div class="secondColumn_signUpDiv">
+    <input id='user_email_signUpInput'  class="content_secondColumn_signUpDiv" onpaste='return false' type='text' name='user_email_signUpInput'/>
+    </div>
+    </div>
+
+    <div id='user_password_signUpDiv' class="relativePosition row_signUpDiv" {#style="margin-top: 0px;"#}>
+    <div class="firstColumn_signUpDiv">User's Password: </div>
+    <div class="secondColumn_signUpDiv" style="right: 40px;">
+    <input id='user_password_signUpInput' class="content_secondColumn_signUpDiv" onpaste='return false' type='password' name='user_password_signUpInput'/>
+    </div>
+    <img id="hide_user_password_signUpDiv" style="right: 5px; top: 5px;" class="hideShowPassword {#relativePosition#} {#boton_personalizado#}"
+        src='files/images/icons/eye.png' 
+        alt='Mountain View'>
+    </div>
+
+    <div id='user_password_confirmation_signUpDiv' class="relativePosition row_signUpDiv" {#style="margin-top: 0px;"#}>
+    <div class="firstColumn_signUpDiv">Confirm user's Password: </div>
+    <div class="secondColumn_signUpDiv" style="right: 40px;">
+    <input id='user_password_confirmation_signUpInput' class="content_secondColumn_signUpDiv" onpaste='return false' type='password' name='user_password_confirmation_signUpInput'/>
+    </div>
+    <img id="hide_user_password_confirmation_signUpDiv" style="right: 5px; top: 5px;" class="hideShowPassword {#relativePosition#} {#boton_personalizado#}"
+        src='files/images/icons/eye.png' 
+        alt='Mountain View'>
+    </div>
+
+
+    {#////////////////////#}
+
+
+    <div id='user_firstGivenName_signUpDiv' class="relativePosition row_signUpDiv">
+    <div class="firstColumn_signUpDiv">User's First given name: </div>
+    <div class="secondColumn_signUpDiv">
+    <input id='user_firstGivenName_signUpInput' class="content_secondColumn_signUpDiv" onpaste='return false' type='text' name='user_firstGivenName_signUpInput'/>
+    </div>
+    </div>
+
+    <div id='user_secondGivenName_signUpDiv' class="relativePosition row_signUpDiv">
+    <div class="firstColumn_signUpDiv">User's Second given name: </div>
+    <div class="secondColumn_signUpDiv">
+    <input id='user_secondGivenName_signUpInput' class="content_secondColumn_signUpDiv" onpaste='return false' type='text' name='user_secondGivenName_signUpInput'/>
+    </div>
+    </div>
+
+    <div id='user_firstFamilyName_signUpDiv' class="relativePosition row_signUpDiv">
+    <div class="firstColumn_signUpDiv">User's First family name: </div>
+    <div class="secondColumn_signUpDiv">
+    <input id='user_firstFamilyName_signUpInput' class="content_secondColumn_signUpDiv" onpaste='return false' type='text' name='user_firstFamilyName_signUpInput'/>
+    </div>
+    </div>
+
+    <div id='user_secondFamilyName_signUpDiv' class="relativePosition row_signUpDiv">
+    <div class="firstColumn_signUpDiv">User's Second family name: </div>
+    <div class="secondColumn_signUpDiv">
+    <input id='user_secondFamilyName_signUpInput' class="content_secondColumn_signUpDiv" onpaste='return false' type='text' name='user_secondFamilyName_signUpInput'/>
+    </div>
+    </div>
+
+    <div id='user_biography_signUpDiv' class="relativePosition row_signUpDiv">
+    <div class="firstColumn_signUpDiv">User's Biography: </div>
+    <div class="secondColumn_signUpDiv">
+    <textarea id='user_biography_signUpTextarea' class="content_secondColumn_signUpDiv" name='user_biography_signUpTextarea'></textarea>
+    </div>
+    </div>
+
+    <div id='user_profilePhoto_signUpDiv' class="relativePosition row_signUpDiv" style="height: 300px;">
+    <div class="firstColumn_signUpDiv">User's profile photo: </div>
+    <div class="secondColumn_signUpDiv">
+    <input type='file' name='user_profilePhoto_signUpInput' id='user_profilePhoto_signUpInput' class="relativePosition"/>
+    </div>
+    <div 
+          style="
+             position: absolute;
+             {#background-color: yellow;#}
+             top: 70px;
+             left: 0px;
+             right: 0px;
+             bottom: 0px;
+             overflow: hidden;"
+         >
+    <output id="user_profilePhoto_signUpOutput" class="thumb"><br><br><br><br><br>Here we can watch the video's portrait's image</output>
+    </div>
+    </div>
+
+    <div id="user_location_signUpDiv" class="relativePosition">
+        
+    </div>
+
+</div>
+
+<div style="
+     bottom: 0px;
+     height: 50px;
+{#     background-color:  yellowgreen;#}
+     width: 100%;
+     position: absolute;
+     align-content: center;
+     text-align: center;
+     ">
+    <div id='save_signUpDiv'>
+        SAVE
+    </div>
+</div>
+
+<script>
+    var btnSignUp = document.getElementById("save_signUpDiv");
+    btnSignUp.addEventListener("click", show_signUpForm, false);
+    
+    function show_signUpForm()
+    {
+        $('#save_signUpDiv').click(function () { {#alert("328hdd");#}
+            signUpUser();
+        });
+        
+        $('#user_name_signUpInput')
+                .keypress(function (e) {
+                    return solo_letras_numeros(e);
+                });
+                
+        $('#user_firstGivenName_signUpInput')
+                .keypress(function (e) {
+                    return solo_letras(e);
+                });
+                
+        $('#user_secondGivenName_signUpInput')
+                .keypress(function (e) {
+                    return solo_letras(e);
+                });
+
+        $('#user_firstFamilyName_signUpInput')
+                .keypress(function (e) {
+                    return solo_letras(e);
+                });
+
+        $('#user_secondFamilyName_signUpInput')
+                .keypress(function (e) {
+                    return solo_letras(e);
+                });
+    }
+
+    function signUpUser()
+    {
+        {#alert("ythgjvnvcmcncncn");#}
+        var form = $('#sign-up-ajax');
+        var url = form.attr('action');
+        
+        user_name_signUpInput = document.getElementById('user_name_signUpInput').value;
+        user_firstGivenName_signUpInput = document.getElementById('user_firstGivenName_signUpInput').value;
+        user_secondGivenName_signUpInput = document.getElementById('user_secondGivenName_signUpInput').value;
+        user_firstFamilyName_signUpInput = document.getElementById('user_firstFamilyName_signUpInput').value;
+        user_secondFamilyName_signUpInput = document.getElementById('user_secondFamilyName_signUpInput').value;
+        user_email_signUpInput = document.getElementById('user_email_signUpInput').value;
+        user_password_signUpInput = document.getElementById('user_password_signUpInput').value;
+        user_password_confirmation_signUpInput = document.getElementById('user_password_confirmation_signUpInput').value;
+        user_biography_signUpTextarea = document.getElementById('user_biography_signUpTextarea').value;
+        user_profilePhoto_signUpInput = document.getElementById('user_profilePhoto_signUpInput').value;
+
+        user_password_signUpDiv = document.getElementById('user_password_signUpDiv');
+        user_password_confirmation_signUpDiv = document.getElementById('user_password_confirmation_signUpDiv');
+
+        var location_id = $("#invocations_signUp").attr("parentLocation");
+        
+        
+        
+        
+        
+        if (!user_name_signUpInput || 
+            !user_firstGivenName_signUpInput || 
+            !user_firstFamilyName_signUpInput || 
+            !user_email_signUpInput || 
+            !user_password_signUpInput || 
+            !user_password_confirmation_signUpInput || 
+            !user_biography_signUpTextarea || 
+            !user_profilePhoto_signUpInput || 
+            !location_id) {
+            alert("You need to introduce all information");
+            alert("ythgjvnvcmcncncn   55555 B");
+        } else if (user_password_signUpInput !== user_password_confirmation_signUpInput)
+        {
+        alert("ythgjvnvcmcncncn   55555 A");
+            document.getElementById('user_password_signUpInput').value = "";
+            document.getElementById('user_password_confirmation_signUpInput').value = "";
+
+            user_password_signUpDiv.style.color = "red";
+            user_password_confirmation_signUpDiv.style.color = "red";
+
+            alert("Password and its confirmation are diferent, try again");
+        } else {
+            {#alert("ythgjvnvcmcncncn   55555 C");#}
+{#            var formData = new FormData($("#signUp_form")[0]);#}
+            var a = 2;
+                        
+            var formdata = new FormData();
+            formdata.append("user_name", user_name_signUpInput);
+            formdata.append("user_firstGivenName", user_firstGivenName_signUpInput);
+            formdata.append("user_secondGivenName", user_secondGivenName_signUpInput);
+            formdata.append("user_firstFamilyName", user_firstFamilyName_signUpInput);
+            formdata.append("user_secondFamilyName", user_secondFamilyName_signUpInput);
+            formdata.append("user_email", user_email_signUpInput);
+            formdata.append("user_password", user_password_signUpInput);
+            formdata.append("user_biography", user_biography_signUpTextarea);
+            formdata.append("user_profilePhoto", user_profilePhoto_signUpInput);
+            formdata.append("user_location", location_id);
+            var profilePhoto = document.getElementById("user_profilePhoto_signUpInput").files[0];
+            formdata.append("user_profilePhoto_file", profilePhoto);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formdata,
+                cache: false,
+                processData: false,
+                contentType: false
+            }).done(function (resp) {
+                alert("success update & upload video ");
+                uploadProfilePhoto();
+                
+                document.getElementById('user_name').value = user_name_signUpInput;
+                document.getElementById('user_password').value = user_password_signUpInput;    
+                logInUser();
+            });
+        }
+    }
+
+    function uploadProfilePhoto()
+    {
+        var form = $('#upload-profile-photo-ajax');
+        var url = form.attr('action');
+
+        var profilePhoto = document.getElementById("user_profilePhoto_signUpInput").files[0];
+        user_name_signUpInput = document.getElementById('user_name_signUpInput').value;
+        var formdata = new FormData();
+        formdata.append("user_profilePhoto_signUpInput", profilePhoto);
+        formdata.append("user_name", user_name_signUpInput);
+        
+        var ajax = new XMLHttpRequest();
+        ajax.open("POST", url);
+        ajax.send(formdata);
+    }
+
+
+
+
+    
+
+            
+    $('#signUpUser')
+    .mouseover(function () {
+        var signUpUser = document.getElementById("signUpUser");
+        signUpUser.classList.add("visibleScroll");
+    })
+    .mouseout(function () {
+        var signUpUser = document.getElementById("signUpUser");
+        signUpUser.classList.remove("visibleScroll");
+    });
+    
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+    $("#user_profilePhoto_signUpInput").change(function () {
+        {#alert("zzzzzzzzzzzz");#}
+        upload_profilePhoto(this);
+        {#alert("ppppppppppp");#}
+    });
+
+    function upload_profilePhoto(evt) {
+        var reader = new FileReader();
+        reader.readAsDataURL(evt.files[0]);
+        reader.onload = function (e) {
+        document.getElementById("user_profilePhoto_signUpOutput").innerHTML = ['<img class="thumb" src="', e.target.result, '"/>'].join('');
+        };
+    }
+            
+            
+            
+            
+    $('#hide_user_password_signUpDiv')
+    .click(function () {
+        var user_password_signUpInput = document.getElementById("user_password_signUpInput");
+        if (user_password_signUpInput.type === "text")
+        {
+            user_password_signUpInput.type = "password";
+        } else if (user_password_signUpInput.type === "password")
+        {
+            user_password_signUpInput.type = "text";
+        }
+    });
+    
+    $('#hide_user_password_confirmation_signUpDiv')
+    .click(function () {
+        var user_password_confirmation_signUpInput = document.getElementById("user_password_confirmation_signUpInput");
+        if (user_password_confirmation_signUpInput.type === "text")
+        {
+            user_password_confirmation_signUpInput.type = "password";
+        } else if (user_password_confirmation_signUpInput.type === "password")
+        {
+            user_password_confirmation_signUpInput.type = "text";
+        }
+    });
+</script>

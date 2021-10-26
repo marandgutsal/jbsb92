@@ -1,0 +1,3 @@
+shipping_homepage:
+    path:     /shipping
+    defaults: { _controller: ShippingBundle:Default:index }

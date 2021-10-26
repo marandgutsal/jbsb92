@@ -1,0 +1,254 @@
+{{ form_start(shippingBundle1.shippingBundle2.get_location_detail_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-location-detail-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.get_location_detail_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.add_shipping_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'add-shipping-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.add_shipping_form_ajax) }}
+
+<style>
+    #search_reach {
+        position: relative;
+        padding: 10px;
+        margin: 10px;
+        background-color: transparent;
+        {#display: inline-block;#}
+    }
+    
+    #waiting_routes {
+        position: relative;
+        background-color: blueviolet;
+        margin: 10px;
+    }
+</style>
+
+<div id="search_reach" attemptsAmount=0>
+    <div id="set_of_arrays">
+    </div>
+    
+    <div id="search_reach_menu">
+    </div>
+</div>
+
+<div id="waiting_routes" interactions=0>
+    reach
+</div>
+
+<script>
+    window.onload = cbdsj();
+    
+    function cbdsj()
+    {
+        var searchReach = document.createElement("img");
+        searchReach.id = "searchReach";
+        searchReach.className = "boton_personalizado relativePosition";
+        searchReach.src = "files/images/icons/search/search.png";
+        searchReach.alt = "";
+        searchReach.addEventListener("click", function () {
+{#            alert("2 2 2 2 2 2 2 ");
+                    
+            var new_env = "reach_originLocation_div";
+            var environment = "idfs_2";
+            change_location_environment(new_env, environment);
+            
+            var location = $("#invocations_signUp").attr("parentLocation");
+            get_location_detail(location, reach_originLocation);#}
+            {#$("#"+div_edit.id).attr("locationId", locationId);#}
+            var parameter_1 = "waiting_routes";
+            var origin_id = $("#reach_originLocation").attr("locationId");
+            var destiny_id = $("#reach_destinyLocation").attr("locationId");
+            get_sale_packageMessenger(parameter_1, origin_id, destiny_id);
+        });
+        document.getElementById("search_reach_menu").appendChild(searchReach);
+
+        add_location();
+    }
+    
+    function open_closePanel(new_env, prev_env, new_confirm, prev_confirm)
+    {
+        if ($("#set_of_arrays").attr("vfdjvdf") == new_env)
+        {
+            $("#set_of_arrays").attr("vfdjvdf", prev_env);
+            
+            document.getElementById(new_env).style.height = "200px";
+            document.getElementById(prev_env).style.height = "0px";
+        }
+        
+        document.getElementById(new_confirm).style.display = "inline-block";
+        document.getElementById(prev_confirm).style.display = "none";
+    }
+    
+    function add_location()
+    {
+        var attemptsAmount = $("#search_reach").attr("attemptsAmount");
+        attemptsAmount++;
+        $("#search_reach").attr("attemptsAmount", attemptsAmount);
+        
+        var label_origin = document.createElement("div");
+        label_origin.id = "label_origin";
+        label_origin.className = "headerList";
+        label_origin.textContent = "ORIGIN: ";
+        label_origin.style.display = "inline-block";
+        label_origin.addEventListener("click", function () {
+            {#alert("2");#}
+        });
+        label_origin.addEventListener("mouseover", function () {
+            document.getElementById("open_originLocation").style.display = "inline-block";
+        });
+        label_origin.addEventListener("mouseout", function () {
+            {#alert("3");#}
+            document.getElementById("open_originLocation").style.display = "none";
+        });
+        document.getElementById("set_of_arrays").appendChild(label_origin);
+        
+        var reach_originLocation = document.createElement("div");
+        reach_originLocation.id = "reach_originLocation";
+        reach_originLocation.style.display = "inline-block";
+        reach_originLocation.style.color = "red";
+        label_origin.appendChild(reach_originLocation);
+                        
+        var open_originLocation = document.createElement("img");
+        open_originLocation.id = "open_originLocation";
+        open_originLocation.className = "relativePosition boton_personalizado";
+        open_originLocation.src = "files/images/icons/more.png";
+        open_originLocation.alt = "";
+        open_originLocation.style.display = "inline-block";
+        open_originLocation.setAttribute('content', "non_search_div");
+        open_originLocation.addEventListener("click", function () {
+            
+            var new_env = "reach_originLocation_div";
+            var environment = "idfs_2";
+            change_location_environment(new_env, environment);
+            
+            var new_confirm = "confirm_originLocation";
+            var prev_confirm = "confirm_destinyLocation";
+            
+            var prev_env = "reach_destinyLocation_div";
+            open_closePanel(new_env, prev_env, new_confirm, prev_confirm);
+            
+        });
+        label_origin.appendChild(open_originLocation);
+        
+        var confirm_originLocation = document.createElement("img");
+        confirm_originLocation.id = "confirm_originLocation";
+        confirm_originLocation.className = "relativePosition boton_personalizado";
+        confirm_originLocation.src = "files/images/icons/ok.png";
+        confirm_originLocation.alt = "";
+        confirm_originLocation.style.backgroundColor = "yellow";
+        confirm_originLocation.style.display = "inline-block";
+        confirm_originLocation.setAttribute('content', "non_search_div");
+        confirm_originLocation.addEventListener("click", function () {
+            var location = $("#invocations_signUp").attr("parentLocation");
+            get_location_detail(location, reach_originLocation);
+        });
+        label_origin.appendChild(confirm_originLocation);
+        
+        var reach_originLocation_div = document.createElement("div");
+        reach_originLocation_div.id = "reach_originLocation_div";
+        reach_originLocation_div.style.overflowY = "hidden";
+        reach_originLocation_div.style.transitionProperty = "all";
+        reach_originLocation_div.style.transitionDuration = "0.5s";
+        document.getElementById("set_of_arrays").appendChild(reach_originLocation_div);
+        
+        var label_destiny = document.createElement("div");
+        label_destiny.id = "label_destiny";
+        label_destiny.className = "headerList";
+        label_destiny.textContent = "DESTINY: ";
+        label_destiny.style.display = "inline-block";
+        label_destiny.addEventListener("click", function () {
+            {#alert("3");#}
+        });
+        label_destiny.addEventListener("mouseover", function () {
+            {#alert("3");#}
+            document.getElementById("open_destinyLocation").style.display = "inline-block";
+        });
+        label_destiny.addEventListener("mouseout", function () {
+            {#alert("3");#}
+            document.getElementById("open_destinyLocation").style.display = "none";
+        });
+        document.getElementById("set_of_arrays").appendChild(label_destiny);
+        
+        var reach_destinyLocation = document.createElement("div");
+        reach_destinyLocation.id = "reach_destinyLocation";
+        reach_destinyLocation.style.display = "inline-block";
+        reach_destinyLocation.style.color = "red";
+        label_destiny.appendChild(reach_destinyLocation);
+                
+        var open_destinyLocation = document.createElement("img");
+        open_destinyLocation.id = "open_destinyLocation";
+        open_destinyLocation.className = "relativePosition boton_personalizado";
+        open_destinyLocation.src = "files/images/icons/more.png";
+        open_destinyLocation.alt = "";
+        open_destinyLocation.style.display = "inline-block";
+        open_destinyLocation.setAttribute('content', "non_search_div");
+        open_destinyLocation.addEventListener("click", function () {
+            var new_env = "reach_destinyLocation_div";
+            var environment = "idfs_2";
+            change_location_environment(new_env, environment);
+            
+            var prev_confirm = "confirm_originLocation";
+            var new_confirm = "confirm_destinyLocation";
+            
+            var prev_env = "reach_originLocation_div";
+            open_closePanel(new_env, prev_env, new_confirm, prev_confirm);
+        });
+        label_destiny.appendChild(open_destinyLocation);
+        
+        var confirm_destinyLocation = document.createElement("img");
+        confirm_destinyLocation.id = "confirm_destinyLocation";
+        confirm_destinyLocation.className = "relativePosition boton_personalizado";
+        confirm_destinyLocation.src = "files/images/icons/ok.png";
+        confirm_destinyLocation.alt = "";
+        confirm_destinyLocation.style.backgroundColor = "yellow";
+        confirm_destinyLocation.style.display = "inline-block";
+        confirm_destinyLocation.setAttribute('content', "non_search_div");
+        confirm_destinyLocation.addEventListener("click", function () {
+            var location = $("#invocations_signUp").attr("parentLocation");
+            get_location_detail(location, reach_destinyLocation);
+        });
+        label_destiny.appendChild(confirm_destinyLocation);
+     
+        var reach_destinyLocation_div = document.createElement("div");
+        reach_destinyLocation_div.id = "reach_destinyLocation_div";
+        reach_destinyLocation_div.style.overflowY = "hidden";
+        reach_destinyLocation_div.style.transitionProperty = "all";
+        reach_destinyLocation_div.style.transitionDuration = "0.5s";
+        document.getElementById("set_of_arrays").appendChild(reach_destinyLocation_div);
+    }
+    
+    function get_location_detail(locationId, div_edit)
+    {
+        var form = $('#get-location-detail-ajax');
+        var url = form.attr('action');
+        
+        $.post(url, {locationId: locationId}, function (data)
+        {
+            var locationId = data[0].locationId;
+            var locationName = data[0].locationName;
+            var territorialityName = data[0].territorialityName;
+            
+            {#alert('#get-location-detail-ajax'+
+                    locationId+" "+
+                    locationName+" "+
+                    territorialityName);#}
+            
+            div_edit.textContent = locationName + " - " + territorialityName;
+            
+            $("#"+div_edit.id).attr("locationId", locationId);
+            
+        }).fail(function () {
+            alert('ERROR #get-location-detail-ajax');
+        });
+    }
+    
+    function add_shipping(interaction_id, environment, productId)
+    {
+        var form = $('#add-shipping-ajax');
+        var url = form.attr('action');
+        
+        $.post(url, function (data)
+        {
+            alert('#add-shipping-ajax '+interaction_id+" "+environment+" "+productId);
+        }).fail(function () {
+            alert('ERROR #add-shipping-ajax');
+        });
+    }
+</script>

@@ -1,0 +1,55 @@
+<style>
+
+</style>
+
+<script>
+    function set_invisible(object)
+    {
+        var cursor_product_event = object.getBoundingClientRect();
+        
+        var x_size = window.innerWidth;
+        var y_size = window.innerHeight;
+        
+        var top = cursor_product_event.top;
+        var left = cursor_product_event.left;
+        var height = cursor_product_event.height;
+        var width = cursor_product_event.width;
+        var bottom = y_size - (top + height);
+        var right = x_size - (left + width);
+        
+        var left_cursor = window.event.clientX;
+        var top_cursor = window.event.clientY;
+        
+        var right_cursor = x_size - left_cursor;
+        var bottom_cursor = y_size - top_cursor;
+        
+        if (
+            left_cursor > left && 
+            right_cursor > right && 
+            bottom_cursor > bottom && 
+            top_cursor > top
+        )
+        {
+            {#alert("no se salió: " + 
+                    "\n left " + left + " left_cursor " + left_cursor + 
+                    "\n right " + right + " right_cursor " + right_cursor + 
+                    "\n bottom " + bottom + " bottom_cursor " + bottom_cursor + 
+                    "\n top " + top + " top_cursor " + top_cursor + 
+                    "\n width " + width + " height " + height + 
+                    "\n x_size " + x_size + " y_size " + y_size);#}
+            var result = 0;
+        } else
+        {
+            {#unshade_menu(interaction_id, environment, productId, kindOfList);#}
+            {#alert("se salió: " + 
+                    "\n left " + left + " left_cursor " + left_cursor + 
+                    "\n right " + right + " right_cursor " + right_cursor + 
+                    "\n bottom " + bottom + " bottom_cursor " + bottom_cursor + 
+                    "\n top " + top + " top_cursor " + top_cursor + 
+                    "\n width " + width + " height " + height + 
+                    "\n x_size " + x_size + " y_size " + y_size);#}
+            var result = 1;
+        }
+        return result;
+    }
+</script>

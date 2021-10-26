@@ -1,0 +1,644 @@
+{{ form_start(get_video_list_profile_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-video-list-profile-ajax'|default('form')} }) }}
+{{ form_end(get_video_list_profile_form_ajax) }}
+
+{{ form_start(update_info_profile_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'update-info-profile-ajax'|default('form')} }) }}
+{{ form_end(update_info_profile_form_ajax) }}
+
+{{ form_start(sessionBundle1.sessionBundle2.get_user_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-user-ajax'|default('form')} }) }}
+{{ form_end(sessionBundle1.sessionBundle2.get_user_form_ajax) }}
+
+{{ form_start(sessionBundle1.sessionBundle2.get_parentsLocation_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-parentsLocation-ajax'|default('form')} }) }}
+{{ form_end(sessionBundle1.sessionBundle2.get_parentsLocation_form_ajax) }}
+
+{{ form_start(sessionBundle1.sessionBundle2.get_childrenLocation_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-childrenLocation-ajax'|default('form')} }) }}
+{{ form_end(sessionBundle1.sessionBundle2.get_childrenLocation_form_ajax) }}
+
+<div id="EditProfileBundle">
+    <div id="ContactInfoProfile"> {#editar informacion del perfil#}
+    </div>
+    
+    <div id="uploadVideoIconButton" class="btnSession"> {#editar informacion del perfil#}
+        UPLOAD VIDEO
+    </div>
+
+    <div id="uploadProductIconButton" class="btnSession"> {#editar informacion del perfil#}
+        UPLOAD PRODUCT
+    </div>
+
+    <div id="selectOrderIconButton" class="btnSession">
+        SELECT ORDER
+    </div>
+
+    <div id="myOderIconButton" class="btnSession">
+        MY ORDER
+    </div>
+    
+    <div id="VideoListProfile"> {#canciones del cantante#}
+    </div>
+    
+    <div id="VideoEnvironment">
+        
+        <div id="VideoEnvironment_content">
+
+            <div id="deleteVideo_environment"> {#environment about DeleteVideo (to create) (don't icon)#}
+                {{ include('@DeleteVideo/Default/index.html.twig') }}
+            </div>
+
+            <div id='editLyrics_environment'> {#environment about editlyrics (don't icon)#}
+                {{ include('@EditLyrics/Default/index.html.twig') }}
+            </div>
+
+            <div id='editVideo_environment' > {#environment about editVideo (don't icon)#}
+                {{ include('@EditVideo/Default/index.html.twig') }}
+            </div>
+
+            <div id='promoteVideo_environment'> {#environment about  promote (don't icon)#}
+                {{ include('@PromoteVideo/Default/index.html.twig') }}
+            </div>
+
+            <div id='editProfile_environment'> {#environment about editInfoProfile (don't icon)#} {#.....#}
+                {#{{ include('@EditProfile/Default/editInfoProfile.html.twig') }}#}
+                {#{{ include('@SignUp/Default/index.html.twig') }}#}
+            </div>
+
+            <div id='uploadVideo_environment'> {#environment about upload video#} {#.....#}
+                {{ include('@UploadVideo/Default/index.html.twig') }}
+            </div>
+
+            <div id='indexProduct_environment'> {#environment about upload product#}
+                {{ include('@UploadProduct/Default/index.html.twig') }}
+            </div>
+
+            <div id='selectOrder_environment'> {#environment about upload product#}
+                {{ include('@SelectOrder/Default/index.html.twig') }}
+            </div>
+
+            <div id='myOrder_environment'> {#environment about upload product#}
+                {{ include('@MyOrder/Default/index.html.twig') }}
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+    
+<script>
+    
+    $('#VideoEnvironment_content')
+    .mouseover(function () {
+        var VideoEnvironment = document.getElementById("VideoEnvironment_content");
+        VideoEnvironment.classList.add("visibleScroll");
+    })
+    .mouseout(function () {
+        var VideoEnvironment = document.getElementById("VideoEnvironment_content");
+        VideoEnvironment.classList.remove("visibleScroll");
+    });
+    
+    function EditProfileBundle()
+    {
+        getInfoProfile();
+        getVideoListProfile();
+        getVideosToDelete(); // deleteVideoBundle
+    }
+    
+    $('#uploadVideoIconButton')
+    .click(function () {
+        var uploadVideo_environment = document.getElementById("uploadVideo_environment");
+        manage_videoEnvironment(uploadVideo_environment);
+    });
+    
+    
+    $('#uploadProductIconButton')
+    .click(function () {
+        var indexProduct_environment = document.getElementById("indexProduct_environment");
+        manage_videoEnvironment(indexProduct_environment);
+    });
+    
+    $('#selectOrderIconButton')
+    .click(function () {
+        var selectOrder_environment = document.getElementById("selectOrder_environment");
+        manage_videoEnvironment(selectOrder_environment);
+    });
+    
+    $('#myOderIconButton')
+    .click(function () {
+        var myOrder_environment = document.getElementById("myOrder_environment");
+        manage_videoEnvironment(myOrder_environment);
+    });
+    
+    $('#ContactInfoProfile')
+    .click(function () {
+        var new_env = "editProfile_environment";
+        var environment = "idfs_1";
+        change_location_environment(new_env, environment);
+        
+        var new_env = "editProfile_environment";
+        var environment = "idfs_2";
+        change_location_environment(new_env, environment);
+        
+        var new_env = "editProfile_environment";
+        var environment = "idfs_3";
+        change_location_environment(new_env, environment);
+        
+        var editProfile_environment = document.getElementById("editProfile_environment");
+        manage_videoEnvironment(editProfile_environment);
+        edit_user_info();
+    })
+    .mouseover(function (e) {
+        document.getElementById("ContactInfoProfile").style.height = "200px";
+        var ContactInfoProfile = document.getElementById("ContactInfoProfile");
+        ContactInfoProfile.classList.add("visibleScroll");
+    })
+    .mouseout(function (e) {
+        document.getElementById("ContactInfoProfile").style.height = "50px";
+        var ContactInfoProfile = document.getElementById("ContactInfoProfile");
+        ContactInfoProfile.classList.remove("visibleScroll");
+    });
+    
+    function getInfoProfile() // borrar crud y extraer info de las variables globales
+    {
+        getUser();
+    }
+    
+    
+    
+    
+    function getVideoListProfile()
+    {
+        var form = $('#get-video-list-profile-ajax');
+        var url = form.attr('action');
+ 
+        $.post(url, function (data)
+        {
+            var amountVideos = data[0].amountVideos;
+            var userId = data[0].userId;
+            
+            document.getElementById("VideoListProfile").innerHTML = "";
+             
+            for (i = 0; i < amountVideos; i++)
+            {
+                var videoId = data[i].videoId;
+                var videoName = data[i].videoName;
+                var videoDescription = data[i].videoDescription; 
+                var videoImage = data[i].videoImage; 
+                var videoContent = data[i].videoContent; 
+                var videoUpdatedate = data[i].videoUpdatedate;
+                var videoAmountViews = data[i].videoAmountViews;
+                var videoAmountComments = data[i].videoAmountComments;
+                var videoScore = data[i].videoScore;
+                var videoCoinScore = data[i].videoCoinScore;
+                var userId = data[i].userId;
+                var userName = data[i].userName;
+                var amountVideos = data[i].amountVideos;
+                
+                if (videoId === "_")
+                {
+                    
+                } else
+                {
+
+                appendVideoList(
+                videoId,
+                videoName,
+                videoDescription,
+                videoImage,
+                videoContent,
+                videoUpdatedate,
+                videoAmountViews,
+                videoAmountComments,
+                videoScore,
+                videoCoinScore,
+                userId,
+                userName);
+                
+                }
+                
+            }
+            
+        }).fail(function () {
+            alert('ERROR: #get-video-list-profile-ajax');
+        });
+    }
+    
+    
+    function appendVideoList(
+                videoId,
+                videoName,
+                videoDescription,
+                videoImage,
+                videoContent,
+                videoUpdatedate,
+                videoAmountViews,
+                videoAmountComments,
+                videoScore,
+                videoCoinScore,
+                userId,
+                userName)
+                {
+                    $("#VideoListProfile").append(
+                        "<div id='video_Profile"+videoId+"' class='video_Profile' "
+                                +"data-id1='"+videoId+"' "
+                                +"data-id2='dont_delete_video' "
+                                +"data-id3='' "
+                            +">"
+
+                            +"<table border='0' width='100%'>"
+                            +"<tr height='80px'>"
+                                +"<td>"
+
+                                    +"<div id='videoPortrait_Profile"+videoId+"' class='videoPortrait_Profile'>"
+                                        +"<img style='"
+                                        +"width: 100%; cursor: pointer;"
+                                        +"z-index: 1;' "
+                                        +"src='files/"+userId+"/"+videoId+"/"+videoImage+"' "
+                                        +"alt='Mountain View'>"
+                                    +"</div>"
+
+                                    +"<div id='videoContaint_Profile"+videoId+"' class='videoContaint_Profile' data-id1='"+videoId+"'>"
+                                        +" <b>"+videoName+"</b><br>"
+                                        +" "+videoUpdatedate+"<br>"
+                                        +" "+videoAmountViews+" views<br>"
+                                        +" "+videoAmountComments+" comments<br>"
+                                        +" <div style='height: 5px; width: 100%;'>"
+                                            +"<div style='display: inline-block; height: 5px; width: 50%; background-color: blue; '></div>"
+                                            +"<div style='display: inline-block; height: 5px; width: 50%; background-color: red; '></div>"
+                                        +" </div>"
+                                    +"</div>"
+
+                                    +"<div id='menu_editVideo"+videoId+"' class='menu_editVideo'"
+
+                                        +"data-id1='"+videoId+"' "
+                                        +"data-id2='"+videoName+"' "
+                                        +"data-id3='"+videoDescription+"' "
+                                        +"data-id4='"+videoImage+"' "
+                                        +"data-id5='"+videoContent+"' "
+                                        +"data-id6='"+videoUpdatedate+"' "
+                                        +"data-id7='"+videoAmountViews+"' "
+                                        +"data-id8='"+videoAmountComments+"' "
+                                        +"data-id9='"+videoScore+"' "
+                                        +"data-id10='0' "
+                                        +"data-id11='"+videoCoinScore+"' "
+                                        +"data-id12='"+userId+"' "
+                                        +"data-id13='"+userName+"' "
+
+                                        +">"
+
+                                        +"<img id='editLyrics_button"+videoId+"' class='menu_editVideo_button' style='position: absolute; top: 0px; left: 10px;' "
+                                             +"src='files/images/icons/configuration/editLyrics.png' "
+                                             +"alt='Mountain View'>"
+                                        +"<img id='editVideo_button"+videoId+"' class='menu_editVideo_button' style='position: absolute; top: 25px; left: 10px;' "
+                                             +"src='files/images/icons/configuration/editVideo.png' "
+                                             +"alt='Mountain View'>"
+                                        +"<img id='deleteVideo_button"+videoId+"' class='menu_editVideo_button' style='position: absolute; top: 50px; left: 10px;' "
+                                             +"src='files/images/icons/configuration/deleteVideo.png' "
+                                             +"alt='Mountain View'>"
+                                        +"<img id='promoteVideo_button"+videoId+"' class='menu_editVideo_button' style='position: absolute; top: 75px; left: 10px;' "
+                                             +"src='files/images/icons/configuration/promoteVideo.png' "
+                                             +"alt='Mountain View'>"
+
+                                    +"</div>"
+
+                                +"</td>"
+                            +"</tr>"
+                            +"<tr height='30px'>"
+                                +"<td width='30px'>"
+
+                                +"</td>"
+                            +"</tr>"
+                            +"</table>"
+                        +"</div>"
+                    );
+
+                    $('#video_Profile'+videoId)
+                    .mouseover(function () {
+                        var videoId = $(this).data('id1');
+                        document.getElementById("videoPortrait_Profile"+videoId).style.opacity = 0.5;
+                        document.getElementById("videoContaint_Profile"+videoId).style.opacity = 1;
+                        document.getElementById("menu_editVideo"+videoId).style.opacity = 1;
+                    })
+                    .mouseout(function () {
+                        var videoId = $(this).data('id1');
+                        document.getElementById("videoPortrait_Profile"+videoId).style.opacity = 0.7;
+                        document.getElementById("videoContaint_Profile"+videoId).style.opacity = 0;
+                        document.getElementById("menu_editVideo"+videoId).style.opacity = 0;
+                    });
+
+                    $('#editLyrics_button'+videoId)
+                    .click(function () {
+                        var editLyrics_environment = document.getElementById("editLyrics_environment");
+                        manage_videoEnvironment(editLyrics_environment);
+
+                        edit_video_id = $(this).parents('div').data('id1');
+                        edit_video_name = $(this).parents('div').data('id2');
+                        edit_video_description = $(this).parents('div').data('id3');
+                        edit_video_image = $(this).parents('div').data('id4');
+                        edit_video_content = $(this).parents('div').data('id5');
+                        edit_video_updateDate = $(this).parents('div').data('id6');
+                        edit_video_amount_views = $(this).parents('div').data('id7');
+                        edit_video_amount_comments = $(this).parents('div').data('id8');
+                        edit_video_likes = $(this).parents('div').data('id9');
+                        edit_video_dislikes = $(this).parents('div').data('id10');
+                        edit_video_coin_score = $(this).parents('div').data('id11');
+                        edit_video_userId = $(this).parents('div').data('id12');
+                        edit_video_userName = $(this).parents('div').data('id13');
+
+                        
+                        
+
+                        EditLyricsBundle(); // EditLyricsBundle
+                    });
+
+                    $('#editVideo_button'+videoId)
+                    .click(function () {
+                        var editVideo_environment = document.getElementById("editVideo_environment");
+                        manage_videoEnvironment(editVideo_environment);
+
+                        edit_video_id = $(this).parents('div').data('id1');
+                        edit_video_name = $(this).parents('div').data('id2');
+                        edit_video_description = $(this).parents('div').data('id3');
+                        edit_video_image = $(this).parents('div').data('id4');
+                        edit_video_content = $(this).parents('div').data('id5');
+                        edit_video_updateDate = $(this).parents('div').data('id6');
+                        edit_video_amount_views = $(this).parents('div').data('id7');
+                        edit_video_amount_comments = $(this).parents('div').data('id8');
+                        edit_video_likes = $(this).parents('div').data('id9');
+                        edit_video_dislikes = $(this).parents('div').data('id10');
+                        edit_video_coin_score = $(this).parents('div').data('id11');
+                        edit_video_userId = $(this).parents('div').data('id12');
+                        edit_video_userName = $(this).parents('div').data('id13');
+
+                        
+                        
+
+                        EditVideoBundle(); // EditVideoBundle
+                    });
+
+                    $('#deleteVideo_button'+videoId)
+                    .click(function () {
+                        var deleteVideo_environment = document.getElementById("deleteVideo_environment");
+                        manage_videoEnvironment(deleteVideo_environment);
+
+                        edit_video_id = $(this).parents('div').data('id1');
+                        edit_video_name = $(this).parents('div').data('id2');
+                        edit_video_description = $(this).parents('div').data('id3');
+                        edit_video_image = $(this).parents('div').data('id4');
+                        edit_video_content = $(this).parents('div').data('id5');
+                        edit_video_updateDate = $(this).parents('div').data('id6');
+                        edit_video_amount_views = $(this).parents('div').data('id7');
+                        edit_video_amount_comments = $(this).parents('div').data('id8');
+                        edit_video_likes = $(this).parents('div').data('id9');
+                        edit_video_dislikes = $(this).parents('div').data('id10');
+                        edit_video_coin_score = $(this).parents('div').data('id11');
+                        edit_video_userId = $(this).parents('div').data('id12');
+                        edit_video_userName = $(this).parents('div').data('id13');
+
+                        
+                        
+
+                        DeleteVideoBundle(); // DeleteVideoBundle
+                    });
+
+                    $('#promoteVideo_button'+videoId)
+                    .click(function () {
+                        var promoteVideo_environment = document.getElementById("promoteVideo_environment");
+                        manage_videoEnvironment(promoteVideo_environment);
+
+                        edit_video_id = $(this).parents('div').data('id1');
+                        edit_video_name = $(this).parents('div').data('id2');
+                        edit_video_description = $(this).parents('div').data('id3');
+                        edit_video_image = $(this).parents('div').data('id4');
+                        edit_video_content = $(this).parents('div').data('id5');
+                        edit_video_updateDate = $(this).parents('div').data('id6');
+                        edit_video_amount_views = $(this).parents('div').data('id7');
+                        edit_video_amount_comments = $(this).parents('div').data('id8');
+                        edit_video_likes = $(this).parents('div').data('id9');
+                        edit_video_dislikes = $(this).parents('div').data('id10');
+                        edit_video_coin_score = $(this).parents('div').data('id11');
+                        edit_video_userId = $(this).parents('div').data('id12');
+                        edit_video_userName = $(this).parents('div').data('id13');
+
+                        
+                        
+
+                        PromoteVideoBundle(); // PromoteVideoBundle
+                    });
+
+                }
+    
+    function manage_videoEnvironment(currentEnvironment)
+    {
+        var editLyrics_environment = document.getElementById("editLyrics_environment");
+        var editVideo_environment = document.getElementById("editVideo_environment");
+        var deleteVideo_environment = document.getElementById("deleteVideo_environment");
+        var promoteVideo_environment = document.getElementById("promoteVideo_environment");
+        var editProfile_environment = document.getElementById("editProfile_environment");
+        var uploadVideo_environment = document.getElementById("uploadVideo_environment");
+        var indexProduct_environment = document.getElementById("indexProduct_environment");
+        var selectOrder_environment = document.getElementById("selectOrder_environment");
+        var myOrder_environment = document.getElementById("myOrder_environment");
+
+        editLyrics_environment.style.display = "none";
+        editVideo_environment.style.display = "none";
+        deleteVideo_environment.style.display = "none";
+        promoteVideo_environment.style.display = "none";
+        editProfile_environment.style.display = "none";
+        uploadVideo_environment.style.display = "none";
+        indexProduct_environment.style.display = "none";
+        selectOrder_environment.style.display = "none";
+        myOrder_environment.style.display = "none";
+        
+        currentEnvironment.style.display = "block";
+    }
+        
+        
+        
+        
+        
+        
+        
+        
+    function getUser()
+    {
+        {#alert("get-user-ajax .... ");#}
+        var form = $('#get-user-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            var userId = data[0].userId;
+            var userProfilephoto = data[0].userProfilephoto;
+            var userName = data[0].userName;
+            var userFirstgivenname = data[0].userFirstgivenname;
+            var userSecondgivenname = data[0].userSecondgivenname;
+            var userFirstfamilyname = data[0].userFirstfamilyname;
+            var userSecondfamilyname = data[0].userSecondfamilyname;
+            var userEmail = data[0].userEmail;
+            var userPassword = data[0].userPassword;
+            var userBiography = data[0].userBiography;
+            var userScore = data[0].userScore;
+            var locationId = data[0].locationId;
+            var territorialityId = data[0].territorialityId;
+            var alias = data[0].alias;
+            
+            var ContactInfoProfile = document.getElementById("ContactInfoProfile");
+            ContactInfoProfile.innerHTML = "";
+            {#alert('#get-user-ajax '+userName+" ..... "+userFirstgivenname);#}
+            draw_field(data[0], ContactInfoProfile);
+                
+            
+        }).fail(function () {
+            alert('ERROR #get-user-ajax 1');
+        });
+    }
+    
+    function draw_field(data, ContactInfoProfile)
+    {
+        {#alert("@æ∫∑ "+data.alias[0]);#}
+        var i = 0;
+        while(data.alias[i])
+        {
+            var jhbcdhj = data.alias[i];
+            
+            var field_frame = document.createElement("div");
+            field_frame.id = data.alias[i];
+            field_frame.className = "relativePosition";
+            field_frame.textContent = data.alias[i] + ": " + data[""+jhbcdhj+""];
+            ContactInfoProfile.appendChild(field_frame);
+            
+            var line_break = document.createElement("hr");
+            ContactInfoProfile.appendChild(line_break);
+            i++;
+        }
+    }
+    
+    function edit_user_info()
+    {
+        {#alert('#get-user-ajax');#}
+        var form = $('#get-user-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            var userId = data[0].userId;
+            var userProfilephoto = data[0].userProfilephoto;
+            var userName = data[0].userName;
+            var userFirstgivenname = data[0].userFirstgivenname;
+            var userSecondgivenname = data[0].userSecondgivenname;
+            var userFirstfamilyname = data[0].userFirstfamilyname;
+            var userSecondfamilyname = data[0].userSecondfamilyname;
+            var userEmail = data[0].userEmail;
+            var userPassword = data[0].userPassword;
+            var userBiography = data[0].userBiography;
+            var userScore = data[0].userScore;
+            var locationId = data[0].locationId;
+            var territorialityId = data[0].territorialityId;
+            var alias = data[0].alias;
+            
+            document.getElementById("SignUpContent_2").innerHTML = "";
+            {#document.getElementById("invocation_home_frhfheru").innerHTML = "";#}
+            
+            document.getElementById("user_name_signUpInput").value = userName;
+            document.getElementById("user_email_signUpInput").value = userEmail;
+            document.getElementById("user_password_signUpInput").value = userPassword;
+            document.getElementById("user_password_confirmation_signUpInput").value = userPassword;
+            document.getElementById("user_firstGivenName_signUpInput").value = userFirstgivenname;
+            document.getElementById("user_secondGivenName_signUpInput").value = userSecondgivenname;
+            document.getElementById("user_firstFamilyName_signUpInput").value = userFirstfamilyname;
+            document.getElementById("user_secondFamilyName_signUpInput").value = userSecondfamilyname;
+            document.getElementById("user_biography_signUpTextarea").value = userBiography;
+            
+{#            alert("locationId "+locationId);#}
+            draw_location(locationId, territorialityId);
+            {#alert('#get-user-ajax');#}
+        }).fail(function () {
+            alert('ERROR #get-user-ajax 2');
+        });
+    }
+    
+    function draw_location(locationId, territorialityId)
+    {
+        if (territorialityId >= 8)
+        {
+            getParentsLocation(locationId);
+        }
+    }
+    
+    function getParentsLocation(locationId)
+    {
+        {#'territorialityId' => $territorialityId_value, 
+        locationId;#}
+        {#get_parentsLocation_form_ajax#}
+        var form = $('#get-parentsLocation-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {locationId: locationId}, function (data)
+        {
+            var i = 9;
+            while (i >= 0)
+            {
+                var alias_q = data[0].alias[i];
+                var location0 = data[0][""+alias_q+""];
+                
+                {#alert(" location: "+ location0 + 
+                      " alias: "+ alias_q);#}
+                
+                var keywordLocation = new Array();
+                keywordLocation[0] = "02%ds_A";
+              
+                getLocation(location0, keywordLocation);
+                
+                {#get_children_location(location0);#}
+                
+                i--;
+            }
+            alert('#get-parentsLocation-ajax');
+        }).fail(function () {
+            alert('ERROR #get-parentsLocation-ajax');
+        });
+    }
+    
+    function get_children_location(locationId)
+    {
+        var form = $('#get-childrenLocation-ajax');
+        var url = form.attr('action');
+
+        var placeId = $("#invocations_signUp").attr('placeId');
+
+        $.post(url, {locationId: locationId}, function (data)
+        {
+            {#$users2[$i] = array(
+                'locationId' => $locationId_value, 
+                'locationName' => $locationName_value, 
+                'locationParent' => $locationParent_value, 
+                'amountLocations' => $amountLocations 
+            );#}
+            
+            var amountLocations = data[0].amountLocations;
+            
+            for (i = 0; i < amountLocations; i++)
+            {
+                var locationId = data[i].locationId;
+                var locationName = data[i].locationName;
+                var locationParent = data[i].locationParent;
+                var keywordContent = data[i].keywordContent;
+                var amountLocations = data[i].amountLocations;
+            }
+            
+                {#alert("\n - i: "+i+"\n - j: "+j+
+                  "\n - locationId: "+locationId+
+                  "\n - locationName: "+locationName+
+                  "\n - locationParent: "+locationParent+
+                  "\n - keywordContent: "+keywordContent+
+                  "\n - amountLocations: "+amountLocations
+                    );#}
+            $("#invocations_signUp").attr("parentLocation", locationId);
+            $("#newLocationContainer" + placeId).attr("keywordsAmount", 0);
+            selectLocation(data);
+            
+            alert('#get-children-ajax');
+        }).fail(function () {
+            alert('ERROR #get-children-ajax');
+        });
+    }
+    
+</script>

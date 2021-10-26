@@ -1,0 +1,291 @@
+{{ form_start(shippingBundle1.shippingBundle2.get_packageMessenger_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-packageMessenger-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.get_packageMessenger_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.get_reach_from_packageMessenger_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-reach-from-packageMessenger-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.get_reach_from_packageMessenger_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.get_sale_packageMessenger_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-sale-packageMessenger-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.get_sale_packageMessenger_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.assign_sale_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'assign-sale-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.assign_sale_form_ajax) }}
+
+<style>
+    #packageMessenger_list {
+        position: relative;
+        background-color: blueviolet;
+        height: 500px;
+        margin: 10px;
+        overflow-y: scroll;
+    }
+</style>
+
+<div id="packageMessenger_list">
+    packageMessenger_list
+</div>
+
+<script>
+    window.onload = get_packageMessenger("messenger");
+    
+    function get_packageMessenger(reach_request)
+    {
+        var form = $('#get-packageMessenger-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {reach_request: reach_request}, function (data)
+        {
+                {#        
+                $sendata[$i] = array(
+                    'reach_id' => $curso["reach_id"],
+                    'origin_id' => $curso["origin_id"],
+                    'destiny_id' => $curso["destiny_id"],
+                    'origin_name' => $curso["origin_name"],
+                    'destiny_name' => $curso["destiny_name"],
+                    'origin_territoriality' => $curso["origin_territoriality"],
+                    'destiny_territoriality' => $curso["destiny_territoriality"],
+                    'amountRecords' => $amountRecords
+                );
+                #}
+            
+            var amountRecords = data[0].amountRecords;
+            
+            {#alert(" - "+amountRecords);#}
+            
+            for (i = 0; i < amountRecords; i++)
+            {
+                add_packageMessenger(data[i]);
+            }
+            
+            {#alert('#get-packageMessenger-ajax');#}
+        }).fail(function () {
+            alert('ERROR #get-packageMessenger-ajax');
+        });
+    }
+    
+    function add_packageMessenger(data)
+    {
+        var reach_id = data.reach_id;
+        var origin_id = data.origin_id;
+        var destiny_id = data.destiny_id;
+        var origin_name = data.origin_name;
+        var destiny_name = data.destiny_name;
+        var origin_territoriality = data.origin_territoriality;
+        var destiny_territoriality = data.destiny_territoriality;
+        
+        
+        
+        var header_reach = document.createElement("div");
+        header_reach.id = "header_reach" + reach_id;
+        header_reach.className = "relativePosition headerList";
+        document.getElementById("packageMessenger_list").appendChild(header_reach);
+        
+        
+        var content_reach = document.createElement("div");
+        content_reach.id = "content_reach" + reach_id;
+        content_reach.className = "relativePosition contentList";
+        document.getElementById("packageMessenger_list").appendChild(content_reach);
+        
+        
+        
+        
+        var pm_items_set = document.createElement("div");
+        pm_items_set.id = "pm_items_set" + reach_id;
+        pm_items_set.className = "relativePosition";
+        pm_items_set.textContent = reach_id;
+        header_reach.appendChild(pm_items_set);
+        
+        var pm_search_menu = document.createElement("div");
+        pm_search_menu.id = "pm_search_menu" + reach_id;
+        pm_search_menu.className = "relativePosition";
+        header_reach.appendChild(pm_search_menu);
+        
+        var pm_search_btn = document.createElement("img");
+        pm_search_btn.id = "pm_search_btn" + reach_id;
+        pm_search_btn.className = "boton_personalizado relativePosition";
+        pm_search_btn.src = "files/images/icons/search/search.png";
+        pm_search_btn.alt = "";
+        pm_search_btn.addEventListener("click", function () {
+            var parameter_1 = "content_reach" + reach_id;
+            
+            get_sale_packageMessenger(parameter_1, origin_id, destiny_id);
+            {#assignSale(reach_id);#}
+        });
+        pm_search_menu.appendChild(pm_search_btn);
+
+
+        
+        
+        
+        var reach_origin_item = document.createElement("div");
+        reach_origin_item.id = "reach_origin_item" + reach_id;
+        reach_origin_item.className = "relativePosition";
+        reach_origin_item.textContent = " ORIGIN: " + origin_name + " (" + origin_territoriality + ")";
+        reach_origin_item.addEventListener("click", function () {
+        });
+        pm_items_set.appendChild(reach_origin_item);
+        
+        var reach_destiny_item = document.createElement("div");
+        reach_destiny_item.id = "reach_destiny_item" + reach_id;
+        reach_destiny_item.className = "relativePosition";
+        reach_destiny_item.textContent = " DESTINY: " + destiny_name + " (" + destiny_territoriality + ")";
+        reach_destiny_item.addEventListener("click", function () {
+        });
+        pm_items_set.appendChild(reach_destiny_item);
+        
+        var location_id = 147;
+        
+        {#get_reach_from_packageMessenger(packageMessenger_id, location_id, packageMessenger_item);#}
+    }
+    
+    function get_reach_from_packageMessenger(packageMessenger_id, location_id, packageMessenger_item)
+    {
+        var form = $('#get-reach-from-packageMessenger-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {location_id: location_id}, function (data)
+        {
+            var amountRecords = data[0].amountRecords;
+            
+            {#alert(" - "+amountRecords);#}
+            
+            for (i = 0; i < amountRecords; i++)
+            {
+                var reach_id = data[i].reach_id;
+                var location_id = data[i].location_id;
+                var location_name = data[i].location_name;
+                var territoriality_name = data[i].territoriality_name;
+                var amountRecords = data[i].amountRecords;
+                
+                var packageMessenger_reach = document.createElement("div");
+                packageMessenger_reach.id = "packageMessenger_reach" + packageMessenger_id;
+                packageMessenger_reach.className = "relativePosition";
+                packageMessenger_reach.style.backgroundColor = "gray";
+                packageMessenger_reach.style.width = "max-content";
+                packageMessenger_reach.style.padding = "10px";
+                packageMessenger_reach.style.margin = "10px";
+                packageMessenger_reach.style.padding = "0px";
+                packageMessenger_reach.style.display = "inline-block";
+                packageMessenger_reach.textContent = location_name + " - " + territoriality_name;
+                packageMessenger_reach.addEventListener("click", function () {
+                });
+                packageMessenger_item.appendChild(packageMessenger_reach);
+                
+                {#add_packageMessenger(packageMessenger_id, package_id);#}
+            }
+            
+            alert('#get-reach-from-packageMessenger-ajax');
+        }).fail(function () {
+            alert('ERROR #get-reach-from-packageMessenger-ajax');
+        });
+    }
+    
+    function get_sale_packageMessenger(parameter_1, origin_id, destiny_id)
+    {
+        var form = $('#get-sale-packageMessenger-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {origin_id: origin_id, destiny_id: destiny_id}, function (data)
+        {
+            var amountRecords = data[0].amountRecords;
+            {#alert('#get-sale-packageMessenger-ajax '+amountRecords);#}
+            
+            for (i=0; i<amountRecords; i++)
+            {
+                var saleDetail_id = data[i].saleDetail_id;
+                var saleDetail_amount = data[i].saleDetail_amount;
+                var product_id = data[i].product_id;
+                var product_name = data[i].product_name;
+                var product_description = data[i].product_description;
+                var product_image = data[i].product_image;
+                var product_score = data[i].product_score;
+                var price = data[i].price;
+                var currency_name = data[i].currency_name;
+                
+                
+                drawProduct_List(
+                    saleDetail_id, 
+                    product_id, 
+                    product_name, 
+                    saleDetail_amount, 
+                    data[i], 
+                    product_image, 
+                    product_score+" "+product_description, 
+                    "reach", 
+                    "user", 
+                    parameter_1 
+                );
+            }
+        }).fail(function () {
+            alert('ERROR #get-sale-packageMessenger-ajax');
+        });
+    }
+    
+    function assignSale(package_id, packageMessenger_id)
+    {
+        {#alert(" ... "+package_id);#}
+        
+        var form = $('#assign-sale-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {package_id: package_id}, function (data)
+        {
+            {#get_saleDetail(origin, destiny);#}
+                    
+                    {#'saleDetail_id' => $curso["saleDetail_id"],
+                    'store_location' => $curso["store_location"],
+                    'custome_location' => $curso["customer_location"]
+                    #}
+                    
+                    {#'saleDetail_id' => $curso["saleDetail_id"],
+                    'store_location' => $curso["store_location"],
+                    'custome_location' => $curso["customer_location"],
+                    'records_amount' => $curso["records_amount"]#}
+         
+         
+            {#var records_amount = data[0].records_amount;
+            alert('#assign-sale-ajax '+records_amount);#}
+           
+           
+            {#drawSaleDetail(data, parameter_1);#}
+
+
+{#            var selectedproductId_1 = data[0].saleDetail_id;
+            var selectedproductId_2 = data[1].saleDetail_id;
+            var selectedproductId_3 = data[2].saleDetail_id;
+            var selectedproductId_4 = data[3].saleDetail_id;
+
+            alert(selectedproductId_1 + " \n"+
+                    selectedproductId_2 + " \n"+
+                    selectedproductId_3 + " \n"+
+                    selectedproductId_4 + " \n");#}
+            
+            var i = 0;
+            while(data[i])
+            {
+                {#var selectedproductId = data[i].saleDetail_id;#}
+                
+                var selectedproductId = data[i].saleDetail_id;
+                var cbvndf = "packageMessenger_item" + packageMessenger_id;
+                alert("#@!"+i+" "+selectedproductId);
+                
+{#                drawProduct_List(
+                    "productName", 
+                    selectedproductId, 
+                    "selectedproductDate", 
+                    "selectedproductPrice_amount", 
+                    "productDescription", 
+                    "productImage", 
+                    "productScore", 
+                    "queryType", 
+                    "amountSelectedProducts", 
+                    cbvndf 
+                );#}
+                
+                i++;
+            }
+                     
+        }).fail(function () {
+            alert('ERROR #assign-sale-ajax');
+        });
+    }
+</script>

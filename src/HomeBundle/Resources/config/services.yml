@@ -1,0 +1,112 @@
+services:
+#    home.example:
+#        class: HomeBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+    app.checker:
+        class: HomeBundle\Helper\Checker
+    
+    app.keyword:
+        class: HomeBundle\Helper\Keyword
+    
+    app.keyworduser:
+        class: HomeBundle\Helper\Keyworduser
+        
+    app.keywordvideo:
+        class: HomeBundle\Helper\Keywordvideo
+        
+    app.topic:
+        class: HomeBundle\Helper\Topic
+        
+    app.topicproduct:
+        class: HomeBundle\Helper\TopicProduct
+        
+    app.object:
+        class: HomeBundle\Helper\Object
+        
+    app.usertype:
+        class: HomeBundle\Helper\Usertype
+        
+    app.product:
+        class: HomeBundle\Helper\Product
+        
+    app.stock:
+        class: HomeBundle\Helper\Stock
+        
+    app.currency:
+        class: HomeBundle\Helper\Currency
+        
+    app.reach:
+        class: HomeBundle\Helper\Reach
+        
+    app.reach_1_international:
+        class: HomeBundle\Helper\Reach_1_international
+        
+    app.reach_2_continental:
+        class: HomeBundle\Helper\Reach_2_continental
+        
+    app.reach_3_national:
+        class: HomeBundle\Helper\Reach_3_national
+        
+    app.reach_4_departamental:
+        class: HomeBundle\Helper\Reach_4_departamental
+        
+    app.reach_5_municipal:
+        class: HomeBundle\Helper\Reach_5_municipal
+        
+    app.reach_6_communal:
+        class: HomeBundle\Helper\Reach_6_communal
+        
+    app.reach_7_local:
+        class: HomeBundle\Helper\Reach_7_local
+        
+    app.reach_8_residential:
+        class: HomeBundle\Helper\Reach_8_residential
+        
+    app.reach_9_domiciled:
+        class: HomeBundle\Helper\Reach_9_domiciled
+        
+    app.reach_10_aditional:
+        class: HomeBundle\Helper\Reach_10_aditional
+        
+    app.matchnodes:
+        class: HomeBundle\Helper\MatchNodes
+        
+    app.reachmessenger:
+        class: HomeBundle\Helper\ReachMessenger
+        
+    app.reachuser:
+        class: HomeBundle\Helper\ReachUser
+        
+    app.user:
+        class: HomeBundle\Helper\User
+        
+    app.commercial:
+        class: HomeBundle\Helper\Commercial
+        
+    app.vehicle:
+        class: HomeBundle\Helper\Vehicle
+        
+    app.vehicletype:
+        class: HomeBundle\Helper\VehicleType
+        
+    app.vehicleuser:
+        class: HomeBundle\Helper\VehicleUser
+        
+    app.driveruser:
+        class: HomeBundle\Helper\DriverUser
+        
+    app.shipping:
+        class: HomeBundle\Helper\Shipping
+        
+    app.shippinguser:
+        class: HomeBundle\Helper\ShippingUser
+        
+    app.saledetail:
+        class: HomeBundle\Helper\SaleDetail
+        
+    app.shipping_1_international:
+        class: HomeBundle\Helper\Shipping_1_international
+        
+    app.reach_1_nodes:
+        class: HomeBundle\Helper\Reach_1_nodes

@@ -1,0 +1,1241 @@
+{{ form_start(get_location_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-location1234567812345678-ajax'|default('form')} }) }}
+{{ form_end(get_location_form_ajax) }}
+
+{{ form_start(insert_location_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'insert-location-ajax'|default('form')} }) }}
+{{ form_end(insert_location_form_ajax) }}
+
+{{ form_start(get_userType_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-userType-ajax'|default('form')} }) }}
+{{ form_end(get_userType_form_ajax) }}
+
+{{ form_start(signupBundle1.signupBundle2.get_territoriality_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-territoriality-ajax'|default('form')} }) }}
+{{ form_end(signupBundle1.signupBundle2.get_territoriality_form_ajax) }}
+
+{{ form_start(signupBundle1.signupBundle2.get_final_location_user_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-final-location-user-ajax'|default('form')} }) }}
+{{ form_end(signupBundle1.signupBundle2.get_final_location_user_form_ajax) }}
+
+<style>
+    #invocations_signUp
+    {
+        background-color: red;
+        {#position: absolute;#}
+        {#position: absolute;#}
+        width: 100%;
+        {#height: max-content;#}
+        height: 250px;
+        max-height: 200px;
+        top: 0px;
+        bottom: 0px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        z-index: 1;
+        transition: 0.6s;
+        cursor: pointer;
+        {#background-color: rgba(0, 0, 0, 0.2);#}
+    }
+    
+    .title_location
+    {
+        background-color: royalblue;
+        position: relative;
+        width: 100%;
+        height: 50px;
+        margin-bottom: 10px;
+        overflow: hidden;
+        transition: 0.6s;
+    }
+
+    .search_div
+    {
+        background-color: pink;
+        margin: 30px;
+        overflow: hidden;
+    }
+</style>
+
+<style>
+    
+    .newLocationContainer {
+        background-color: fuchsia;
+        height: 180px;
+        max-height: 180px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    
+    .container_location {
+        background-color: gray;
+        {#height: 100%;
+        max-height: 90px;#}
+        height:max-content;
+        padding: 10px;
+    }
+    
+    .send_location {
+        position: absolute;
+        left: 205px;
+    }
+    
+</style>
+
+<div id="invocations_signUp" 
+    placeId=0 
+    parentLocation=1 
+    languageId=1
+    territoriality=1
+    >
+</div>
+
+{#<img id='sendFinalDestiny' class="animatedButton boton_personalizado relativePosition" 
+    src='files/images/icons/ok.png' 
+    alt='Mountain View'>#}
+
+{{ include('@SignUp/userType/searchShipping_category.html.twig') }}
+
+<script>
+    
+    $("#invocations_signUp")
+    .click(function () {
+        var placeId = $("#invocations_signUp").attr('placeId');
+        if (placeId == 0)
+        {
+            var locationParentId = 1;
+            drawFrame(locationParentId, placeId, "#invocations_signUp");
+        }
+    });
+    
+    function drawFrame(locationParentId, placeId, title_object)
+    {
+        var keywordLocation = new Array();
+        keywordLocation[0] = "02%ds_A";
+        
+        if (document.getElementById("user_location_signUpSelect" + placeId))
+        {
+            var currentOption = document.getElementById("user_location_signUpSelect" + placeId).value;
+            
+            {#alert("1. "+currentOption);#}
+            if (currentOption == "other")
+            {
+                {#alert("1.1 search location "+currentOption);#}
+                searchLocation_123(placeId);
+            } else if (currentOption == -2)
+            {
+                alert("1.2 search location ....................... "+currentOption);
+                getLocation(locationParentId, keywordLocation, "insert_newChild", title_object);
+            } else
+            {
+                {#alert("1.3 get location "+currentOption);#}
+                if (document.getElementById("search_div" + placeId))
+                {
+                    document.getElementById("title_location" + placeId).style.height = "50px";
+                    var elem = document.getElementById("search_div" + placeId);
+                    document.getElementById("title_location" + placeId).removeChild(elem);
+                    $("#title_location" + placeId).attr('content', "non_search_div");
+                }
+                getLocation(locationParentId, keywordLocation, "getChild_byParent", title_object);
+            }
+        } else
+        {
+            {#alert("2. get location");#}
+            getLocation(locationParentId, keywordLocation, "getChild_byParent", title_object);
+        }
+    }
+    
+    function getLocation(locationParentId, keywordLocation, event, title_object)
+    {
+        if (event == "insert_newChild")
+        {
+            {#alert("@1 "+locationParentId);#}
+            locationParentId = -1287650;
+            var keywordLocation = new Array();
+            keywordLocation[0] = "02%ds_A";
+            
+        } else if (event == "getChild_byParent")
+        {
+            {#alert("@2 "+locationParentId);#}
+            var keywordLocation = new Array();
+            keywordLocation[0] = "02%ds_A";
+        } else if (event == "getChild_bySearch")
+        {
+            locationParentId = 0;
+            {#alert("@3 getChild_bySearch "+locationParentId);#}
+        }
+        
+        var form = $('#get-location1234567812345678-ajax');
+        var url = form.attr('action');
+        
+        var language = $("#invocations_signUp").attr('languageId');
+        var placeId = $("#invocations_signUp").attr('placeId');
+        
+        {#alert("placeId "+placeId);#}
+        
+        {#alert("\n -. language: "+language+
+              "\n -. locationParentId: "+locationParentId+
+              "\n -. keywordLocation: "+keywordLocation);#}
+        
+        {#alert("territoriality ... ");#}
+            
+        {#if (document.getElementById("title_location" + placeId).previousElementSibling)
+        {alert("territoriality aaaa");var territoriality = 
+        $("#"+document.getElementById("title_location" + placeId).previousElementSibling.id).attr('territoriality');}
+        else
+        {alert("territoriality bbbb");var territoriality = 1;}
+
+        alert("territoriality "+territoriality);#}
+    
+        var territoriality = $(title_object).attr('territoriality');
+    
+{#        alert("territoriality "+territoriality + " ..... "+title_object);#}
+    
+        $.post(url, {
+                    locationParent: locationParentId,
+                    language: language,
+                    insertedLocation: keywordLocation,
+                    event: event,
+                    territoriality: territoriality
+                }, function (data)
+        {
+            var locationData_1 = data[0].locationData[0].locationId;
+            var finish_1 = data[0].finish;
+            
+            {#alert(
+                  "\n - "+locationData_1+
+                  "\n - "+finish_1
+                 );
+            alert(" - "+data[0].options[0].process);#}
+            
+            {#
+            $locationData[] = array(
+                'locationId' => $curso["locationId"],
+                'locationName' => $curso["locationName"],
+                'locationParent' => $curso["locationParent"],
+                'territoriality' => $curso["territoriality"]
+            );
+            #}
+            
+            {#
+            $options[] = array(
+                'optionName' => $option,
+                'process' => $process,
+                'amountLocations' => $amountRecords
+            );
+            
+            $locationData_3456[0] = array(
+                'locationData' => $locationData,
+                'options' => $options
+            );
+            #}
+            
+            $("#invocations_signUp").attr("parentLocation", locationParentId);
+            $("#newLocationContainer" + placeId).attr("keywordsAmount", 0);
+            
+            var territoriality = data[0].options[0].territoriality;
+            
+            {#alert("# territoriality " + territoriality);
+            alert("@ process "+data[0].options[0].process);#}
+            
+            if (data[0].options[0].process == "insertLocationIcon")
+            {
+                {#alert("insertLocationIcon");#}
+                {#alert("insertLocationIcon ----- "+placeId);#}
+                insert_location(placeId);
+            } else if (data[0].options[0].process == "finishLocationIcon")
+            {
+                {#alert("finishLocationIcon");#}
+                {#alert("finishLocationIcon ----- "+placeId);#}
+                {#data[0].amountLocations#}    
+                selectLocation(data[0].locationData, data[0].options);
+            } else if (data[0].options[0].process == "emptyChild")
+            {
+                {#alert("emptyChild");#}
+                {#alert(" ----- "+placeId);#}
+                selectLocation(data[0].locationData, data[0].options);
+            } else if (data[0].options[0].process == "newLocationChild")
+            {
+                {#alert("newLocationChild");#}
+                {#alert("frvfr 2222 "+placeId);#}
+                selectLocation(data[0].locationData, data[0].options);
+            } else
+            {
+                {#alert(" . . . . . . . . . . . . ");#}
+                {#alert("frvfr     . . . . --- "+placeId);#}
+            }
+            
+            {#alert('... GET LOCATION1234567812345678');#}
+        }).fail(function () {
+            {#alert('ERROR... GET LOCATION1234567812345678');#}
+        });
+    }
+    
+    function down_to_the_bottom()
+    {
+        var scrollHeight_3 = document.getElementById("invocations_signUp").scrollHeight;
+        {#alert(" G8 "+scrollHeight_3);#}
+        var scrolltop_3 = $("#invocations_signUp").scrollTop();
+        {#alert(scrollHeight_3 + " + " + scrolltop_3);#}
+        var frvfbg = scrolltop_3 + scrollHeight_3;
+        $("#invocations_signUp").scrollTop(frvfbg);
+    }
+    
+    function selectLocation(data, options)
+    {
+        {#alert(" selectLocation ");#}
+        {#
+        alert(" amountLocations selectLocation(data) territoriality ");
+        alert(" amountLocations ");
+        alert(" territoriality ");
+        alert(" amountLocations "+amountLocations+" territoriality "+territoriality);
+        #}
+        var amountLocations = options[0].amountLocations;
+        var territoriality = options[0].territoriality;
+        
+        var placeId = $("#invocations_signUp").attr('placeId');
+        var locationParent = data[0].locationParent;
+        
+        placeId++;
+        $("#invocations_signUp").attr('placeId', placeId);
+        {#$("#send_location"+placeId).attr("p_location", options[0].territoriality);#}
+        
+        var title_location = document.createElement("div");
+        title_location.id = "title_location" + placeId;
+        title_location.className = "title_location";
+        title_location.style.backgroundColor = "green";
+        title_location.setAttribute('locationId', locationParent);
+        title_location.setAttribute('content', "non_search_div");
+        title_location.setAttribute('territoriality', territoriality);
+        document.getElementById("invocations_signUp").appendChild(title_location);down_to_the_bottom();
+        
+        
+        
+        
+        addInfoAboutLocation(placeId, data);
+        
+        var select_location = document.createElement("select");
+        select_location.id = "user_location_signUpSelect" + placeId;
+        select_location.className = "relativePosition";
+        select_location.name = "user_location_signUpSelect" + placeId;
+        select_location.style.position = "absolute";
+        select_location.style.top = "0px";
+        select_location.style.left = "0px";
+        select_location.style.width = "190px";
+        select_location.setAttribute('placeId', placeId);
+        select_location.setAttribute('selectedLocation', 12345678);
+        select_location.setAttribute("territoriality", territoriality);
+        document.getElementById("title_location" + placeId).appendChild(select_location);
+        
+        var i = 0;
+        while (i < amountLocations)
+        {
+            var locationId = data[i].locationId;
+            var locationName = data[i].locationName;
+            var locationParent = data[i].locationParent;
+            var territoriality = data[i].territoriality;
+            {#var keywordContent = data[i].keywordContent;#}
+            
+            {#lo.location_id as locationId, 
+            lo.location_name as locationName, 
+            lp.location_id as locationParent, 
+            k.keyword_content as keywordContent, 
+            count(lo.location_id) as amountRecords#}
+            
+            {#alert("\n - i: "+i+"\n - j: "+j+
+                  "\n - locationId: "+locationId+
+                  "\n - locationName: "+locationName+
+                  "\n - locationParent: "+locationParent+
+                  "\n - keywordContent: "+keywordContent+
+                  "\n - amountLocations: "+amountLocations
+                    );#}
+                                
+            var location_option = document.createElement("option");
+            location_option.id = "location_option" + placeId + locationId;
+            location_option.name = "location_option" + placeId + locationId;
+            location_option.value = locationId;
+            location_option.textContent = locationId+" - "+locationName;
+            document.getElementById("user_location_signUpSelect" + placeId).appendChild(location_option);
+            i++;
+        }
+            
+        var territoriality = options[0].territoriality;
+        
+        var location_option = document.createElement("option");
+        location_option.id = "location_option" + placeId + "null";
+        location_option.name = "location_option" + placeId + "null";
+        location_option.value = -1;
+        location_option.disabled = true;
+        location_option.selected = true;
+        document.getElementById("user_location_signUpSelect" + placeId).appendChild(location_option);
+        
+        var i = 0;
+        while (options[0].optionName[i])
+        {
+            var optionId = options[0].optionId[i];
+            var location_option = document.createElement("option");
+            location_option.id = "location_option" + placeId + optionId;
+            location_option.name = "location_option" + placeId + optionId;
+            location_option.value = optionId;
+            location_option.textContent = options[0].optionName[i];
+            location_option.selected = true;
+            document.getElementById("user_location_signUpSelect" + placeId).appendChild(location_option);
+            
+            i++;
+        }
+        
+        if (amountLocations === 0)
+        {
+            searchLocation_123(placeId);
+        }
+    }
+    
+    function addInfoAboutLocation(placeId, data)
+    {
+        var amountLocations = data[0].amountLocations;
+        
+        var send_location = document.createElement("button");
+        send_location.id = "send_location" + placeId;
+        send_location.className = "send_location boton_personalizado relativePosition";
+        send_location.setAttribute("parent", 0);
+        document.getElementById("title_location" + placeId).appendChild(send_location);
+        
+        $("#send_location" + placeId)
+        .click(function () {
+            {#alert("click ... " + placeId);#}
+            send_location_event(send_location, placeId);
+            
+            if (document.getElementById("title_location" + placeId))
+            {var trri = $("#"+document.getElementById("title_location" + placeId).id).attr('territoriality');}
+            else
+            {var trri = 1;}
+            
+            var attemptsAmount = $("#newLocationContainer" + placeId).attr("keywordsAmount");
+            var select_userType = document.getElementById("select_userType" + placeId + attemptsAmount);
+            var language = $("#invocations_signUp").attr('languageId');
+            
+            get_territoriality_crud(trri, language, select_userType, placeId);
+            
+            {#$("#invocations_signUp").scrollBottom(0);#}
+            {#alert(scrollHeight_3 + " - " + scrolltop_3);#}
+        })
+        .keyup(function (e) {
+            {#alert(" . "+e.keyCode);#}
+            if (e.keyCode==13)
+                send_location_event(send_location, placeId);
+            else
+                e.returnValue = false;
+            {#var videoId = $(this).data('id1');#}
+            {#alert("keypress ... " + placeId + " --- " + e);#}
+        });
+            var img_send_location = document.createElement("img");
+            img_send_location.id = "img_send_location" + placeId;
+            img_send_location.className = "img_boton_personalizado";
+            img_send_location.src = "files/images/icons/colombia.png";
+            img_send_location.alt = "";
+            send_location.appendChild(img_send_location);
+    }
+
+    function send_location_event(send_location, placeId)
+    {
+        var locationParentId = document.getElementById("user_location_signUpSelect" + placeId).value;
+                
+        if (locationParentId == "finish") // finish
+        {
+            $("#"+send_location.id).attr("p_location", locationParentId);
+            insertLocation_crud();
+            
+        } else {
+            $("#"+send_location.id).attr("p_location", locationParentId);
+            deleteTheRest(placeId);
+            drawFrame(locationParentId, placeId, "#title_location" + placeId);
+        }
+    }
+    
+    function insertLocation_crud()
+    {
+        var board = document.getElementById("invocations_signUp");
+        var titleLocation_child = board.children; // title_location
+        var i = 0;
+        
+        var array_geoposition = new Array();
+        var description_geoposition = new Array();
+        
+        while(titleLocation_child[i])
+        {
+            var c_child = titleLocation_child[i].children;
+            {#var j = 0;
+            while(c_child[j])
+            {
+                alert(" - - - - - - - - "+c_child);
+                j++;
+            }#}
+            //c_child[0].id; // #send_location : button
+            //c_child[1].id; // #user_location_signUpSelect : select
+            {#alert(" - "+c_child[0].id+" - "+c_child[1].id);#}
+            {#var keywordLocation = $("#" + c_child[0].id).attr("keywordLocation");#}
+                
+            {#
+            var keywordLocation = $("#" + c_child[1].id).value;
+            #}
+                        
+            var keywordLocation = $("#" + c_child[0].id).attr("p_location");
+                        
+            if (keywordLocation == "other" || keywordLocation == -2)
+            {
+                {#alert("ncjkcds " + c_child[0].id);#}
+                var a = get_keywordAttribute_hbdjcbdjs(c_child);
+                {#alert("ncjkcds ____ ");#}
+                {#var a = "a";#}
+                {#alert("a "+ " . " + keywordLocation);#}
+                array_geoposition[i] = a;
+                description_geoposition[i] = "a";
+            }
+            else
+            {
+                var b = $("#" + c_child[0].id).attr("p_location");
+                {#var b = "b";#}
+                {#alert("b . " + b + " . " + keywordLocation);#}
+                array_geoposition[i] = b;
+                description_geoposition[i] = "b";
+            }
+            
+            {#alert("title_location "+titleLocation_child[i].id+
+                  "\n keywordLocation "+keywordLocation+
+                  "\n c_child[0].id "+c_child[0].id);#}
+            document.getElementById(titleLocation_child[i].id).style.backgroundColor = "blue";
+            i++;
+        }
+        
+        var form = $('#insert-location-ajax');
+        var url = form.attr('action');
+        
+        var language = $("#invocations_signUp").attr("languageId"); {#alert(" language ... "+language);#}
+        
+        $.post(url, {
+                    array_geoposition: array_geoposition,
+                    description_geoposition: description_geoposition,
+                    language: language}, function (data)
+        {
+            var total = data[0].total;
+            var location_id = data[0].location_id;
+            var location_name = data[0].location_name;
+            
+            {#$("#invocations_signUp").attr("parentLocation", location_id);#}
+            
+            {#alert('insert-location-ajax '+total+
+                  "\n location_id "+location_id+
+                  "\n location_name "+location_name);#}
+            
+            $("#invocations_signUp").attr("final_location", location_id);
+            
+            {#alert('insert-location-ajax , a: '+a+
+                   "\nlocation_id "+location_id+
+                   "\nlocation_name "+location_name);#}
+        }).fail(function () {
+            alert('ERROR... insert-location-ajax');
+        });
+    }
+    
+    function get_keywordAttribute_hbdjcbdjs(c_child)
+    {
+        var array_keywordLocation = new Array();
+        var i = 0;
+        while ($("#" + c_child[0].id).attr("keywordLocation"+i))
+        {
+            var atribute_topic_member_1 = $("#" + c_child[0].id).attr("keywordLocation"+i);
+            {#alert(" * "+atribute_topic_member_1);#}
+            array_keywordLocation[i] = atribute_topic_member_1;
+            i++;
+        }
+        return array_keywordLocation;
+    }
+    
+    function deleteTheRest(placeId)
+    {
+        var next = document.getElementById("title_location" + placeId).nextSibling;
+        while (next)
+        {
+            var next2 = next.nextSibling;
+            document.getElementById("invocations_signUp").removeChild(next);
+            var next = next2;
+        }
+    }
+    
+    function searchLocation_123(placeId)
+    {
+        var title_location_content = $("#title_location" + placeId).attr('content');
+        
+        if (title_location_content == "search_div")
+        {
+            var search_div = document.getElementById("search_div" + placeId);
+            document.getElementById("title_location" + placeId).removeChild(search_div);
+            $("#title_location" + placeId).attr('content', "non_search_div");
+            
+            var search_div = add_searchTool(placeId);
+            $("#title_location" + placeId).attr('locationId', "n");
+            $("#title_location" + placeId).attr('content', "search_div");
+            draw_search_content(placeId, search_div);
+        }
+        
+        if (title_location_content == "non_search_div")
+        {
+            var search_div = add_searchTool(placeId);
+            $("#title_location" + placeId).attr('locationId', "n");
+            $("#title_location" + placeId).attr('content', "search_div");
+            draw_search_content(placeId, search_div);
+        }
+
+    }
+    
+    function add_searchTool(placeId)
+    {
+        var search_div = document.createElement("div");
+        search_div.id = "search_div" + placeId;
+        search_div.className = "search_div";
+        document.getElementById("title_location" + placeId).appendChild(search_div);
+        return search_div;
+    }
+    
+    function draw_search_content(placeId, search_div)
+    {
+        document.getElementById("title_location" + placeId).style.height = "260px";
+        
+        add_newLocationContainer(search_div, placeId);
+        
+        var searchLocation = document.createElement("img");
+        searchLocation.id = "searchLocation" + placeId;
+        searchLocation.className = "boton_personalizado relativePosition";
+        searchLocation.src = "files/images/icons/search/search.png";
+        searchLocation.alt = "";
+        search_div.appendChild(searchLocation);
+        
+        drawNewLocation(placeId);
+            
+        $("#searchLocation" + placeId)
+        .click(function () {
+            {#var cdscds = document.getElementById("title_location" + placeId).nextSibling;
+            var chwuiwe = document.getElementById("invocations_signUp");#}
+            
+            if (document.getElementById("title_location" + placeId).nextSibling && 
+                document.getElementById("invocations_signUp"))
+            { // next
+                {#alert(" - - - - - ");#}
+                var delt = document.getElementById("title_location" + placeId).nextSibling;
+                document.getElementById("title_location" + placeId).style.backgroundColor = "purple";
+                delt.style.backgroundColor = "pink";
+                document.getElementById("invocations_signUp").removeChild(delt);
+            } else
+            {
+                {#alert("dont create more title_location");#}
+            }
+            {#alert("@cdjnkcds . 2");#}
+            var keywordLocation = getKeywords(placeId);
+            {#alert("@cdjnkcds . 3");#}
+            var p_properties = getParent(placeId);
+            {#alert("@cdjnkcds . 4");#}
+            var locationParentId = p_properties[0];
+            {#alert("@cdjnkcds . 5 "+locationParentId+" , , , "+keywordLocation);#}
+            getLocation(locationParentId, keywordLocation, "getChild_bySearch", "#title_location" + placeId);
+        });
+    }
+    
+    function getKeywords(placeId)
+    {
+        if (document.getElementById("newLocationContainer" + placeId).firstChild)
+        {
+            var Element = document.getElementById("newLocationContainer" + placeId).firstChild;
+
+            var child = Element.children;
+
+            {#alert("@ "+child[0]+
+                  "@ "+child[1]+
+                  "@ "+child[2]+
+                  "@ "+child[3].id+
+                  "@ "+child[4]
+                  );#}
+
+            var board = child[3];
+            var elements = board.children;
+            
+            var i = 0;
+            var j = 0;
+            var keywordLocation = new Array();
+            while(elements[j])
+            {
+                var topicMember = elements[j];
+                var keyword_topicMember = $("#"+topicMember.id).attr("keyword");
+
+                keywordLocation[i] = keyword_topicMember;
+                {#alert(keyword_topicMember + " ... " + userType_topicMember);#}
+                {#alert(keywordLocation[i]);#}
+                
+                $("#send_location" + placeId).attr("keywordLocation"+i, keywordLocation[i]);
+                
+                i++;
+                j+=2;
+            }
+            
+            $("#send_location" + placeId).attr("keywordLocation", keywordLocation);
+        }
+        return keywordLocation;
+    }
+    
+    
+    
+    
+    
+    
+    
+    function getParent(placeId)
+    {
+        var prev = document.getElementById("title_location" + placeId);
+
+        while(prev)
+        {
+            var t_child = prev.children;
+            alert("\n@ button: "+t_child[0].id+
+                  "\n@ select: "+t_child[1].id+
+                  "\n@ search_div: "+t_child[2].id
+                  );
+            var p_locationId = $("#" + t_child[0].id).attr("p_location");
+            var p_territorialityId = $("#" + t_child[1].id).attr("territoriality");
+            var p_territorialityName = $("#" + t_child[1].id).attr("territoriality_name");
+            
+            if (p_locationId == 0) // 0 - other
+            {
+                var prev_ = prev.previousElementSibling;
+                prev = prev_;
+            } else
+            {
+                prev = false;
+            }
+        }
+        
+        if (p_locationId == 0)
+            p_locationId = 1;
+        
+        {#alert("p_locationId ... "+p_locationId+" ... p_territorialityId "+p_territorialityId);#}
+        
+        var p_properties = new Array(2);
+        p_properties[0] = p_locationId;
+        p_properties[1] = p_territorialityId;
+        p_properties[2] = p_territorialityName;
+        
+        return p_properties;
+    }
+    
+    function add_newLocationContainer(search_div, placeId)
+    {
+        var newLocationContainer = document.createElement("div");
+        newLocationContainer.id = "newLocationContainer" + placeId;
+        newLocationContainer.className = "newLocationContainer relativePosition";
+        newLocationContainer.setAttribute('keywordsAmount', 0);
+        search_div.appendChild(newLocationContainer);
+            
+        $("#newLocationContainer" + placeId)
+        .mouseover(function () {
+            var currentList_content = document.getElementById("newLocationContainer" + placeId);
+            currentList_content.classList.add("visibleScroll");
+        })
+        .mouseout(function () {
+            var currentList_content = document.getElementById("newLocationContainer" + placeId);
+            currentList_content.classList.remove("visibleScroll");
+        });
+    }
+    
+    function add_container(placeId, attemptsAmount, userType)
+    {
+        var toDraw = "newLocationContainer" + placeId;
+        if(placeId == "searchStore_div")
+        {
+            var toDraw = "searchStore_div";
+            placeId = 0;
+        }
+        if(placeId == "topic_div_id")
+        {
+            var toDraw = "topic_div_id";
+            placeId = 0;
+        }
+        if(placeId == "reach_div_id")
+        {
+            var toDraw = "reach_div_id";
+            placeId = 0;
+        }
+        if(placeId == "search_vehicle")
+        {
+            var toDraw = "search_vehicle";
+        }
+        if(placeId == "search_driver")
+        {
+            var toDraw = "search_driver";
+        }
+        if(placeId == "search_shipping")
+        {
+            var toDraw = "search_shipping";
+        }
+        
+        {#"search_shipping"#}
+        
+        
+        {#alert("@@@@@ ");#}
+        
+        var container_location = document.createElement("div");
+        container_location.id = "container_location" + placeId + attemptsAmount;
+        container_location.className = "relativePosition container_location";
+        {#container_location.style.backgroundColor = "purple";#}
+        container_location.style.transition = "0.6s";
+        container_location.value = "12345";
+        container_location.setAttribute("userType", 0);
+        {#container_location.height = "auto";#}
+        {#container_location.style.padding = "10px";#}
+        document.getElementById(toDraw).appendChild(container_location);
+            
+        var locationName_input = document.createElement("input"); 
+        locationName_input.id = "locationName_input" + placeId + attemptsAmount;
+        locationName_input.name = "locationName_input" + placeId + attemptsAmount;
+        locationName_input.type = "text";
+        locationName_input.className = "standar_input relativePosition";
+        locationName_input.style.height = "30px";
+        locationName_input.style.width = "130px";
+        locationName_input.style.cursor = "cursor";
+        {#locationName_input.style.position = "absolute";#}
+        {#locationName_input.style.top = "0px";
+        locationName_input.style.left = "0px";#}
+        locationName_input.placeholder = "location name";
+        container_location.appendChild(locationName_input);
+            
+        var select_userType = document.createElement("select");
+        select_userType.id = "select_userType" + placeId + attemptsAmount;
+        select_userType.name = "select_userType" + placeId + attemptsAmount;
+        {#select_userType.style.position = "absolute";
+        select_userType.style.top = "50px";
+        select_userType.style.left = "10px";#}
+        select_userType.style.height = "30px";
+        select_userType.style.width = "230px";
+        container_location.appendChild(select_userType);
+        
+        var newTopicMember = document.createElement("img");
+        newTopicMember.id = "newTopicMember" + placeId + attemptsAmount;
+        newTopicMember.className = "boton_personalizado relativePosition";
+        newTopicMember.src = "files/images/icons/more.png";
+        newTopicMember.alt = "";
+        newTopicMember.style.display = "inline-block";
+        {#newTopicMember.style.position = "absolute";
+        newTopicMember.style.top = "10px";
+        newTopicMember.style.left = "150px";#}
+        container_location.appendChild(newTopicMember);
+        
+        
+        
+            
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        var board_topicMembers = document.createElement("div");
+        board_topicMembers.id = "board_topicMembers" + placeId + attemptsAmount;
+        {#board_topicMembers.style.position = "absolute";
+        board_topicMembers.style.top = "10px";
+        board_topicMembers.style.left = "190px";
+        board_topicMembers.style.right = "10px";#}
+        board_topicMembers.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
+        {#board_topicMembers.style.backgroundColor = "blue";#}
+        board_topicMembers.style.height = "70px";
+        board_topicMembers.style.overflowX = "hidden";
+        board_topicMembers.style.overflowY = "scroll";
+        board_topicMembers.style.transition = "0.6s";
+        board_topicMembers.setAttribute("attempts_topicMembers_amount", 0);
+        board_topicMembers.addEventListener("mouseover", function (e) {
+            this.classList.add("visibleScroll");
+            this.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
+        }, false);
+        board_topicMembers.addEventListener("mouseout", function (e) {
+            this.classList.remove("visibleScroll");
+            this.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
+        }, false);
+            
+        container_location.appendChild(board_topicMembers);
+        
+        
+        
+        if (document.getElementById("newLocationContainer" + placeId))
+        {
+            var scrollHeight_2 = document.getElementById("newLocationContainer" + placeId).scrollHeight;
+            var scrolltop_2 = $("#newLocationContainer" + placeId).scrollTop();
+            scrolltop_2+=scrollHeight_2;
+            $("#newLocationContainer" + placeId).scrollTop(scrolltop_2);            
+        }
+        
+        
+        function add_topicMember(current_topicMember, current_userType)
+        {
+            var topicMember_position = 
+                $("#board_topicMembers" + placeId + attemptsAmount).attr("attempts_topicMembers_amount");
+            topicMember_position++;
+                $("#board_topicMembers" + placeId + attemptsAmount).attr("attempts_topicMembers_amount", topicMember_position);
+            
+            var topicMember = document.createElement("input"); 
+            topicMember.id = "topicMember" + placeId + attemptsAmount + topicMember_position;
+            topicMember.name = "topicMember" + placeId + attemptsAmount + topicMember_position;
+            topicMember.type = "text";
+            topicMember.className = "standar_input relativePosition";
+            topicMember.style.height = "30px";
+            topicMember.style.width = "100%";
+            topicMember.style.maxWidth = "130px";
+            topicMember.style.cursor = "cursor";
+            topicMember.value = current_topicMember + " - " + current_userType;
+            {#topicMember.value = placeId + " - " + attemptsAmount + " - " + topicMember_position;#}
+            topicMember.placeholder = "location name";
+            topicMember.disabled = true;
+            topicMember.setAttribute("keyword", current_topicMember);
+            topicMember.setAttribute("userType", current_userType);
+            document.getElementById("board_topicMembers" + placeId + attemptsAmount).appendChild(topicMember);
+            
+            var delete_topicMember = document.createElement("img");
+            delete_topicMember.id = "delete_topicMember" + placeId;
+            delete_topicMember.className = "relativePosition boton_personalizado";
+            delete_topicMember.style.backgroundColor = "green";
+            delete_topicMember.src = "files/images/icons/delete.png";
+            delete_topicMember.alt = "";
+            delete_topicMember.style.display = "inline-block";
+            delete_topicMember.setAttribute('content', "non_search_div");
+            delete_topicMember.addEventListener("click", function () {
+            board_topicMembers.removeChild(topicMember);
+            board_topicMembers.removeChild(delete_topicMember);
+            });
+            document.getElementById("board_topicMembers" + placeId + attemptsAmount).appendChild(delete_topicMember);
+                    
+            
+            
+                    
+        
+            var scrollHeight_1 = document.getElementById("board_topicMembers" + placeId + attemptsAmount).scrollHeight;
+            var scrolltop_1 = $("#board_topicMembers" + placeId + attemptsAmount).scrollTop();
+            scrolltop_1+=scrollHeight_1;
+            $("#board_topicMembers" + placeId + attemptsAmount).scrollTop(scrolltop_1);
+            
+            document.getElementById("locationName_input" + placeId + attemptsAmount).value = "";
+            
+            {#var keywordLocation = document.getElementById("locationName_input" + placeId + attemptsAmount).value;
+            if (keywordLocation)
+            {
+                document.getElementById("newTopicMember" + placeId + attemptsAmount).style.display = "none";
+                document.getElementById("editLocationName" + placeId + attemptsAmount).style.display = "block";
+                document.getElementById("locationName_input" + placeId + attemptsAmount).disabled = true;
+                document.getElementById("container_location" + placeId + attemptsAmount).style.backgroundColor = "transparent";
+            }#}
+        }
+        
+        
+        $("#newTopicMember" + placeId + attemptsAmount)
+        .click(function () {
+            var current_topicMember = document.getElementById("locationName_input" + placeId + attemptsAmount).value;
+            var current_userType = document.getElementById("select_userType" + placeId + attemptsAmount).value;
+            
+            if (current_topicMember)
+            {
+                add_topicMember(current_topicMember, current_userType);
+            }
+        });
+        
+        
+        if (userType == 0)
+        {
+            get_userType_invocations(placeId, attemptsAmount, userType);
+        }
+        
+        if (userType == 17)
+        {
+
+            {#
+            search vehicle by
+                owner >
+                plate -
+                type of vehicle -
+
+                send request available 
+            #}
+            
+            {#get_userType_invocations(placeId, attemptsAmount, userType);#}
+            
+            var userType_value = 0;
+            var option_userType = document.createElement("option");
+            option_userType.id = "usertype_option" + userType_value;
+            option_userType.value = userType_value;
+            option_userType.textContent = "owner";
+            document.getElementById("select_userType" + placeId + attemptsAmount).appendChild(option_userType);
+
+            var userType_value = 1;
+            var option_userType = document.createElement("option");
+            option_userType.id = "usertype_option" + userType_value;
+            option_userType.value = userType_value;
+            option_userType.textContent = "plate";
+            document.getElementById("select_userType" + placeId + attemptsAmount).appendChild(option_userType);
+
+            var userType_value = 2;
+            var option_userType = document.createElement("option");
+            option_userType.id = "usertype_option" + userType_value;
+            option_userType.value = userType_value;
+            option_userType.textContent = "type of vehicle";
+            document.getElementById("select_userType" + placeId + attemptsAmount).appendChild(option_userType);
+        }
+        
+        if (userType == 18)
+        {
+            var userType_value = 0;
+            var option_userType = document.createElement("option");
+            option_userType.id = "usertype_option" + userType_value;
+            option_userType.value = userType_value;
+            option_userType.textContent = "username";
+            document.getElementById("select_userType" + placeId + attemptsAmount).appendChild(option_userType);
+            
+            var userType_value = 1;
+            var option_userType = document.createElement("option");
+            option_userType.id = "usertype_option" + userType_value;
+            option_userType.value = userType_value;
+            option_userType.textContent = "email";
+            document.getElementById("select_userType" + placeId + attemptsAmount).appendChild(option_userType);
+            
+            var userType_value = 2;
+            var option_userType = document.createElement("option");
+            option_userType.id = "usertype_option" + userType_value;
+            option_userType.value = userType_value;
+            option_userType.textContent = "user id";
+            document.getElementById("select_userType" + placeId + attemptsAmount).appendChild(option_userType);    
+            
+            var userType_value = 3;
+            var option_userType = document.createElement("option");
+            option_userType.id = "usertype_option" + userType_value;
+            option_userType.value = userType_value;
+            option_userType.textContent = "commercial id";
+            document.getElementById("select_userType" + placeId + attemptsAmount).appendChild(option_userType);
+            
+            var userType_value = 4;
+            var option_userType = document.createElement("option");
+            option_userType.id = "usertype_option" + userType_value;
+            option_userType.value = userType_value;
+            option_userType.textContent = "commercial name";
+            document.getElementById("select_userType" + placeId + attemptsAmount).appendChild(option_userType);
+            
+            var userType_value = 5;
+            var option_userType = document.createElement("option");
+            option_userType.id = "usertype_option" + userType_value;
+            option_userType.value = userType_value;
+            option_userType.textContent = "commercial tin";
+            document.getElementById("select_userType" + placeId + attemptsAmount).appendChild(option_userType);
+        }
+        
+        if (userType == 21)
+        {
+            searchShipping_category(placeId, attemptsAmount);
+        }
+    }
+    
+    function drawNewLocation(placeId)
+    {
+        {#var keywordsAmount = document.getElementById("newLocationContainer" + placeId).childElementCount;
+        var keywordsAmount_2 = document.getElementById("newLocationContainer" + placeId).childNodes.length;#}
+        
+        {#alert("placeId "+placeId);#}
+        var attemptsAmount = $("#newLocationContainer" + placeId).attr("keywordsAmount");
+        attemptsAmount++;
+        $("#newLocationContainer" + placeId).attr("keywordsAmount", attemptsAmount);
+        
+        {#alert("placeId "+placeId);#}
+        $("#newLocationContainer" + placeId).attr('attemptsAmount', attemptsAmount);
+        {#alert("placeId "+placeId);#}
+            
+            
+        var userType = 11;
+        add_container(placeId, attemptsAmount, userType);
+    }
+    
+    function get_userType_invocations(placeId, attemptsAmount, userType)
+    {
+        {#alert('GET usertype '+userType);#}
+        
+        var form = $('#get-userType-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            var i = 0;
+            var amountUsertypes = data[i].amountUsertypes;
+            
+            {#alert('GET usertype '+amountUsertypes);#}
+            while (i < amountUsertypes)
+            {
+                var usertypeId = data[i].usertypeId;
+                var usertypeClass = data[i].usertypeClass;
+                
+                {#alert(usertypeId + " " + usertypeClass);#}
+                
+                var container_location = document.getElementById("container_location" + placeId + attemptsAmount);
+                $("#"+container_location.id).attr("userType", userType);
+                
+                if ($("#"+container_location.id).attr("userType") == 0)
+                {
+                    var option_userType = document.createElement("option");
+                    option_userType.id = "usertype_option" + usertypeId;
+                    option_userType.name = "usertype_option" + usertypeId;
+                    option_userType.value = usertypeClass;
+                    option_userType.textContent = usertypeClass;
+                    document.getElementById("select_userType" + placeId + attemptsAmount).appendChild(option_userType);
+                } else if ($("#"+container_location.id).attr("userType") == 11)
+                {
+                    if (usertypeId == 11 || usertypeClass == "location")
+                    {
+                        var p_properties = getParent(placeId);
+                        var territorialityParentId = p_properties[1];
+                        var territorialityNameParentId = p_properties[2];
+                        
+        {#var p_locationId = $("#" + t_child[0].id).attr("p_location");
+        var p_territorialityId = $("#" + t_child[1].id).attr("territoriality");
+        var p_territorialityName = $("#" + t_child[1].id).attr("territoriality_name");#}
+                        
+                        var option_userType = document.createElement("option");
+                        option_userType.id = "usertype_option" + usertypeId;
+                        option_userType.name = "usertype_option" + usertypeId;
+                        option_userType.value = "t " + territorialityParentId; // usertypeClass
+                        option_userType.textContent = territorialityParentId + " . " + territorialityNameParentId; // usertypeClass
+                        document.getElementById("select_userType" + placeId + attemptsAmount).appendChild(option_userType);
+                    }
+                }
+{#                select_usertype.setAttribute('usertypeId', usertypeId);#}
+                i++;
+            }
+        }).fail(function () {
+            alert('ERROR... GET usertype');
+        });
+    }
+    
+    function get_territoriality_crud(territorialityParentId, language, select_userType, placeId)
+    {
+        var form = $('#get-territoriality-ajax');
+        var url = form.attr('action');
+        $.post(url, {territorialityParentId: territorialityParentId, language: language}, function (data)
+        {
+            var keywordContent = data[0].keywordContent;
+            var territorialityId = data[0].territorialityId;
+            
+            var option_territoriality = document.createElement("option");
+            option_territoriality.id = "territoriality_option" + territorialityId;
+            option_territoriality.name = "territoriality_option" + territorialityId;
+            option_territoriality.value = territorialityParentId; // territorialityClass
+            option_territoriality.textContent = keywordContent; // territorialityClass
+            select_userType.appendChild(option_territoriality);down_to_the_bottom();
+            
+            
+            
+            $("#user_location_signUpSelect" + placeId).attr("territoriality", territorialityId);
+            $("#user_location_signUpSelect" + placeId).attr("territoriality_name", keywordContent);
+        }).fail(function () {
+            alert('ERROR #get-territoriality-ajax');
+        });
+    }
+    
+    $("#invocations_signUp")
+    .mouseover(function () {
+        var currentList_content = document.getElementById("invocations_signUp");
+        currentList_content.classList.add("visibleScroll");
+        currentList_content.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
+    })
+    .mouseout(function () {
+        var currentList_content = document.getElementById("invocations_signUp");
+        currentList_content.classList.remove("visibleScroll");
+        currentList_content.style.backgroundColor = "rgba(0, 0, 0, 0.2)";
+    });
+</script>
+
+<script>
+    function insert_location(placeId)
+    {
+        {#alert("@q "+$("#search_div" + placeId).attr("insertLocation"));#}
+        if ($("#search_div" + placeId).attr("insertLocation") != 1)
+        {
+            $("#search_div" + placeId).attr("insertLocation", 1);
+            
+            var icon_insertLocation = document.createElement("img");
+            icon_insertLocation.id = "icon_insertLocation" + placeId;
+            icon_insertLocation.className = "icon_insertLocation boton_personalizado relativePosition";
+            icon_insertLocation.src = "files/images/icons/mexico.png";
+            icon_insertLocation.alt = "";
+            icon_insertLocation.setAttribute("parent", 0);
+            document.getElementById("search_div" + placeId).appendChild(icon_insertLocation);
+            icon_insertLocation.addEventListener("click", function (e) {
+                {#alert("transform div_search---to selct");#}
+                appendLocation(placeId);
+                
+                document.getElementById("title_location" + placeId).style.height = "50px";
+                var elem = document.getElementById("search_div" + placeId);
+                document.getElementById("title_location" + placeId).removeChild(elem);
+                $("#title_location" + placeId).attr('content', "non_search_div");
+            }, false);
+        }
+    }
+    
+    function appendLocation(placeId)
+    {
+        var to_remove = document.getElementById("location_option" + placeId + "newLocation");
+    
+        if (to_remove)
+            document.getElementById("user_location_signUpSelect" + placeId).removeChild(to_remove);
+     
+        var territoriality = $("#user_location_signUpSelect" + placeId).attr("territoriality_name");
+        var topicmembers = $("#send_location" + placeId).attr("keywordLocation");
+     
+        {#$("#send_location" + placeId).("p_location", "toInsert");#}
+     
+        var location_option = document.createElement("option");
+        location_option.id = "location_option" + placeId + "newLocation";
+        location_option.name = "location_option" + placeId + "newLocation";
+        location_option.value = -2;
+        location_option.textContent = territoriality + ": " + topicmembers;
+        location_option.selected = true;
+        document.getElementById("user_location_signUpSelect" + placeId).appendChild(location_option);
+    }
+    
+    window.onload = get_final_location_user();
+    
+    function get_final_location_user()
+    {
+        if ($("#invocations_signUp").attr('bdj74') != 1)
+        {
+            $("#invocations_signUp").attr('bdj74', 1);
+            
+            var form = $('#get-final-location-user-ajax');
+            var url = form.attr('action');
+
+            $.post(url, function (data)
+            {
+                var userId = data[0].userId;
+                var geolocalization = data[0].geolocalization;
+                var positions = data[0].positions;
+                
+                for (i=positions-1; i>=0; i--)
+                {
+                    var geolocalization_1 = data[0].geolocalization[i];
+                    
+                    {#alert(" - "+geolocalization_1);#}
+                    
+                    var placeId = $("#invocations_signUp").attr('placeId');
+                    
+                    var locationParentId = geolocalization_1;
+                    drawFrame(locationParentId, placeId, "#invocations_signUp");
+                    
+{#                    var placeId = $("#invocations_signUp").attr("placeId");
+                    var parentLocation = $("#invocations_signUp").attr("parentLocation");
+                    var languageId = $("#invocations_signUp").attr("languageId");
+                    var territoriality = $("#invocations_signUp").attr("territoriality");#}
+                }
+            }).fail(function () {
+                alert('ERROR #get-final-location-user-ajax');
+            });
+        }
+    }
+</script>

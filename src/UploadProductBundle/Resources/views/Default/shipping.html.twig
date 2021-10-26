@@ -1,0 +1,1674 @@
+{{ form_start(shippingBundle1.shippingBundle2.get_shipping_list_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-shipping-list-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.get_shipping_list_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.get_vehicle_list_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-vehicle-list-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.get_vehicle_list_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.get_driver_list_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-driver-list-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.get_driver_list_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.get_driver_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-driver-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.get_driver_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.get_vehicle_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-vehicle-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.get_vehicle_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.set_new_driver_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'set-new-driver-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.set_new_driver_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.set_new_vehicle_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'set-new-vehicle-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.set_new_vehicle_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.set_new_shipping_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'set-new-shipping-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.set_new_shipping_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.search_ownerVehicle_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'search-ownerVehicle-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.search_ownerVehicle_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.search_userDriver_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'search-userDriver-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.search_userDriver_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.search_userDriverCommercial_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'search-userDriverCommercial-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.search_userDriverCommercial_form_ajax) }}
+
+<style>
+    #form_vehicle, #form_driver 
+    {
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.1);
+{#        background-color: rgba(0, 0, 0, 0.1);#}
+        height: max-content;
+        max-height: 300px;
+        margin: 10px;
+        margin-left: 0px;
+        margin-right: 0px;
+        overflow-y: hidden;
+        overflow-x: hidden;
+    }
+    
+    #set_shipping {
+        height: max-content;
+        max-height: 100%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+    
+    #vehicle_area, #driver_area, #shipping_area {
+        height: auto;
+        max-height: 250px;
+        padding: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        overflow-y: scroll;
+    }
+</style>
+
+<div id="set_shipping">
+    
+</div>
+
+<script>
+    $("#set_shipping")
+    .mouseover(function () {
+        var currentList_content = document.getElementById("set_shipping");
+        currentList_content.classList.add("visibleScroll");
+    })
+    .mouseout(function () {
+        var currentList_content = document.getElementById("set_shipping");
+        currentList_content.classList.remove("visibleScroll");
+    });
+    
+    {#window.onload = load_shipping();#}
+    
+    function load_shipping()
+    {
+        if ($("#set_shipping").attr("gcdcds") != 1)
+        {
+            $("#set_shipping").attr("gcdcds", 1);
+            confirm_shipping();
+        }
+    }
+    
+    function confirm_shipping()
+    {
+        var div_shipping = document.createElement("div");
+        div_shipping.id = "div_shipping";
+        div_shipping.className = "relativePosition";
+        div_shipping.textContent = "shipping ";
+        div_shipping.style.display = "inline-block";
+        document.getElementById("set_shipping").appendChild(div_shipping);
+
+        var select_shipping = document.createElement("select");
+        select_shipping.id = "select_shipping";
+        select_shipping.className = "relativePosition";
+        select_shipping.style.display = "inline-block";
+        document.getElementById("set_shipping").appendChild(select_shipping);
+
+        var confirm_shipping = document.createElement("img");
+        confirm_shipping.id = "confirm_shipping";
+        confirm_shipping.className = "relativePosition boton_personalizado";
+        confirm_shipping.src = "files/images/icons/ok.png";
+        confirm_shipping.alt = "";
+        confirm_shipping.style.display = "inline-block";
+        confirm_shipping.setAttribute('content', "non_search_div");
+        confirm_shipping.addEventListener("click", function () {
+            {#alert("get shipping list");#}
+            {#alert(" shippingUser - "+shippingUser);#}
+            var shippingUser = document.getElementById("select_shipping").value;
+            get_shipping(shippingUser);
+        });
+        document.getElementById("set_shipping").appendChild(confirm_shipping);
+
+        $("#confirm_shipping").click(function () {
+            {#alert(" - - - - ");#}
+            var select_shipping = document.getElementById("select_shipping").value;
+            
+            {#alert(" - "+select_shipping);#}
+            
+            if (select_shipping == -1)
+            {
+                insert_new_shipping();
+            } else if (select_shipping == 0)
+            {
+                fill_in_shipping();
+            } else
+            {
+                erase_fill_in_shipping();
+            }
+        });
+        
+        var topic_array = 0;
+        get_shipping_list(select_shipping, topic_array);
+    }
+    
+    function insert_new_shipping()
+    {
+        {#alert("search shipping");#}
+        erase_fill_in_shipping();
+        draw_new_shipping123();
+    }
+    
+    function cleanBoard_3()
+    {
+        var form_shipping = document.getElementById("form_shipping");
+        
+        if (document.getElementById("shipping_area"))
+        {
+            var shipping_area = document.getElementById("shipping_area");
+            form_shipping.removeChild(shipping_area);
+        }
+    }
+    
+    function draw_new_shipping123()
+    {
+        var form_shipping = document.createElement("div");
+        form_shipping.id = "form_shipping";
+        form_shipping.className = "form_shipping";
+        document.getElementById("set_shipping").appendChild(form_shipping);
+        
+        var form_shipping = document.getElementById("form_shipping");
+        
+        var shipping_area = document.createElement("div");
+        shipping_area.id = "shipping_area";
+        shipping_area.className = "border_effect";
+        shipping_area.setAttribute("attemptsAmount", 0);
+        {#shipping_area.addEventListener("click", function () {
+        });#}
+        form_shipping.appendChild(shipping_area);
+        
+        var search_shipping = document.createElement("div");
+        search_shipping.id = "search_shipping";
+        search_shipping.style.height = "200px;";
+        search_shipping.style.width = "100%";
+{#        search_shipping.style.backgroundColor = "transparent";#}
+        search_shipping.style.backgroundColor = "yellow";
+        search_shipping.style.padding = "10px";
+        search_shipping.setAttribute("attemptsAmount", 0);
+        search_shipping.addEventListener("click", function () {
+        });
+        shipping_area.appendChild(search_shipping);
+        
+        /////////////////////////////////////////////////////////////////
+        
+        var placeId = "search_shipping";
+        var attemptsAmount = $("#search_shipping").attr("attemptsAmount");
+        if (attemptsAmount == 0)
+        {
+            attemptsAmount++;
+            $("#search_shipping").attr("attemptsAmount", attemptsAmount);
+            var userType = 21;
+            {#alert(" placeId "+placeId+" attemptsAmount "+attemptsAmount+" userType "+userType);#}
+            add_container(placeId, attemptsAmount, userType);
+        }
+        
+        /////////////////////////////////////////////////////////////////
+        
+        {#var search_categories_shipping = document.createElement("div");
+        search_categories_shipping.id = "search_categories_shipping";
+        search_categories_shipping.style.height = "300px";
+        search_categories_shipping.style.maxHeight = "300px";
+        search_categories_shipping.style.width = "100%";
+        search_categories_shipping.style.backgroundColor = "green";
+        search_categories_shipping.textContent = "cbdshjcds";
+        search_categories_shipping.setAttribute("attemptsAmount", 0);
+        search_categories_shipping.addEventListener("click", function () {
+            
+        });
+        shipping_area.appendChild(search_categories_shipping);#}
+        
+        /////////////////////////////////////////////////////////////////
+        
+        var search_shipping_img = document.createElement("img");
+        search_shipping_img.id = "search_shipping_img";
+        search_shipping_img.className = "relativePosition boton_personalizado";
+        search_shipping_img.src = "files/images/icons/search/search.png";
+        search_shipping_img.alt = "";
+        search_shipping_img.style.display = "inline-block";
+        search_shipping_img.addEventListener("click", function () {
+            var board = "search_shipping";
+            get_topics(board);
+            
+            var select_shipping = document.getElementById("select_shipping");
+            get_shipping_list(select_shipping, topic_array);
+        });
+        shipping_area.appendChild(search_shipping_img);
+    }
+    
+    function get_shipping_list(select_shipping, topic_array)
+    {
+        var form = $('#get-shipping-list-ajax');
+        var url = form.attr('action');
+
+{#        var topic_array = 1;#}
+
+        {#alert("topic_array "+topic_array);#}
+        
+        $.post(url, {topic_array: topic_array}, function (data)
+        {
+            {#
+                $locationData[] = array(
+                    'shipping_id' => 0,
+                    'driver_id' => 0,
+                    'driver_name' => "_",
+                    'driver_firstGivenName' => "_",
+                    'driver_secondGivenName' => "_",
+                    'driver_firstFamilyName' => "_",
+                    'driver_secondFamilyName' => "_",
+                    'driver_email' => "_",
+                    'vehicle_id' => 0,
+                    'vehicle_plate' => "_",
+                    'vehicleType_id' => 0,
+                    'vehicleType_name' => "_",
+                    'reach_id' => 0,
+                    'departure_id' => 0,
+                    'departure_name' => "_",
+                    'delivery_id' => 0,
+                    'delivery_name' => "_",
+                    'amountRecords' => 0,
+                    'query_condition' => $cbdhxsj
+                );
+            #}
+                        
+            var query_condition = data[0].query_condition;
+            {#alert(" - query_condition "+query_condition);#}
+            
+            var amountRecords = data[0].amountRecords;
+            
+            for (i = 0; i < amountRecords; i++)
+            {
+                var shippingUser_id = data[i].shippingUser_id;
+                var shipping_id = data[i].shipping_id;
+                var driver_id = data[i].driver_id;
+                var driver_name = data[i].driver_name;
+                var driver_firstGivenName = data[i].driver_firstGivenName;
+                var driver_secondGivenName = data[i].driver_secondGivenName;
+                var driver_firstFamilyName = data[i].driver_firstFamilyName;
+                var driver_secondFamilyName = data[i].driver_secondFamilyName;
+                var driver_email = data[i].driver_email;
+                var vehicle_id = data[i].vehicle_id;
+                var vehicle_plate = data[i].vehicle_plate;
+                var vehicleType_id = data[i].vehicleType_id;
+                var vehicleType_name = data[i].vehicleType_name;
+                var reach_id = data[i].reach_id;
+                var departure_id = data[i].departure_id;
+                var departure_name = data[i].departure_name;
+                var delivery_id = data[i].delivery_id;
+                var delivery_name = data[i].delivery_name;
+                var amountRecords = data[i].amountRecords;
+                
+                var shipping_option = document.createElement("option");
+                shipping_option.id = "shipping_option" + shipping_id;
+                shipping_option.value = shippingUser_id;
+                shipping_option.textContent = shippingUser_id + " (" + shipping_id + ") " + departure_name + " " + delivery_name + " " + driver_name + " " + vehicle_plate;
+                select_shipping.appendChild(shipping_option);
+            }
+            
+                var shipping_option = document.createElement("option");
+                shipping_option.id = "shipping_option" + "other";
+                shipping_option.value = -1;
+                shipping_option.textContent = "others";
+                select_shipping.appendChild(shipping_option);
+
+                var shipping_option = document.createElement("option");
+                shipping_option.id = "shipping_option" + "other";
+                shipping_option.value = 0;
+                shipping_option.textContent = "apply for a shipping";
+                select_shipping.appendChild(shipping_option);
+            
+            alert('#get-shipping-list-ajax '+amountRecords);
+        }).fail(function () {
+            alert('ERROR #get-shipping-list-ajax');
+        });
+    }
+    
+    function fill_in_shipping()
+    {
+        erase_fill_in_shipping();
+        draw_fill_in_shipping();
+    }
+    
+    function draw_fill_in_shipping()
+    {
+        var form_shipping = document.createElement("div");
+        form_shipping.id = "form_shipping";
+        form_shipping.className = "form_shipping";
+        document.getElementById("set_shipping").appendChild(form_shipping);
+        
+        var form_vehicle = document.createElement("div");
+        form_vehicle.id = "form_vehicle";
+        form_vehicle.className = "form_vehicle";
+        form_shipping.appendChild(form_vehicle);
+        
+        var form_driver = document.createElement("div");
+        form_driver.id = "form_driver";
+        form_driver.className = "form_driver";
+        form_shipping.appendChild(form_driver);
+        
+        var form_reach = document.createElement("div");
+        form_reach.id = "form_reach";
+        form_reach.className = "form_reach";
+        form_shipping.appendChild(form_reach);
+            
+        var form_finish = document.createElement("div");
+        form_finish.id = "form_finish";
+        form_finish.className = "form_finish";
+        form_shipping.appendChild(form_finish);
+            
+        confirm_vehicle(form_vehicle);
+        confirm_driver(form_driver);
+        draw_reach_tool();
+        finish_shipping(form_finish);
+    }
+    
+    function finish_shipping(form_finish)
+    {
+        var finish_shipping = document.createElement("img");
+        finish_shipping.id = "finish_shipping";
+        finish_shipping.className = "relativePosition boton_personalizado";
+        finish_shipping.src = "files/images/icons/ok.png";
+        finish_shipping.alt = "";
+        finish_shipping.style.display = "inline-block";
+        finish_shipping.addEventListener("click", function () {
+        });
+        form_finish.appendChild(finish_shipping);
+        $("#finish_shipping").click(function () {
+            {#alert("finish shipping");#}
+            set_new_shipping();
+        });
+    }
+    
+    function set_new_shipping()
+    {
+        var form = $('#set-new-shipping-ajax');
+        var url = form.attr('action');
+
+        var driver_id = document.getElementById("select_driver").value;
+        var vehicle_id = document.getElementById("select_vehicle").value;
+        {#var origin_id = document.getElementById("origin_id");
+        var destiny_id = document.getElementById("destiny_id");#}
+        
+        var origin_id = $("#reach_originLocation").attr("locationId");
+        var destiny_id = $("#reach_destinyLocation").attr("locationId");
+        
+        alert("\ndriver_id "+driver_id+
+              "\nvehicle_id "+vehicle_id+
+              "\norigin_id "+origin_id+
+              "\ndestiny_id "+destiny_id);
+
+        $.post(url, {
+            driver_id: driver_id, 
+            vehicle_id: vehicle_id, 
+            origin_id: origin_id, 
+            destiny_id: destiny_id 
+        }, function (data)
+        {
+            var select_shipping = document.getElementById("select_shipping");
+            select_shipping.innerHTML = "";
+            
+            {#var = ;#}
+            var topic_array = 0;
+            get_shipping_list(select_shipping, topic_array);
+        }).fail(function () {
+            alert('ERROR #set-new-shipping-ajax');
+        });
+    }
+    
+    function erase_fill_in_shipping()
+    {
+        var new_env = "TRtgtrgtr";
+        var environment = "idfs_5";
+        change_location_environment(new_env, environment);
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        if (document.getElementById("form_shipping"))
+        {
+            var form_shipping = document.getElementById("form_shipping");
+            document.getElementById("set_shipping").removeChild(form_shipping);
+        }
+    }
+    
+    
+    function cleanBoard()
+    {
+        var form_vehicle = document.getElementById("form_vehicle");
+        
+        if (document.getElementById("vehicle_area"))
+        {
+            var vehicle_area = document.getElementById("vehicle_area");
+            form_vehicle.removeChild(vehicle_area);
+        }
+    }
+    
+    
+    function fill_in_vehicle()
+    {
+        cleanBoard();
+        draw_fill_in_vehicle();
+    }
+    
+    function draw_fill_in_vehicle()
+    {
+        var form_vehicle = document.getElementById("form_vehicle");
+        
+        var vehicle_area = document.createElement("div");
+        vehicle_area.id = "vehicle_area";
+        vehicle_area.className = "border_effect";
+        vehicle_area.setAttribute("attemptsAmount", 0);
+        vehicle_area.addEventListener("click", function () {
+        });
+        form_vehicle.appendChild(vehicle_area);
+        
+        var search_vehicle = document.createElement("div");
+        search_vehicle.id = "search_vehicle";
+        search_vehicle.style.height = "auto";
+        search_vehicle.style.width = "100%";
+        search_vehicle.style.backgroundColor = "transparent";
+        search_vehicle.style.padding = "10px";
+        search_vehicle.setAttribute("attemptsAmount", 0);
+        search_vehicle.addEventListener("click", function () {
+        });
+        {#form_vehicle.appendChild(search_vehicle);#}
+        vehicle_area.appendChild(search_vehicle);
+        
+        
+        
+        
+        
+        var placeId = "search_vehicle";
+        var attemptsAmount = $("#search_vehicle").attr("attemptsAmount");
+        if (attemptsAmount == 0)
+        {
+            attemptsAmount++;
+            $("#search_vehicle").attr("attemptsAmount", attemptsAmount);
+            var userType = 17;
+            {#alert(" placeId "+placeId+" attemptsAmount "+attemptsAmount+" userType "+userType);#}
+            add_container(placeId, attemptsAmount, userType);
+        }
+        
+        
+        
+        
+        
+        
+        var search_vehicle_img = document.createElement("img");
+        search_vehicle_img.id = "search_vehicle_img";
+        search_vehicle_img.className = "relativePosition boton_personalizado";
+        search_vehicle_img.src = "files/images/icons/search/search.png";
+        search_vehicle_img.alt = "";
+        search_vehicle_img.style.display = "inline-block";
+        search_vehicle_img.addEventListener("click", function () {
+            var board = "search_vehicle";
+            get_topics(board);
+            
+            get_vehicle();
+        });
+        vehicle_area.appendChild(search_vehicle_img);
+    }
+    
+    function get_vehicle()
+    {
+        var form = $('#get-vehicle-ajax');
+        var url = form.attr('action');
+
+        alert("topic_array "+topic_array);
+
+        $.post(url, {topic_array: topic_array}, function (data)
+        {
+            {#
+            $locationData[$i] = array(
+                'vehicleUser_id' => $vehicleUser_id,
+                'vehicle_id' => $vehicle_id,
+                'vehicle_plate' => $vehicle_plate,
+                'vehicleType_id' => $vehicleType_id,
+                'vehicleType_name' => $vehicleType_name,
+                'amountRecords' => $amountRecords
+            );
+            #}
+            
+            var amountRecords = data[0].amountRecords;
+            
+            alert('#get-vehicle-ajax '+amountRecords);
+            draw_vehicle_results(data);
+        }).fail(function () {
+            alert('ERROR #get-vehicle-ajax');
+        });
+    }
+    
+    function draw_vehicle_results(data)
+    {
+        var select_vehicle = document.getElementById("select_vehicle");
+        
+        var amountRecords = data[0].amountRecords;
+        
+        for (i = 0; i < amountRecords; i++)
+        {
+            var vehicleUser_id = data[i].vehicleUser_id;
+            var vehicle_id = data[i].vehicle_id;
+            var vehicle_plate = data[i].vehicle_plate;
+            var vehicleType_id = data[i].vehicleType_id;
+            var vehicleType_name = data[i].vehicleType_name;
+            
+            var vehicleUser_option_result = document.createElement("option");
+            vehicleUser_option_result.id = "vehicleUser_option_result" + vehicle_id;
+            vehicleUser_option_result.value = vehicleUser_id;
+            vehicleUser_option_result.textContent = vehicleUser_id+" "+ vehicle_plate+" "+vehicleType_name;
+            vehicleUser_option_result.selected = true;
+            select_vehicle.appendChild(vehicleUser_option_result);
+        }
+        document.getElementById("select_vehicle").style.backgroundColor = "fuchsia";
+    }
+    
+    function fill_in_driver()
+    {
+        cleanBoard_2();
+        draw_fill_in_driver();
+    }
+    
+    function draw_fill_in_driver()
+    {
+        var form_driver = document.getElementById("form_driver");
+        
+        var driver_area = document.createElement("div");
+        driver_area.id = "driver_area";
+        driver_area.className = "border_effect";
+        driver_area.setAttribute("attemptsAmount", 0);
+        driver_area.addEventListener("click", function () {
+        });
+        form_driver.appendChild(driver_area);
+        
+        
+        
+        
+        
+        
+        var search_driver = document.createElement("div");
+        search_driver.id = "search_driver";
+        search_driver.style.height = "auto";
+        search_driver.style.width = "100%";
+        search_driver.style.backgroundColor = "transparent";
+        search_driver.style.padding = "10px";
+        search_driver.setAttribute("attemptsAmount", 0);
+        search_driver.addEventListener("click", function () {
+        });
+        driver_area.appendChild(search_driver);
+        
+        
+        
+        
+        
+        
+        var placeId = "search_driver";
+        var attemptsAmount = $("#search_driver").attr("attemptsAmount");
+        if (attemptsAmount == 0)
+        {
+            attemptsAmount++;
+            $("#search_driver").attr("attemptsAmount", attemptsAmount);
+            var userType = 18;
+            {#alert(" placeId "+placeId+" attemptsAmount "+attemptsAmount+" userType "+userType);#}
+            add_container(placeId, attemptsAmount, userType);
+        }
+        
+        
+        
+        
+        
+        
+        var search_driver_img = document.createElement("img");
+        search_driver_img.id = "search_driver_img";
+        search_driver_img.className = "relativePosition boton_personalizado";
+        search_driver_img.src = "files/images/icons/search/search.png";
+        search_driver_img.alt = "";
+        search_driver_img.style.display = "inline-block";
+        search_driver_img.addEventListener("click", function () {
+            var board = "search_driver";
+            get_topics(board);
+            
+            get_driver();
+        });
+        driver_area.appendChild(search_driver_img);
+    }
+    
+    function get_driver()
+    {
+        var form = $('#get-driver-ajax');
+        var url = form.attr('action');
+
+{#        alert("topic_array "+topic_array);#}
+
+        $.post(url, {topic_array: topic_array}, function (data)
+        {
+                {#$locationData[$i] = array(
+                    'driverUser_id' => $driverUser_id,
+                    'commercial_id' => $commercial_id,
+                    'commercial_name' => $commercial_name,
+                    'commercial_tin' => $commercial_tin,
+                    'user_id' => $user_id,
+                    'user_name' => $user_name,
+                    'user_email' => $user_email,
+                    'amountRecords' => $amountRecords
+                );#}
+            
+            var amountRecords = data[0].amountRecords;
+            alert('#get-driver-ajax '+amountRecords);
+            
+            draw_driver_results(data);
+        }).fail(function () {
+            alert('ERROR #get-driver-ajax');
+        });
+    }
+    
+    function draw_driver_results(data)
+    {
+        var select_driver = document.getElementById("select_driver");
+        
+        var amountRecords = data[0].amountRecords;
+        
+        for (i = 0; i < amountRecords; i++)
+        {
+            {#
+                $locationData[$i] = array(
+                    'driverUser_id' => $driverUser_id,
+                    'commercial_id' => $commercial_id,
+                    'commercial_name' => $commercial_name,
+                    'commercial_tin' => $commercial_tin,
+                    'driver_id' => $driver_id,
+                    'driver_name' => $driver_name,
+                    'driver_firstGivenName' => $driver_firstGivenName,
+                    'driver_secondGivenName' => $driver_secondGivenName,
+                    'driver_firstFamilyName' => $driver_firstFamilyName,
+                    'driver_secondFamilyName' => $driver_secondFamilyName,
+                    'driver_email' => $driver_email,
+                    'amountRecords' => $amountRecords
+                );
+            #}
+            
+            var driverUser_id = data[i].driverUser_id;
+            var commercial_id = data[i].commercial_id;
+            var commercial_name = data[i].commercial_name;
+            var commercial_tin = data[i].commercial_tin;
+            var driver_id = data[i].driver_id;
+            var driver_name = data[i].driver_name;
+            var driver_firstGivenName = data[i].driver_firstGivenName;
+            var driver_secondGivenName = data[i].driver_secondGivenName;
+            var driver_firstFamilyName = data[i].driver_firstFamilyName;
+            var driver_secondFamilyName = data[i].driver_secondFamilyName;
+            var driver_email = data[i].driver_email;
+            var amountRecords = data[i].amountRecords;
+            
+            var driverUser_option_result = document.createElement("option");
+            driverUser_option_result.id = "driverUser_option_result" + driverUser_id;
+            driverUser_option_result.value = driverUser_id;
+            driverUser_option_result.textContent = driverUser_id + " " + 
+                        commercial_name + " " + commercial_tin + " " + 
+                        driver_id + " " + driver_name + " " + driver_firstGivenName + " " + 
+                        driver_firstFamilyName + " " + driver_email;
+            select_driver.appendChild(driverUser_option_result);
+        }
+        
+        document.getElementById("select_driver").style.backgroundColor = "fuchsia";
+    }
+    
+    function confirm_vehicle(form_vehicle)
+    {
+        var div_vehicle = document.createElement("div");
+        div_vehicle.id = "div_vehicle";
+        div_vehicle.className = "relativePosition";
+        div_vehicle.textContent = "vehicle";
+        div_vehicle.style.display = "inline-block";
+        form_vehicle.appendChild(div_vehicle);
+
+        var select_vehicle = document.createElement("select");
+        select_vehicle.id = "select_vehicle";
+        select_vehicle.className = "relativePosition";
+        select_vehicle.style.display = "inline-block";
+        select_vehicle.addEventListener("mouseover", function () {
+            select_vehicle.style.backgroundColor = "white";
+        });
+        form_vehicle.appendChild(select_vehicle);
+
+        var confirm_vehicle = document.createElement("img");
+        confirm_vehicle.id = "confirm_vehicle";
+        confirm_vehicle.className = "relativePosition boton_personalizado";
+        confirm_vehicle.src = "files/images/icons/ok.png";
+        confirm_vehicle.alt = "";
+        confirm_vehicle.style.display = "inline-block";
+        confirm_vehicle.addEventListener("click", function () {
+        });
+        form_vehicle.appendChild(confirm_vehicle);
+        $("#confirm_vehicle").click(function () {
+            var select_vehicle = document.getElementById("select_vehicle").value;
+            
+            if (select_vehicle == -1)
+            {
+                insert_new_vehicle();
+            } else if (select_vehicle == 0)
+            {
+                fill_in_vehicle();
+            }
+            else
+            {
+                cleanBoard();
+            }
+        });
+        get_vehicle_list(select_vehicle);
+    }
+    
+    function insert_new_vehicle()
+    {
+        cleanBoard();
+        draw_new_vehicle();
+    }
+    
+    function draw_new_vehicle()
+    {
+        var form_vehicle = document.getElementById("form_vehicle");
+        
+        
+        var vehicle_area = document.createElement("div");
+        vehicle_area.id = "vehicle_area";
+        vehicle_area.setAttribute("attemptsAmount", 0);
+        vehicle_area.addEventListener("click", function () {
+        });
+        vehicle_area.addEventListener("mouseover", function () {
+            {#alert(" mouse over");#}
+            var currentList_content = document.getElementById("vehicle_area");
+            currentList_content.classList.add("visibleScroll");
+        });
+        vehicle_area.addEventListener("mouseout", function () {
+            {#alert(" mouse out");#}
+            var currentList_content = document.getElementById("vehicle_area");
+            currentList_content.classList.remove("visibleScroll");
+        });
+        form_vehicle.appendChild(vehicle_area);
+        
+        
+        
+        var div_new_vehicle = document.createElement("div");
+        div_new_vehicle.id = "div_new_vehicle";
+        div_new_vehicle.className = "relativePosition";
+        {#div_new_vehicle.textContent = "vehicle";#}
+        div_new_vehicle.width = "100%";
+        div_new_vehicle.style.height = "max-content";
+        div_new_vehicle.style.marginLeft = "0px";
+        {#div_new_vehicle.style.display = "inline-block";#}
+        vehicle_area.appendChild(div_new_vehicle);
+        
+        
+        var complement = "";
+        
+        
+        var label = "ownerVehicle_user_name_label" + complement;
+        var label_value = "ownerVehicle user_name: ";
+        var row = "ownerVehicle_user_name_input" + complement;
+        draw_raw(label, label_value, "", row, div_new_vehicle);
+        
+        var label = "ownerVehicle_user_id_label" + complement;
+        var label_value = "ownerVehicle user_id: ";
+        var row = "ownerVehicle_user_id_input" + complement;
+        draw_raw(label, label_value, "", row, div_new_vehicle);
+        
+        var label = "ownerVehicle_user_email_label" + complement;
+        var label_value = "ownerVehicle user_email: ";
+        var row = "ownerVehicle_user_email_input" + complement;
+        draw_raw(label, label_value, "", row, div_new_vehicle);
+        
+        
+        
+        
+        var search_ownerVehicle_img = document.createElement("img");
+        search_ownerVehicle_img.id = "search_ownerVehicle_img";
+        search_ownerVehicle_img.className = "relativePosition boton_personalizado";
+        search_ownerVehicle_img.src = "files/images/icons/search/search.png";
+        search_ownerVehicle_img.alt = "";
+        search_ownerVehicle_img.style.display = "inline-block";
+        search_ownerVehicle_img.addEventListener("click", function () {
+            search_ownerVehicle(ownerVehicle_div);
+        });
+        div_new_vehicle.appendChild(search_ownerVehicle_img);
+        
+        
+        var ownerVehicle_div = document.createElement("div");
+        ownerVehicle_div.id = "ownerVehicle_div";
+        ownerVehicle_div.className = "relativePosition";
+        {#ownerVehicle_div.textContent = "vehicle";#}
+        ownerVehicle_div.width = "100%";
+        ownerVehicle_div.style.height = "max-content";
+        {#ownerVehicle_div.style.backgroundColor = "red";#}
+        ownerVehicle_div.style.marginLeft = "0px";
+        {#ownerVehicle_div.style.display = "inline-block";#}
+        div_new_vehicle.appendChild(ownerVehicle_div);
+            
+        var select_ownerVehicle = document.createElement("select");
+        select_ownerVehicle.id = "select_ownerVehicle";
+        select_ownerVehicle.className = "relativePosition";
+        select_ownerVehicle.style.display = "inline-block";
+        ownerVehicle_div.appendChild(select_ownerVehicle);
+        
+        
+            
+        
+        
+        var label = "vehicle_plate_label" + complement;
+        var label_value = "vehicle plate: ";
+        var row = "vehicle_plate_input" + complement;
+        draw_raw(label, label_value, "", row, div_new_vehicle);
+        
+        var label = "vehicle_type_label" + complement;
+        var label_value = "vehicle type: ";
+        var row = "vehicle_type_input" + complement;
+        draw_raw(label, label_value, "", row, div_new_vehicle);
+        
+        
+        
+        
+        var send_new_vehicle = document.createElement("img");
+        send_new_vehicle.id = "send_new_vehicle";
+        send_new_vehicle.className = "relativePosition boton_personalizado";
+        send_new_vehicle.src = "files/images/icons/ok.png";
+        send_new_vehicle.alt = "";
+        send_new_vehicle.style.display = "inline-block";
+        send_new_vehicle.setAttribute('content', "non_search_div");
+        send_new_vehicle.addEventListener("click", function () {
+            set_new_vehicle();
+        });
+        div_new_vehicle.appendChild(send_new_vehicle);
+    }
+    
+    function search_ownerVehicle(ownerVehicle_div)
+    {
+        var ownerVehicle_user_name = document.getElementById("ownerVehicle_user_name_input").value;
+        var ownerVehicle_user_id = document.getElementById("ownerVehicle_user_id_input").value;
+        var ownerVehicle_user_email = document.getElementById("ownerVehicle_user_email_input").value;
+        
+        var form = $('#search-ownerVehicle-ajax');
+        var url = form.attr('action');
+
+        $.post(url, 
+        {
+            ownerVehicle_user_name : ownerVehicle_user_name, 
+            ownerVehicle_user_id : ownerVehicle_user_id, 
+            ownerVehicle_user_email : ownerVehicle_user_email
+        },
+        function (data)
+        {
+            
+            {#$locationData[$i] = array(
+                'user_id' => $user_id,
+                'user_name' => $user_name,
+                'user_firstGivenName' => $user_firstGivenName,
+                'user_secondGivenName' => $user_secondGivenName,
+                'user_firstFamilyName' => $user_firstFamilyName,
+                'user_secondFamilyName' => $user_secondFamilyName,
+                'user_email' => $user_email,
+                'user_biography' => $user_biography,
+                'amountRecords' => $amountRecords
+            );#}
+                        
+            var amountRecords = data[0].amountRecords;
+            
+            document.getElementById("select_ownerVehicle").innerHTML = "";
+            var select_ownerVehicle = document.getElementById("select_ownerVehicle");
+            
+            {#search_ownerVehicle#}
+            
+            for (i = 0; i < amountRecords; i++)
+            {
+                var user_id = data[i].user_id;
+                var user_name = data[i].user_name;
+                var user_firstGivenName = data[i].user_firstGivenName;
+                var user_secondGivenName = data[i].user_secondGivenName;
+                var user_firstFamilyName = data[i].user_firstFamilyName;
+                var user_secondFamilyName = data[i].user_secondFamilyName;
+                var user_email = data[i].user_email;
+                var user_biography = data[i].user_biography;
+                
+{#                var driver_name = data[i].driver_name;
+                var driver_firstGivenName = data[i].driver_firstGivenName;
+                var driver_secondGivenName = data[i].driver_secondGivenName;
+                var driver_firstFamilyName = data[i].driver_firstFamilyName;
+                var driver_secondFamilyName = data[i].driver_secondFamilyName;
+                var driver_email = data[i].driver_email;#}
+                
+                var ownerVehicle_option = document.createElement("option");
+                ownerVehicle_option.id = "ownerVehicle_option" + user_id;
+                ownerVehicle_option.value = user_id;
+                ownerVehicle_option.textContent = user_id + " : " + user_name + " " + 
+                        user_firstGivenName + " " + 
+                        user_firstFamilyName + " " + 
+                        user_email;
+                select_ownerVehicle.appendChild(ownerVehicle_option);
+            }
+            
+            alert('#search-ownerVehicle-ajax');
+        }).fail(function () {
+            alert('ERROR #search-ownerVehicle-ajax');
+        });
+    }
+    
+    function set_new_vehicle()
+    {
+        var form = $('#set-new-vehicle-ajax');
+        var url = form.attr('action');
+        
+        var select_ownerVehicle = document.getElementById("select_ownerVehicle").value;
+        var vehicle_plate = document.getElementById("vehicle_plate_input").value;
+        var vehicle_type = document.getElementById("vehicle_type_input").value;
+        
+        $.post(url,
+        {
+            select_ownerVehicle : select_ownerVehicle, 
+            vehicle_plate : vehicle_plate, 
+            vehicle_type : vehicle_type
+        },
+        function (data)
+        {
+            var select_vehicle = document.getElementById("select_vehicle");
+            
+            var vehicleUser_id = data[0].vehicleUser_id;
+            var vehicle_id = data[0].vehicle_id;
+            var vehicle_plate = data[0].vehicle_plate;
+            var vehicleType_id = data[0].vehicleType_id;
+            var vehicleType_name = data[0].vehicleType_name;
+            
+            var vehicleUser_option_result = document.createElement("option");
+            vehicleUser_option_result.id = "vehicleUser_option_result" + vehicle_id;
+            vehicleUser_option_result.value = vehicleUser_id;
+            vehicleUser_option_result.textContent = vehicleUser_id+" "+ vehicle_plate+" "+vehicleType_name;
+            vehicleUser_option_result.selected = true;
+            select_vehicle.appendChild(vehicleUser_option_result);
+            
+            document.getElementById("select_vehicle").style.backgroundColor = "fuchsia";
+            
+            alert('#set-new-vehicle-ajax');
+        }).fail(function () {
+            alert('ERROR #set-new-vehicle-ajax');
+        });
+    }
+    
+    function get_vehicle_list(select_vehicle)
+    {
+        var form = $('#get-vehicle-list-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            {#
+            $locationData[$i] = array(
+                'vehicle_id' => $vehicle_id,
+                'vehicle_plate' => $vehicle_plate,
+                'vehicleType_id' => $vehicleType_id,
+                'vehicleType_name' => $vehicleType_name,
+                'amountRecords' => $amountRecords
+            );
+            #}
+                        
+            var amountRecords = data[0].amountRecords;
+            
+            for (i = 0; i < amountRecords; i++)
+            {
+                var vehicleUser_id = data[i].vehicleUser_id;
+                var vehicle_id = data[i].vehicle_id;
+                var vehicle_plate = data[i].vehicle_plate;
+                var vehicleType_id = data[i].vehicleType_id;
+                var vehicleType_name = data[i].vehicleType_name;
+            
+                var vehicle_option = document.createElement("option");
+                vehicle_option.id = "vehicle_option" + vehicle_id;
+                vehicle_option.value = vehicleUser_id;
+                vehicle_option.textContent = vehicleUser_id + " "+ vehicle_plate + " " + vehicleType_name;
+                select_vehicle.appendChild(vehicle_option);
+            }
+            
+            var vehicle_option = document.createElement("option");
+            vehicle_option.id = "vehicle_option" + "other";
+            vehicle_option.value = 0;
+            vehicle_option.textContent = "other";
+            select_vehicle.appendChild(vehicle_option);
+            
+            var vehicle_option = document.createElement("option");
+            vehicle_option.id = "vehicle_option" + "new";
+            vehicle_option.value = -1;
+            vehicle_option.textContent = "new";
+            select_vehicle.appendChild(vehicle_option);
+            
+            alert('#get-vehicle-list-ajax '+amountRecords);
+            
+        }).fail(function () {
+            alert('ERROR #get-vehicle-list-ajax');
+        });
+    }
+    
+    function draw_reach_tool()
+    {
+        var new_env = "form_reach";
+        var environment = "idfs_5";
+        change_location_environment(new_env, environment);
+    }
+    
+    function confirm_driver(form_driver)
+    {
+        var div_driver = document.createElement("div");
+        div_driver.id = "div_driver";
+        div_driver.className = "relativePosition";
+        div_driver.textContent = "driver";
+        div_driver.style.display = "inline-block";
+        form_driver.appendChild(div_driver);
+
+        var select_driver = document.createElement("select");
+        select_driver.id = "select_driver";
+        select_driver.className = "relativePosition";
+        select_driver.style.display = "inline-block";
+        select_driver.addEventListener("mouseover", function () {
+            select_driver.style.backgroundColor = "white";
+        });
+        form_driver.appendChild(select_driver);
+
+        var confirm_driver = document.createElement("img");
+        confirm_driver.id = "confirm_driver";
+        confirm_driver.className = "relativePosition boton_personalizado";
+        confirm_driver.src = "files/images/icons/ok.png";
+        confirm_driver.alt = "";
+        confirm_driver.style.display = "inline-block";
+        confirm_driver.addEventListener("click", function () {
+        });
+        form_driver.appendChild(confirm_driver);
+        $("#confirm_driver").click(function () {
+            var select_driver = document.getElementById("select_driver").value;
+            
+            if (select_driver == -1)
+            {
+                insert_new_driver();
+            } else if (select_driver == 0)
+            {
+                fill_in_driver();
+            } else
+            {
+                cleanBoard_2();
+            }
+        });
+        get_driver_list(select_driver);
+    }
+    
+    function insert_new_driver()
+    {
+        cleanBoard_2();
+        draw_new_driver();
+    }
+    
+    function draw_new_driver()
+    {
+        var form_driver = document.getElementById("form_driver");
+        
+        var driver_area = document.createElement("div");
+        driver_area.id = "driver_area";
+        driver_area.setAttribute("attemptsAmount", 0);
+        driver_area.addEventListener("click", function () {
+        });
+        driver_area.addEventListener("mouseover", function () {
+            var currentList_content = document.getElementById("driver_area");
+            currentList_content.classList.add("visibleScroll");
+        });
+        driver_area.addEventListener("mouseout", function () {
+            var currentList_content = document.getElementById("driver_area");
+            currentList_content.classList.remove("visibleScroll");
+        });
+        form_driver.appendChild(driver_area);
+        
+        
+    
+        
+        
+        
+        var div_new_driver = document.createElement("div");
+        div_new_driver.id = "div_new_driver";
+        div_new_driver.className = "relativePosition";
+        {#div_new_driver.textContent = "driver";#}
+        div_new_driver.width = "100%";
+        div_new_driver.style.height = "max-content";
+        div_new_driver.style.marginLeft = "0px";
+        {#div_new_driver.style.display = "inline-block";#}
+        driver_area.appendChild(div_new_driver);
+        
+        var complement = "";
+        
+        
+        var label = "userDriver_user_name_label" + complement;
+        var label_value = "username driver: ";
+        var row = "userDriver_user_name_input" + complement;
+        draw_raw(label, label_value, "", row, div_new_driver);
+        
+        var label = "userDriver_user_email_label" + complement;
+        var label_value = "user_email driver: ";
+        var row = "userDriver_user_email_input" + complement;
+        draw_raw(label, label_value, "", row, div_new_driver);
+        
+        var label = "userDriver_user_id_label" + complement;
+        var label_value = "user_id driver: ";
+        var row = "userDriver_user_id_input" + complement;
+        draw_raw(label, label_value, "", row, div_new_driver);
+        
+        
+        
+        
+        
+        
+        
+        var search_userDriver_img = document.createElement("img");
+        search_userDriver_img.id = "search_userDriver_img";
+        search_userDriver_img.className = "relativePosition boton_personalizado";
+        search_userDriver_img.src = "files/images/icons/search/search.png";
+        search_userDriver_img.alt = "";
+        search_userDriver_img.style.display = "inline-block";
+        search_userDriver_img.addEventListener("click", function () {
+            search_userDriver(select_userDriver);
+        });
+        div_new_driver.appendChild(search_userDriver_img);
+        
+        
+        var userDriver_div = document.createElement("div");
+        userDriver_div.id = "userDriver_div";
+        userDriver_div.className = "relativePosition border_effect";
+        {#userDriver_div.textContent = "vehicle";#}
+        userDriver_div.width = "100%";
+        userDriver_div.style.height = "max-content";
+        {#userDriver_div.style.backgroundColor = "red";#}
+        userDriver_div.style.marginLeft = "0px";
+        {#userDriver_div.style.display = "inline-block";#}
+        div_new_driver.appendChild(userDriver_div);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        var div_1 = document.createElement("div");
+        userDriver_div.appendChild(div_1);
+        
+        var select_userDriver = document.createElement("select");
+        select_userDriver.id = "select_userDriver";
+        select_userDriver.className = "relativePosition";
+        select_userDriver.addEventListener("click", function () {
+            search_userDriverCommercial(select_userDriver, select_userDriverCommercial, div_3);
+        });
+        div_1.appendChild(select_userDriver);
+        
+        
+        
+        
+        
+        var div_2 = document.createElement("div");
+        div_2.id = "div_2";
+        userDriver_div.appendChild(div_2);
+        
+        
+        
+        var div_3 = document.createElement("div");
+        div_3.id = "div_3";
+        div_3.style.display = "none";
+        div_2.appendChild(div_3);
+        
+        var select_userDriverCommercial = document.createElement("select");
+        select_userDriverCommercial.id = "select_userDriverCommercial";
+        select_userDriverCommercial.className = "relativePosition";
+        div_3.appendChild(select_userDriverCommercial);
+        
+        var label = "commercial_id_label" + complement;
+        var label_value = "id: ";
+        var row = "commercial_id_input" + complement;
+        draw_raw(label, label_value, "", row, div_3);
+        document.getElementById(row).disabled = true;
+        document.getElementById(row).style.backgroundColor = "transparent";
+        
+        
+        var label = "commercial_name_label" + complement;
+        var label_value = "name: ";
+        var row = "commercial_name_input" + complement;
+        draw_raw(label, label_value, "", row, div_3);
+        document.getElementById(row).disabled = true;
+        document.getElementById(row).style.backgroundColor = "transparent";
+        
+        var label = "commercial_tin_label" + complement;
+        var label_value = "TIN: ";
+        var row = "commercial_tin_input" + complement;
+        draw_raw(label, label_value, "", row, div_3);
+        document.getElementById(row).disabled = true;
+        document.getElementById(row).style.backgroundColor = "transparent";
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        var label = "new_commercial_name_label" + complement;
+        var label_value = "commercial name: ";
+        var row = "new_commercial_name_input" + complement;
+        draw_raw(label, label_value, "", row, div_2);
+        {#document.getElementById(row).disabled = true;
+        document.getElementById(row).style.backgroundColor = "transparent";#}
+        
+        var label = "new_commercial_tin_label" + complement;
+        var label_value = "commercial TIN: ";
+        var row = "new_commercial_tin_input" + complement;
+        draw_raw(label, label_value, "", row, div_2);
+        document.getElementById(row).type = "numeric";
+        
+        {#document.getElementById(row).style.backgroundColor = "transparent";#}
+        
+        
+        
+        
+        
+        
+        
+        var send_new_driver = document.createElement("img");
+        send_new_driver.id = "send_new_driver";
+        send_new_driver.className = "relativePosition boton_personalizado";
+        send_new_driver.src = "files/images/icons/ok.png";
+        send_new_driver.alt = "";
+        send_new_driver.style.display = "inline-block";
+        send_new_driver.setAttribute('content', "non_search_div");
+        send_new_driver.addEventListener("click", function () {
+            set_new_driver();
+        });
+        div_new_driver.appendChild(send_new_driver);
+    }
+    
+    function search_userDriver(select_userDriver)
+    {
+        var userDriver_user_name = document.getElementById("userDriver_user_name_input").value;
+        var userDriver_user_email = document.getElementById("userDriver_user_email_input").value;
+        var userDriver_user_id = document.getElementById("userDriver_user_id_input").value;
+        
+        var form = $('#search-userDriver-ajax');
+        var url = form.attr('action');
+
+        $.post(url,
+        {
+            userDriver_user_name: userDriver_user_name,
+            userDriver_user_email: userDriver_user_email,
+            userDriver_user_id: userDriver_user_id
+        },
+        function (data)
+        {
+            var amountRecords = data[0].amountRecords;
+            
+            select_userDriver.innerHTML = "";
+            document.getElementById("div_3").style.display = "none";
+            
+            for (i = 0; i < amountRecords; i++)
+            {
+                var user_id = data[i].user_id;
+                var user_name = data[i].user_name;
+                var user_firstGivenName = data[i].user_firstGivenName;
+                var user_secondGivenName = data[i].user_secondGivenName;
+                var user_firstFamilyName = data[i].user_firstFamilyName;
+                var user_secondFamilyName = data[i].user_secondFamilyName;
+                var user_email = data[i].user_email;
+                var user_biography = data[i].user_biography;
+                        
+                {#select_userDriver.value = user_id;
+                select_userDriver.textContent = user_id + " : " + user_name + " " + 
+                    user_firstGivenName + " " + 
+                    user_secondGivenName + " " + 
+                    user_firstFamilyName + " " + 
+                    user_secondFamilyName + " " + 
+                    user_email;
+                    #}
+                var userDriver_option = document.createElement("option");
+                userDriver_option.id = "userDriver_option" + user_id;
+                userDriver_option.value = user_id;
+                userDriver_option.textContent = user_id + " : " + user_name + " " + 
+                        user_firstGivenName + " " + 
+                        user_firstFamilyName + " " + 
+                        user_email;
+                select_userDriver.appendChild(userDriver_option);
+            }
+            
+            alert('#search-userDriver-ajax');
+        }).fail(function () {
+            alert('ERROR #search-userDriver-ajax');
+        });
+    }
+    
+    function search_userDriverCommercial(select_userDriver, select_userDriverCommercial, div_3)
+    {
+        var form = $('#search-userDriverCommercial-ajax');
+        var url = form.attr('action');
+
+        var user_id = select_userDriver.value;
+
+        $.post(url, {user_id: user_id}, function (data)
+        {
+            var amountRecords = data[0].amountRecords;
+
+            if (amountRecords == 0)
+            {
+                div_3.style.display = "none";
+            } else
+            {
+                div_3.style.display = "block";
+            }
+
+            select_userDriverCommercial.innerHTML = "";
+
+            for (i = 0; i < amountRecords; i++)
+            {
+                var commercial_id = data[i].commercial_id;
+                var commercial_name = data[i].commercial_name;
+                var commercial_tin = data[i].commercial_tin;
+                var user_id = data[i].user_id;
+                var user_name = data[i].user_name;
+                var user_firstGivenName = data[i].user_firstGivenName;
+                var user_secondGivenName = data[i].user_secondGivenName;
+                var user_firstFamilyName = data[i].user_firstFamilyName;
+                var user_secondFamilyName = data[i].user_secondFamilyName;
+                var user_email = data[i].user_email;
+                var user_biography = data[i].user_biography;
+
+                var option_usertDriverCommercial = document.createElement("option");
+                option_usertDriverCommercial.id = "option_usertDriverCommercial" + commercial_id;
+                option_usertDriverCommercial.value = commercial_id;
+                option_usertDriverCommercial.setAttribute("commercial_id", commercial_id);
+                option_usertDriverCommercial.setAttribute("commercial_name", commercial_name);
+                option_usertDriverCommercial.setAttribute("commercial_tin", commercial_tin);
+                option_usertDriverCommercial.textContent = commercial_id + " - " + commercial_name;
+                select_userDriverCommercial.appendChild(option_usertDriverCommercial);
+                
+                
+                
+                select_userDriverCommercial.addEventListener("change", function () {
+                    var i_value = select_userDriverCommercial.value;
+                    
+                    var current_commercial = document.getElementById("option_usertDriverCommercial"+i_value);
+                    
+                    var commercial_id = $("#"+current_commercial.id).attr("commercial_id");
+                    var commercial_name = $("#"+current_commercial.id).attr("commercial_name");
+                    var commercial_tin = $("#"+current_commercial.id).attr("commercial_tin");
+                    
+                    var commercial_id_input = document.getElementById("commercial_id_input");
+                    var commercial_name_input = document.getElementById("commercial_name_input");
+                    var commercial_tin_input = document.getElementById("commercial_tin_input");
+                    
+                    commercial_id_input.value = commercial_id;
+                    commercial_name_input.value = commercial_name;
+                    commercial_tin_input.value = commercial_tin;
+                });
+            }
+            
+            {#alert('#search-userDriverCommercial-ajax'+amountRecords);#}
+        }).fail(function () {
+            alert('ERROR #search-userDriverCommercial-ajax');
+        });
+    }
+    
+    function set_new_driver()
+    {
+        var form = $('#set-new-driver-ajax');
+        var url = form.attr('action');
+
+        var user_id = document.getElementById("select_userDriver").value;
+        
+        var commercial_id = "";
+        var commercial_name = "";
+        var commercial_tin = "";
+        var commercial_action = "";
+        
+        if (document.getElementById("new_commercial_name_input").value && 
+            document.getElementById("new_commercial_tin_input").value)
+        {
+            commercial_action = "new";
+            var commercial_name = document.getElementById("new_commercial_name_input").value;
+            var commercial_tin = document.getElementById("new_commercial_tin_input").value;
+        } else
+        {
+            commercial_action = "existent";
+            var commercial_id = document.getElementById("commercial_id_input").value;
+        }
+        
+        alert("user_id ... "+user_id);
+        
+        $.post(url, {
+            user_id : user_id,
+            commercial_id : commercial_id,
+            commercial_name : commercial_name,
+            commercial_tin : commercial_tin,
+            commercial_action : commercial_action
+            }, function (data)
+        {
+            {#$locationData[] = array(
+                'new_driverUserId' => $driveruser_id,
+                'driver_commercial_array' => $driver_commercial_array,
+                'user_array' => $user_array,
+                'loggedUser_commercial_array' => $loggedUser_commercial_array
+            );#}
+            
+            
+            var new_driverUserId = data[0].new_driverUserId;
+            var driver_commercial_array = data[0].driver_commercial_array;
+            var user_array = data[0].user_array;
+            var loggedUser_commercial_array = data[0].loggedUser_commercial_array;
+            
+            
+            alert("new_driverUserId"+ new_driverUserId + "\n"+
+                  "driver_commercial_array"+ driver_commercial_array + "\n"+
+                  "user_array"+ user_array + "\n"+
+                  "loggedUser_commercial_array"+ loggedUser_commercial_array);
+            
+            {#$locationData[$i] = array(
+                'commercial_id' => $commercial_id,
+                'commercial_name' => $commercial_name,
+                'commercial_tin' => $commercial_tin,
+                'amountRecords' => $amountRecords
+            );#}
+            
+            var driver_commercial_id = driver_commercial_array[0]["commercial_id"];
+            var driver_commercial_name = driver_commercial_array[0]["commercial_name"];
+            var driver_commercial_tin = driver_commercial_array[0]["commercial_tin"];
+            
+            alert("\n - driver_commercial_id "+driver_commercial_id+
+                  "\n - driver_commercial_name "+driver_commercial_name+
+                  "\n - driver_commercial_tin "+driver_commercial_tin);
+            
+            
+            {#$locationData[] = array(
+                'user_id' => 0,
+                'user_name' => "",
+                'user_firstGivenName' => "",
+                'user_secondGivenName' => "",
+                'user_firstFamilyName' => "",
+                'user_secondFamilyName' => "",
+                'user_email' => "",
+                'user_biography' => "",
+                'amountRecords' => $amountRecords
+            );#}
+            
+            var user_id = user_array[0]["user_id"];
+            var user_name = user_array[0]["user_name"];
+            var user_firstGivenName = user_array[0]["user_firstGivenName"];
+            var user_secondGivenName = user_array[0]["user_secondGivenName"];
+            var user_firstFamilyName = user_array[0]["user_firstFamilyName"];
+            var user_secondFamilyName = user_array[0]["user_secondFamilyName"];
+            var user_email = user_array[0]["user_email"];
+            var user_biography = user_array[0]["user_biography"];
+            
+            
+            alert("\n - user_id "+user_id+
+                  "\n - user_name "+user_name+
+                  "\n - user_firstGivenName "+user_firstGivenName+
+                  "\n - user_secondGivenName "+user_secondGivenName+
+                  "\n - user_firstFamilyName "+user_firstFamilyName+
+                  "\n - user_secondFamilyName "+user_secondFamilyName+
+                  "\n - user_email "+user_email+
+                  "\n - user_biography "+user_biography);
+            
+            
+            {#$locationData[] = array(
+                'commercial_id' => 0,
+                'commercial_name' => "",
+                'commercial_tin' => "",
+                'user_id' => 0,
+                'user_name' => "",
+                'user_firstGivenName' => "",
+                'user_secondGivenName' => "",
+                'user_firstFamilyName' => "",
+                'user_secondFamilyName' => "",
+                'user_email' => "",
+                'user_biography' => "",
+                'amountRecords' => $amountRecords
+            );#}
+            
+            
+            var loggedUser_commercial_id = loggedUser_commercial_array[0]["commercial_id"];
+            var loggedUser_commercial_name = loggedUser_commercial_array[0]["commercial_name"];
+            var loggedUser_commercial_tin = loggedUser_commercial_array[0]["commercial_tin"];
+            
+            alert("\n - loggedUser_commercial_id "+loggedUser_commercial_id+
+                  "\n - loggedUser_commercial_name "+loggedUser_commercial_name+
+                  "\n - loggedUser_commercial_tin "+loggedUser_commercial_tin);
+            
+            
+            
+            {#var new_driverUserId = data[0].new_driverUserId;
+            var commercial_id = data[0].commercial_id;
+            var commercial_name = data[0].commercial_name;
+            var commercial_tin = data[0].commercial_tin;
+            var user_id = data[0].user_id;
+            var user_name = data[0].user_name;
+            var user_firstGivenName = data[0].user_firstGivenName;
+            var user_secondGivenName = data[0].user_secondGivenName;
+            var user_firstFamilyName = data[0].user_firstFamilyName;
+            var user_secondFamilyName = data[0].user_secondFamilyName;
+            var user_email = data[0].user_email;
+            var user_logged_commercial_id = data[0].user_logged_commercial_id;
+            var user_logged_commercial_name = data[0].user_logged_commercial_name;
+            var user_logged_commercial_tin = data[0].user_logged_commercial_tin;
+            
+            alert("commercial id"+user_logged_commercial_id + "\n"+
+                  "commercial name"+user_logged_commercial_name + "\n"+
+                  "commercial tin"+user_logged_commercial_tin);#}
+            
+                        
+            {#$locationData[] = array(
+                'new_driverUserId' => $driveruser_id,
+                'commercial_id' => $commercial_id,
+                'commercial_name' => $commercial_name,
+                'commercial_tin' => $commercial_tin,
+                'user_id' => $user_idcd,
+                'user_name' => $user_namecd,
+                'user_firstGivenName' => $user_firstGivenNamecd,
+                'user_secondGivenName' => $user_secondGivenNamecd,
+                'user_firstFamilyName' => $user_firstFamilyNamecd,
+                'user_secondFamilyName' => $user_secondFamilyNamecd,
+                'user_email' => $user_emailcd,
+                'user_logged_commercial_id' => $user_logged_commercial_id,
+                'user_logged_commercial_name' => $user_logged_commercial_name,
+                'user_logged_commercial_tin' => $user_logged_commercial_tin
+            );#}
+            
+            var driver_option = document.createElement("option");
+            driver_option.id = "driver_option" + new_driverUserId;
+            driver_option.value = new_driverUserId;
+            driver_option.selected = true;
+            driver_option.textContent = new_driverUserId + " " + user_name + " " + 
+                commercial_name + " " + commercial_tin + " " + 
+                user_firstGivenName + " " + 
+                user_firstFamilyName + " " + 
+                user_email;
+            document.getElementById("select_driver").appendChild(driver_option);
+            document.getElementById("select_driver").style.backgroundColor = "fuchsia";
+            
+            alert('#set-new-driver-ajax '+new_driverUserId);
+        }).fail(function () {
+            alert('ERROR #set-new-driver-ajax');
+        });
+    }
+    
+    function cleanBoard_2()
+    {
+        var form_driver = document.getElementById("form_driver");
+        
+        if (document.getElementById("driver_area"))
+        {
+            var driver_area = document.getElementById("driver_area");
+            form_driver.removeChild(driver_area);
+        }
+    }
+    
+    function get_driver_list(select_driver)
+    {
+        var form = $('#get-driver-list-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+                {#      
+                $locationData[] = array(
+                    'driverUser_id' => 0,
+                    'commercial_id' => 0,
+                    'commercial_name' => "",
+                    'commercial_tin' => 0,
+                    'driver_id' => 0,
+                    'driver_name' => "",
+                    'driver_firstGivenName' => "",
+                    'driver_secondGivenName' => "",
+                    'driver_firstFamilyName' => "",
+                    'driver_secondFamilyName' => "",
+                    'driver_email' => "",
+                    'amountRecords' => 0
+                );#}
+         
+            var amountRecords = data[0].amountRecords;
+            
+            for (i = 0; i < amountRecords; i++)
+            {
+                var driverUser_id = data[i].driverUser_id;
+                var commercial_id = data[i].commercial_id;
+                var commercial_name = data[i].commercial_name;
+                var commercial_tin = data[i].commercial_tin;
+                var driver_id = data[i].driver_id;
+                var driver_name = data[i].driver_name;
+                var driver_firstGivenName = data[i].driver_firstGivenName;
+                var driver_secondGivenName = data[i].driver_secondGivenName;
+                var driver_firstFamilyName = data[i].driver_firstFamilyName;
+                var driver_secondFamilyName = data[i].driver_secondFamilyName;
+                var driver_email = data[i].driver_email;
+                
+                var driver_option = document.createElement("option");
+                driver_option.id = "driver_option" + commercial_id;
+                driver_option.value = driverUser_id;
+                driver_option.textContent = driverUser_id + " " + 
+                        commercial_name + " " + commercial_tin + " " + 
+                        driver_id + " " + driver_name + " " + driver_firstGivenName + " " + 
+                        driver_firstFamilyName + " " + driver_email;
+                select_driver.appendChild(driver_option);
+            }
+
+            var driver_option = document.createElement("option");
+            driver_option.id = "driver_option" + "other";
+            driver_option.value = 0;
+            driver_option.textContent = "other";
+            select_driver.appendChild(driver_option);
+            
+            var driver_option = document.createElement("option");
+            driver_option.id = "driver_option" + "new";
+            driver_option.value = -1;
+            driver_option.textContent = "new";
+            select_driver.appendChild(driver_option);
+            
+            alert('#get-driver-list-ajax');
+        }).fail(function () {
+            alert('ERROR #get-driver-list-ajax');
+        });
+    }
+    
+</script>

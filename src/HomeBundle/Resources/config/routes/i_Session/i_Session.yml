@@ -1,0 +1,94 @@
+check_session_form:
+    path:     /checkSession
+    defaults: { _controller: SessionBundle:Default:checkSession }
+    methods:  POST
+    
+log_in_user_form:
+    path:     /logInUser
+    defaults: { _controller: SessionBundle:Default:logInUser }
+    methods:  POST    
+    
+log_out_user_form:
+    path:     /logOutUser
+    defaults: { _controller: SessionBundle:Default:logOutUser }
+    methods:  POST
+
+
+
+    
+upload_profile_photo_form:
+    path:     /uploadProfilePhoto
+    defaults: { _controller: SessionBundle:Default:uploadProfilePhoto }
+    methods:  POST
+
+
+
+get_user_form:
+    path:     /getUser
+    defaults: { _controller: SessionBundle:User:getUser }
+    methods:  POST
+    
+get_parentsLocation_form:
+    path:     /getParentsLocation
+    defaults: { _controller: SessionBundle:User:getParentsLocation }
+    methods:  POST
+
+get_childrenLocation_form:
+    path:     /getChildrenLocation
+    defaults: { _controller: SessionBundle:User:getChildrenLocation }
+    methods:  POST
+
+
+
+
+
+
+
+
+    
+    
+
+
+
+index_session:
+    path:     /session
+    defaults: { _controller: HomeBundle:i_Session:index }
+    
+    
+    
+    
+
+sign_up_form:
+    path:     /signUp
+    defaults: { _controller: SignUpBundle:Default:signUp }
+    methods:  POST
+    
+get_location_form:
+    path:     /getLocation
+    defaults: { _controller: SignUpBundle:Default:getLocation }
+    methods:  POST
+    
+insert_location_form:
+    path:     /insertLocation
+    defaults: { _controller: SignUpBundle:Default:insertLocation }
+    methods:  POST
+    
+search_language_form:
+    path:     /searchLanguage
+    defaults: { _controller: SignUpBundle:Default:searchLanguage }
+    methods:  POST
+    
+get_territoriality_form:
+    path:     /getTerritoriality
+    defaults: { _controller: SignUpBundle:Default:getTerritoriality }
+    methods:  POST
+    
+search_shipping_category_form:
+    path:     /searchShippingCategory
+    defaults: { _controller: SignUpBundle:UserType:searchShippingCategory }
+    methods:  POST
+    
+get_final_location_user_form:
+    path:     /getFinalLocationUser
+    defaults: { _controller: SignUpBundle:UserType:getFinalLocationUser }
+    methods:  POST

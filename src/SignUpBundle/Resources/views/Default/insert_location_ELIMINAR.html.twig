@@ -1,0 +1,20 @@
+<script>
+
+    function insertLocation()
+    {
+        alert("INSERT LOCATION");
+        
+        var locationPosition = $("#user_location_signUpDiv").attr('locationPosition');
+        
+        var ghjk = locationPosition - 1;
+        document.getElementById("frame_location"+ghjk).style.backgroundColor = "yellow";
+        
+        var addLocationName = document.createElement("img");
+        addLocationName.id = "addLocationName" + locationPosition;
+        addLocationName.className = "boton_personalizado relativePosition";
+        addLocationName.src = "files/images/icons/ok.png";
+        addLocationName.alt = "";
+        document.getElementById("frame_location" + ghjk).appendChild(addLocationName);
+    }
+
+</script>

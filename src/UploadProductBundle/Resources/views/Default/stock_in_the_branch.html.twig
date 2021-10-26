@@ -1,0 +1,53 @@
+{{ form_start(uploadproductBundle1.uploadproductBundle2.get_stock_in_the_branch_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-stock-in-the-branch-ajax'|default('form')} }) }}
+{{ form_end(uploadproductBundle1.uploadproductBundle2.get_stock_in_the_branch_form_ajax) }}
+
+<div>
+    
+</div>
+            
+<script>
+    function checkStockInTheBranch(productId, branchId)
+    {
+        var form = $('#get-stock-in-the-branch-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {productId: productId, branchId: branchId}, function (data)
+        {
+            {#$sendData[0] = array(
+                'branchId' => $branchId_Value,
+                'stockAmount' => $stockAmount_Value,
+                'priceAmount' => $priceAmount_Value,
+                'currencyName' => $currencyName_Value
+            );#}
+            
+{#document.getElementById("branch_list_stockPrice" + productId + branchId).style.backgroundColor = "yellow";
+document.getElementById("branch_list_stockAmount" + productId + branchId).style.backgroundColor = "yellow";#}
+            
+            var branchId_result = data[0].branchId;
+            var stockAmount = data[0].stockAmount;
+            var priceAmount = data[0].priceAmount;
+            var currencyName = data[0].currencyName;
+            
+            {#alert("# "+priceAmount);#}
+            
+            {#alert('#get-stock-in-the-branch-ajax '+branchId+
+                    "\n "+stockAmount+
+                    "\n "+priceAmount+
+                    "\n "+currencyName);#}
+            {#branch_list_stockCurrencyPrice.id = "branch_list_stockCurrencyPrice" + productId + branchId;#}
+            
+            if (priceAmount != 0)
+            {
+                document.getElementById("branch_list_stockPrice" + productId + branchId).value = priceAmount;
+                document.getElementById("branch_list_stockCurrencyPrice" + productId + branchId).value = currencyName;
+            }
+            
+            if (stockAmount != 0)
+                document.getElementById("branch_list_stockAmount" + productId + branchId).value = stockAmount;
+            
+        }).fail(function () {
+            alert('ERROR #get-stock-in-the-branch-ajax');
+        });
+        {#alert("tastingtyh2222 ..... ");#}
+    }
+</script>

@@ -1,0 +1,10 @@
+services:
+#    upload_product.example:
+#        class: UploadProductBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+    app.stockamount:
+        class: UploadProductBundle\Services\StockAmount
+
+    app.stockprice:
+        class: UploadProductBundle\Services\StockPrice

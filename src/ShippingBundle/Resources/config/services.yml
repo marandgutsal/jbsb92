@@ -1,0 +1,13 @@
+services:
+#    shipping.example:
+#        class: ShippingBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+    app.supplier:
+        class: ShippingBundle\Helper\Supplier
+
+    app.supplying:
+        class: ShippingBundle\Helper\Supplying
+
+    app.trajectory:
+        class: ShippingBundle\Helper\Trajectory

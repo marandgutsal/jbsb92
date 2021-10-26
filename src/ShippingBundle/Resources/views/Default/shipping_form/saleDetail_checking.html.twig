@@ -1,0 +1,550 @@
+<style>
+    .headerList_2 {
+        width: 100%;
+        height: 50px;
+        padding: 0px;
+        margin: 0px;
+    }
+    
+    .contentList_2 {
+        width: 100%;
+        height: auto;
+        {#max-height: 300px;#}
+        {#background-color: yellow;#}
+        margin: 0px;
+        padding: 0px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        {#cursor: pointer;#}
+        transition-property: all;
+        transition-duration: 0.5s;
+    }
+    
+    .item_button {
+        white-space: nowrap;
+        cursor: pointer;
+        background-color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 2px;
+    }
+    
+    .item_button:hover {
+        background-color: rgba(255, 255, 255, 1);
+    /*    color: #1ab7ea;*/
+    }
+    
+    .item_label {
+        white-space: nowrap;
+        cursor: default;
+        background-color: rgba(255, 255, 255, 0.2);
+        width: 100%;
+        margin-bottom: 2px;
+    }
+</style>
+
+{{ form_start(shippingBundle1.shippingBundle2.get_saleDetail_shipment_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-saleDetail-shipment-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.get_saleDetail_shipment_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.get_supplier_data_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-supplier-data-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.get_supplier_data_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.get_supplying_data_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-supplying-data-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.get_supplying_data_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.get_item_data_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-item-data-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.get_item_data_form_ajax) }}
+
+<div id="vcyudu_2">
+</div>
+
+<script>
+    function draw_shipment_from_saleDetail_menu(interaction_id, environment, productId, kindOfList, productImage, topicId, data)
+    {
+{#        alert(",,,,  ... saleDetail_checking ");#}
+        var checking_shipment_btn = document.createElement("img");
+        checking_shipment_btn.id = "checking_shipment_btn" + interaction_id + environment + productId;
+        checking_shipment_btn.className = "checking_shipment_btn boton_personalizado relativePosition";
+        checking_shipment_btn.src = "files/images/icons/ajax_clock_small.gif";
+        checking_shipment_btn.alt = "_"+productImage+"_";
+        checking_shipment_btn.disabled = true;
+        checking_shipment_btn.setAttribute('first_click', 0);
+        checking_shipment_btn.addEventListener("click", function (e) {
+            {#alert("1234");#}
+            var identity = new Array();
+            identity[0] = interaction_id;
+            identity[1] = environment;
+            identity[2] = productId;
+            
+            var object = document.getElementById("product_panel" + interaction_id + environment + productId);
+            var code = "saleDetail_shipment";
+
+            manage_panelEnvironment(identity, checking_shipment_btn, object, code);
+            $("#checking_shipment_btn" + interaction_id + environment + productId).attr('first_click', 1);
+            var sheet = document.getElementById("sheet_environment" + interaction_id + environment + productId + code);
+            
+            if ($("#"+sheet.id).attr(code) != 1)
+            {
+                $("#"+sheet.id).attr(code, 1);
+                sdfghtttt(sheet, identity, data);
+            }
+        });
+        document.getElementById("product_menu" + interaction_id + environment + productId).appendChild(checking_shipment_btn);
+    }
+    
+    function sdfghtttt(sheet, identity, data)
+    {
+        var interaction_id = identity[0];
+        var environment = identity[1];
+        var productId = identity[2];
+        
+        var shipment_id = data.shipment_id;
+        var saleDetail_id = data.saleDetail_id;
+        
+        var sghjknjetail_shipment_div = document.createElement("div");
+        sghjknjetail_shipment_div.style.backgroundColor = "green";
+        sghjknjetail_shipment_div.style.width = "100%";
+        sghjknjetail_shipment_div.style.height = "auto";
+        {#sghjknjetail_shipment_div.textContent = "_-´ "+shipment_id+" - "+saleDetail_id;#}
+        sghjknjetail_shipment_div.style.overflow = "scroll";
+        sheet.appendChild(sghjknjetail_shipment_div);
+        
+        get_saleDetail_shipment(shipment_id, sheet);
+{#        alert("#####");#}
+    }
+    
+    function get_saleDetail_shipment(shipment_id, sheet)
+    {
+        var form = $('#get-saleDetail-shipment-ajax');
+        var url = form.attr('action');
+
+        {#$saleDetail_id = $_POST['saleDetail_id'];#}
+
+        $.post(url, {shipment_id: shipment_id}, function (data)
+        {
+            {#
+            $locationData[] = array(
+                'supplier_results' => $supplier_results,
+                'supplying_results' => $supplying_results
+            );
+            #}
+            
+            {#
+                $supplierData[] = array(
+                    'supplier_id' => $supplier_id,
+                    'shipment_id' => $shipment_id,
+                    'amountRecords' => $amountRecords
+                );
+
+                $supplyingData[] = array(
+                    'supplying_id' => $supplying_id,
+                    'shipment_id' => $shipment_id,
+                    'amountRecords' => $amountRecords
+                );
+            #}
+                        
+            {#alert('#get-saleDetail-shipment-ajax - - - - - - - -');#}
+                        
+            draw_trajectory(data, sheet);
+                        
+            alert('#get-saleDetail-shipment-ajax');
+        }).fail(function () {
+            alert('ERROR #get-saleDetail-shipment-ajax');
+        });
+    }
+    
+    function draw_trajectory(data, sheet)
+    {
+        var amountRecords = data[0].amountRecords;
+        
+        for (i=0; i<amountRecords; i++)
+        {
+            draw_trajectory_list(data[i], sheet);
+        }
+    }
+    
+    function draw_trajectory_list(data, sheet)
+    {
+        {#
+            $trajectoryData[] = array(
+                'identifier' => $identifier,
+                'description' => $description,
+                'table_db' => $table_db,
+                'departure_date' => $departure_date,
+                'delivery_date' => $delivery_date,
+                'agreement_date' => $agreement_date,
+                'individual_description' => $individual_description,
+                'amountRecords' => $amountRecords
+            );
+        #}
+        var identifier = data.identifier;
+        var description = data.description;
+        var table_db = data.table_db;
+        var departure_date = data.departure_date;
+        var delivery_date = data.delivery_date;
+        var agreement_date = data.agreement_date;
+        var individual_description = data.individual_description;
+        var amountRecords = data.amountRecords;
+    
+        var saleDetail_shipment_div = document.createElement("div");
+        saleDetail_shipment_div.style.backgroundColor = "green";
+        saleDetail_shipment_div.style.width = "100%";
+        saleDetail_shipment_div.style.height = "auto";
+        saleDetail_shipment_div.textContent = individual_description;
+        saleDetail_shipment_div.style.overflow = "scroll";
+        sheet.appendChild(saleDetail_shipment_div);
+        
+        var link_description = document.createElement("div");
+        link_description.className = "buttonDescription headerList_2";
+        {#link_description.textContent = " - "+description;#}
+        link_description.style.height = "auto";
+        link_description.addEventListener("click", function (e) {
+            var xsxs = document.getElementById("content_description"+table_db+" "+identifier);
+            
+            open_node_description(xsxs, table_db, identifier);
+            
+            if (document.getElementById("content_description"+table_db+" "+identifier))
+            {
+                document.getElementById("content_description"+table_db+" "+identifier).innerHTML = "";
+
+                if (table_db == "supplier")
+                {
+                    get_supplier_data(identifier, content_description);
+                } else if (table_db == "supplying")
+                {
+                    get_supplying_data(identifier, content_description);
+                }
+            }
+        });
+        saleDetail_shipment_div.appendChild(link_description);
+        
+        var content_description = document.createElement("div");
+        content_description.id = "content_description"+table_db+" "+identifier;
+        content_description.className = "contentList_2";
+        content_description.addEventListener("mouseover", function (e) {
+            content_description.classList.add("visibleScroll");
+        });
+        content_description.addEventListener("mouseout", function (e) {
+            content_description.classList.remove("visibleScroll");
+        });
+        saleDetail_shipment_div.appendChild(content_description);
+        
+        var departure_div = document.createElement("div");
+        departure_div.textContent = " departure "+departure_date;
+        link_description.appendChild(departure_div);
+        
+        var delivery_div = document.createElement("div");
+        delivery_div.textContent = " delivery "+delivery_date;
+        link_description.appendChild(delivery_div);
+        
+        var agreement_div = document.createElement("div");
+        agreement_div.textContent = " agreement "+agreement_date;
+        link_description.appendChild(agreement_div);
+    }
+    
+    function get_supplier_data(supplier_id, content_description)
+    {
+        {#alert("get_supplier_data");#}
+        var form = $('#get-supplier-data-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {supplier_id: supplier_id}, function (data)
+        {
+            {#$supplierData[] = array(
+                'supplier_id' => $supplier_id,
+                'shipment_id' => $shipment_id,
+                'amountRecords' => $amountRecords
+            );#}
+                        
+            {#
+            $supplierData[] = array(
+                'supplier_id' => $supplier_id,
+                'shipment_id' => $shipment_id,
+                'shipping_id' => $shipping_id,
+                'driverUser_id' => $driverUser_id,
+                'vehicleUser_id' => $vehicleUser_id,
+                'reach_id' => $reach_id,
+                'amountRecords' => $amountRecords
+            );
+            #}
+                        
+            var supplier_id = data[0].supplier_id;
+            var shipment_id = data[0].shipment_id;
+            var shipping_id = data[0].shipping_id;
+            var driverUser_id = data[0].driverUser_id;
+            var vehicleUser_id = data[0].vehicleUser_id;
+            var reach_id = data[0].reach_id;
+            var amountRecords = data[0].amountRecords;
+            
+            draw_item_description("supplier_id", supplier_id, content_description, "label");
+            draw_item_description("shipping_id", shipping_id, content_description, "label");
+            draw_item_description("driverUser_id", driverUser_id, content_description, "button");
+            draw_item_description("vehicleUser_id", vehicleUser_id, content_description, "button");
+            draw_item_description("reach_id", reach_id, content_description, "button");
+            
+            {#alert('#get-supplier-data-ajax ' + amountRecords);#}
+        }).fail(function () {
+            alert('ERROR #get-supplier-data-ajax');
+        });
+    }
+    
+    function get_supplying_data(supplying_id, content_description)
+    {
+        {#alert("get_supplying_data");#}
+        var form = $('#get-supplying-data-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {supplying_id: supplying_id}, function (data)
+        {
+            {#$supplyingData[] = array(
+                'supplying_id' => $supplying_id,
+                'shipment_id' => $shipment_id,
+                'amountRecords' => $amountRecords
+            );#}
+                        
+            {#$supplyingData[] = array(
+                'supplying_id' => $supplying_id,
+                'shipment_id' => $shipment_id,
+                'branch_id' => $branch_id,
+                'branch_name' => $branch_name,
+                'branch_telephone' => $branch_telephone,
+                'branch_cellphone' => $branch_cellphone,
+                'branch_aditional_information' => $branch_aditional_information,
+                'commercial_id' => $commercial_id,
+                'commercial_name' => $commercial_name,
+                'commercial_logo' => $commercial_logo,
+                'location_id' => $location_id,
+                'amountRecords' => $amountRecords
+            );#}
+                        
+            var supplying_id = data[0].supplying_id;
+            var shipment_id = data[0].shipment_id;
+            var branch_id = data[0].branch_id;
+            var branch_name = data[0].branch_name;
+            var branch_telephone = data[0].branch_telephone;
+            var branch_cellphone = data[0].branch_cellphone;
+            var branch_aditional_information = data[0].branch_aditional_information;
+            var commercial_id = data[0].commercial_id;
+            var commercial_name = data[0].commercial_name;
+            var commercial_logo = data[0].commercial_logo;
+            var location_id = data[0].location_id;
+            var amountRecords = data[0].amountRecords;
+            
+            draw_item_description("supplying_id", supplying_id, content_description, "label");
+            draw_item_description("branch_id", branch_id, content_description, "label");
+            draw_item_description("branch_name", branch_name, content_description, "label");
+            draw_item_description("branch_telephone", branch_telephone, content_description, "label");
+            draw_item_description("branch_cellphone", branch_cellphone, content_description, "label");
+            draw_item_description("branch_aditional_information", branch_aditional_information, content_description, "label");
+            draw_item_description("commercial_id", commercial_id, content_description, "label");
+            draw_item_description("commercial_name", commercial_name, content_description, "label");
+            draw_item_description("commercial_logo", commercial_logo, content_description, "label");
+            draw_item_description("location_id", location_id, content_description, "button");
+
+            {#alert('#get-supplying-data-ajax ' + amountRecords);#}
+        }).fail(function () {
+            alert('ERROR #get-supplying-data-ajax');
+        });
+    }
+    
+    function draw_item_description(label, value, content_description, type)
+    {
+        var item_description = document.createElement("div");
+        item_description.textContent = label + ": " + value;
+        
+        if (type == "button")
+        {
+            {#headerList_2#}
+            item_description.className = "item_button";
+            {#content_description.id = "content_description"+table_db+" "+identifier;#}
+        } else if (type == "label")
+        {
+            {#headerList_2#}
+            item_description.className = "item_label";
+        }
+        
+        item_description.addEventListener("click", function (e) {
+            
+            if (type == "button")
+            {
+                get_item_data(label, value, item_description_moreDetail);
+                        
+                if (item_description.getAttribute("cdhdcds") != 1)
+                {
+                    var ftg = item_description.getAttribute("cdhdcds");
+                    item_description.setAttribute("cdhdcds", 1);
+                    item_description_moreDetail.style.height = "100px";
+                    item_description_moreDetail.style.maxHeight = "100px";
+                } else
+                {
+                    var ftg = item_description.getAttribute("cdhdcds");
+                    item_description.setAttribute("cdhdcds", 0);
+                    item_description_moreDetail.style.height = "0px";
+                    item_description_moreDetail.style.maxHeight = "0px";
+                }
+        
+            } else if (type == "label")
+            {
+                
+            }
+        });
+        content_description.appendChild(item_description);
+        
+        
+        
+        
+        
+        
+        if (type == "button")
+        {
+            var rsp_id = content_description.id;
+
+            var item_description_moreDetail = document.createElement("div");
+            item_description_moreDetail.id = rsp_id+" "+label+" "+value;
+            item_description_moreDetail.className = "contentList_2";
+            item_description_moreDetail.style.backgroundColor = "yellow";
+            item_description_moreDetail.style.height = "0px";
+            item_description_moreDetail.addEventListener("click", function (e) {
+
+            });
+            content_description.appendChild(item_description_moreDetail);
+        }
+    }
+    
+    function get_item_data(label, value, item_description_moreDetail)
+    {
+        var form = $('#get-item-data-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {label: label, value: value}, function (data)
+        {
+            var amountRecords = data[0].amountRecords;
+            var alias = data[0].alias;
+            var alias_length = data[0].alias.length;
+            
+            
+            {#alert(" - amountRecords "+amountRecords+
+                  "\n - alias "+alias+
+                  "\n - alias_length "+alias_length);#}
+            
+            for (h=0; h<=amountRecords; h++)
+            {
+                {#alert(" - amountRecords "+amountRecords);#}
+                
+                {#var taster = data[h].alias_i;#}
+                for (i=0; i<alias_length; i++)
+                {
+                    var alias_i = data[0].alias[i];
+                    
+                    var alias_iii = data[0][alias_i];
+                        
+                    {#alert(" alias_i "+alias_i+
+                          "\n alias_iii "+alias_iii);#}
+                          
+                    draw_item_content(alias_i, alias_iii, item_description_moreDetail);
+                }
+            }
+            
+            
+            {#            
+            $locationData[] = array(
+                'location_id' => $location_id,
+                'location_name' => $location_name,
+                'locationParent_id' => $locationParent_id,
+                'alias' => $alias,
+                'amountRecords' => $amountRecords
+            );
+            #}
+            
+            {#
+            $driverData[] = array(
+                'commercial_id' => $commercial_id,
+                'commercial_name' => $commercial_name,
+                'commercial_logo' => $commercial_logo,
+                'commercial_tin' => $commercial_tin,
+                'user_id' => $user_id,
+                'user_profilePhoto' => $user_profilePhoto,
+                'user_name' => $user_name,
+                'user_firstGivenName' => $user_firstGivenName,
+                'user_secondGivenName' => $user_secondGivenName,
+                'user_firstFamilyName' => $user_firstFamilyName,
+                'user_secondFamilyName' => $user_secondFamilyName,
+                'user_email' => $user_email,
+                'user_biography' => $user_biography,
+                'user_score' => $user_score,
+                'alias' => $alias,
+                'amountRecords' => $amountRecords
+            );
+            #}
+                        
+            {#            
+            $vehicleData[] = array(
+                'vehicle_id' => $vehicle_id,
+                'vehicle_plate' => $vehicle_plate,
+                'vehicleType_name' => $vehicleType_name,
+                'user_id' => $user_id,
+                'user_profilePhoto' => $user_profilePhoto,
+                'user_name' => $user_name,
+                'user_firstGivenName' => $user_firstGivenName,
+                'user_secondGivenName' => $user_secondGivenName,
+                'user_firstFamilyName' => $user_firstFamilyName,
+                'user_secondFamilyName' => $user_secondFamilyName,
+                'user_email' => $user_email,
+                'user_biography' => $user_biography,
+                'user_score' => $user_score,
+                'alias' => $alias,
+                'amountRecords' => $amountRecords
+            );
+            #}
+                        
+            {#                        
+            $vehicleData[] = array(
+                'departure_id' => $departure_id,
+                'departure_name' => $departure_name,
+                'delivery_id' => $delivery_id,
+                'delivery_name' => $delivery_name,
+                'alias' => $alias,
+                'amountRecords' => $amountRecords
+            );
+            #}
+                        
+            {#alert('#get-item-data-ajax');#}
+        }).fail(function () {
+            alert('ERROR #get-item-data-ajax');
+        });
+    }
+    
+    function draw_item_content(alias_i, data, item_description_moreDetail)
+    {
+        {#item_description_moreDetail.id = rsp_id+" "+label+" "+value;#}
+        var item_description_1 = document.createElement("div");
+        item_description_1.textContent = " "+alias_i+": "+data;
+        item_description_moreDetail.appendChild(item_description_1);
+    }
+    
+    function open_node_description(content_description, table_db, identifier)
+    {
+        var element = content_description.id;
+        
+        document.getElementById("content_description"+table_db+" "+identifier).setAttribute("cs", "0");
+        var cax = document.getElementById("content_description"+table_db+" "+identifier).getAttribute("cs");
+        
+        {#alert(" - table_db: "+table_db+" - identifier: "+identifier);#}
+        
+        if (document.getElementById("content_description"+table_db+" "+identifier).getAttribute("cdhs_csdcds") != 1)
+        {
+            document.getElementById("content_description"+table_db+" "+identifier).setAttribute("cdhs_csdcds", 1);
+            content_description.style.height = "100px";
+            content_description.style.maxHeight = "100px";
+            
+            {#var cdszp = document.getElementById("content_description"+table_db+" "+identifier).getAttribute("cdhs_csdcds");
+            alert("opened "+cdszp+" "+element+"\ntable_db "+table_db+" identifier "+identifier);#}
+        } else
+        {
+            document.getElementById("content_description"+table_db+" "+identifier).setAttribute("cdhs_csdcds", 0);
+            content_description.style.height = "0px";
+            content_description.style.maxHeight = "0px";
+            
+            {#var cdszp = document.getElementById("content_description"+table_db+" "+identifier).getAttribute("cdhs_csdcds");
+            alert("closed "+cdszp+" "+element+"\ntable_db "+table_db+" identifier "+identifier);#}
+        }
+    }
+</script>

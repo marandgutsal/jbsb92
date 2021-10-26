@@ -1,0 +1,44 @@
+<style>
+    
+</style>
+
+{{ form_start(shippingBundle1.shippingBundle2.match_nodes_taster_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'match-nodes-taster-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.match_nodes_taster_form_ajax) }}
+
+<div id="gam4">
+    match nodes
+</div>
+
+<script>
+    $("#gam4")
+    .click(function () {
+        match_nodes_taster();
+    });
+    
+    function match_nodes_taster()
+    {
+        var form = $('#match-nodes-taster-ajax');
+        var url = form.attr('action');
+        
+        var origin_id = 153;
+        var destiny_id = 150;
+        
+        $.post(url, {origin_id: origin_id, destiny_id: destiny_id}, function (data)
+        {
+            var origin = data[0].origin;
+            var destiny = data[0].destiny;
+            var i = data[0].i;
+            var j = data[0].j;
+            var reach = data[0].reach;
+            var l_11 = data[0].l_11;
+            var l_22 = data[0].l_22;
+            
+            alert('#match-nodes-taster-ajax origin: '+origin+" destiny: "+destiny+
+                    " i: "+i+" j: "+j+" reach: "+reach+
+                    " \nl_11: "+l_11+
+                    " \nl_22: "+l_22);
+        }).fail(function () {
+            alert('ERROR #match-nodes-taster-ajax');
+        });
+    }
+</script>

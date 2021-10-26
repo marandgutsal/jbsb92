@@ -1,0 +1,106 @@
+{{ form_start(edit_window_store_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'edit-window-store-ajax'|default('form')} }) }}
+{{ form_end(edit_window_store_form_ajax) }}
+
+<style>
+    #queryType {
+        position: absolute;
+        color: black;
+        width: 100px;
+        height: 30px;
+        top: 0px;
+        left: 0px;
+    }
+</style>
+    
+{#<select id="queryType" class="animatedButton">
+    <option value="location">location</option>
+    <option value="user">user</option>
+    <option value="search">search</option>
+    <option value="artist">artist</option>
+</select>#}
+
+<script>
+    
+    $('#queryType')
+    .change(function () {
+        var queryType = document.getElementById("queryType").value;
+        
+        document.getElementById("artistArea-storeBundle").style.display = "none";
+        document.getElementById("locationArea-storeBundle").style.display = "none";
+        document.getElementById("userArea-storeBundle").style.display = "none";
+        document.getElementById("searchArea-storeBundle").style.display = "none";
+        document.getElementById(""+queryType+"Area-storeBundle").style.display = "block";
+        
+        if (queryType == "location")
+        {
+            var keyword = session_locationId;
+        } else if (queryType == "user")
+        {
+            var keyword = session_userId;
+        } else if (queryType == "search")
+        {
+            var keyword = document.getElementById("search_txt").value;
+        }  else if (queryType == "artist")
+        {
+            var keyword = current_video_userId; // artist - (si el artista nuevo vs el previous artista son diferentes...)
+        }
+        
+        var results = $("#"+queryType+"List-storeBundle").attr('results');
+        var interactions = $("#"+queryType+"List-storeBundle").attr('interactions');
+        
+{#        if (results == 0)
+        {#}
+            var divToDraw = ""+queryType+"List-storeBundle";
+            getProducts(queryType, divToDraw, keyword);
+{#            alert("first time");#}
+            results++;
+            $("#"+queryType+"List-storeBundle").attr('results', results);
+            
+            interactions++;
+            $("#"+queryType+"List-storeBundle").attr('interactions', interactions);
+        {#} else
+        {#}
+            {#var divToDraw = ""+queryType+"List-storeBundle";
+            getProducts(queryType, divToDraw, keyword);#}
+{#            alert("second time "+results);#}
+{#        }#}
+        
+    });
+
+    function editWindowStore()
+    {
+        var form = $('#edit-window-store-ajax');
+        var url = form.attr('action');
+        
+        {#back_searchList#} {#-> 1: shoppingList #}
+        {#$('#buy_product'+ environment +productId)#} {#-> 4: storeList#}
+        
+        {#homeTopic_btn#} {#-> 3: currentTopicList#}
+        {#storeTopic_btn#} {#-> 2: searchList#}
+        
+        // modestoreId2 = 1; // 1: shoppingList, 4: storeList 
+        // modestoreId = 2; // 2: searchList, 3: currentTopicList
+        
+        $.post(url, {
+            modestoreId: modestoreId,
+            modestoreId2: modestoreId2,
+            windowId: windowId
+        }, function (data)
+        {
+            alert("edit-window-store-ajax");
+        }).fail(function () {
+            alert('ERROR edit-window-store-ajax');
+        });
+    }
+    
+    {#back_searchList#} {#-> 1: shoppingList #}
+    {#$('#buy_product'+ environment +productId)#} {#-> 4: storeList#}
+        
+    {#homeTopic_btn#} {#-> 3: currentTopicList#}
+    {#storeTopic_btn#} {#-> 2: searchList#}
+        
+        
+    {#editWindowStore();#}
+    {#identifyKeyword();#}
+    
+</script>

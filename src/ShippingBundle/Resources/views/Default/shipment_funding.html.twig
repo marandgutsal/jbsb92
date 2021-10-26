@@ -1,0 +1,68 @@
+<style>
+    #shipment_funding {
+        background-color: greenyellow;
+    }
+</style>
+
+{{ form_start(shippingBundle1.shippingBundle2.calculate_price_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'calculate-price-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.calculate_price_form_ajax) }}
+
+<div id="shipment_funding" interactions=0>
+    tomar shipment funding
+</div>
+
+<script>
+    
+    window.onload = calculatePrice();
+        
+    function calculatePrice()
+    {
+        var form = $('#calculate-price-ajax');
+        var url = form.attr('action');
+        
+        $.post(url, function (data)
+        {
+            {#var amount = data[0].amountRecords;#}
+            alert('#calculate-price-ajax -------- ');
+            
+            {#for(i=0; i<amount; i++)
+            {
+                var shipping_1_id = data[i].shipping_1_id;
+                var shipping_1_capacity = data[i].shipping_1_capacity;
+                var price_1_id = data[i].price_1_id;
+                var reach_1_id = data[i].reach_1_id;
+                var departure_id = data[i].departure_id;
+                var departure_name = data[i].departure_name;
+                var delivery_id = data[i].delivery_id;
+                var delivery_name = data[i].delivery_name;
+                var shipping_2_id = data[i].shipping_2_id;
+                var shipping_2_capacity = data[i].shipping_2_capacity;
+                var price_2_id = data[i].price_2_id;
+                var reach_2_id = data[i].reach_2_id;
+                var shipping_3_id = data[i].shipping_3_id;
+                var shipping_3_capacity = data[i].shipping_3_capacity;
+                var price_3_id = data[i].price_3_id;
+                var reach_3_id = data[i].reach_3_id;
+                
+                var amountProducts_input = document.createElement("input");
+                amountProducts_input.id = "amountProducts_input" + shipping_1_id + " " + shipping_2_id + " " + shipping_3_id;
+                amountProducts_input.className = "relativePosition";
+                amountProducts_input.type = "numeric";
+                amountProducts_input.value = 
+                        "\n -1 " + shipping_1_id + ": " + price_1_id + 
+                        "\n -2 " + shipping_2_id + ": " + price_2_id + 
+                        "\n -3 " + shipping_3_id + ": " + price_3_id;
+                amountProducts_input.style.width = "530px";
+                amountProducts_input.placeholder = "amount: ";
+                document.getElementById("waiting_shipping_12").appendChild(amountProducts_input);
+                
+                alert(" - "+shipping_1_id+" amount "+amount);
+            }#}
+            
+        }).fail(function () {
+            alert('ERROR #calculate-price-ajax');
+        });
+        {#alert("tastingtyh2222 ..... ");#}
+    }
+    
+</script>

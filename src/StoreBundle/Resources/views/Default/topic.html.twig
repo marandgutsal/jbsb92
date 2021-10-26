@@ -1,0 +1,176 @@
+<style>
+    #topic_div_id {
+        position: relative;
+        {#position: absolute;#}
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: auto;
+        max-height: 300px;
+        padding: 20px;
+        text-align: right;
+        {#background-color: fuchsia;#}
+        overflow-x: hidden;
+        overflow-y: scroll;
+        transition: 0.6s;
+    }
+    
+    #finish_topic {
+        position: relative;
+        bottom: 0px;
+        left: 0px;
+    }
+</style>
+
+{{ form_start(get_topic_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-topic-ajax'|default('form')} }) }}
+{{ form_end(get_topic_form_ajax) }}
+
+<img id='add_topic' class="animatedButton boton_personalizado relativePosition" 
+    src='files/images/icons/more.png' 
+    alt='Mountain View'>
+
+<div id="topic_div_id" attemptsAmount=0>
+</div>
+
+<div style="
+     height: 40px;
+     width: 100%;
+     position: relative;
+    justify-content: center;
+    display: flex;
+     ">
+    <img id='finish_topic' class="animatedButton boton_personalizado relativePosition" 
+    src='files/images/icons/ok.png' 
+    alt='Mountain View'>
+</div>
+
+<script>
+    $("#add_topic")
+    .click(function () {
+        var placeId = "topic_div_id";
+        
+        var attemptsAmount = $("#topic_div_id").attr("attemptsAmount");
+        {#alert(" placeId "+placeId+" attemptsAmount "+attemptsAmount);#}
+        attemptsAmount++;
+        $("#topic_div_id").attr("attemptsAmount", attemptsAmount);
+                
+        var userType = 0;
+        add_container(placeId, attemptsAmount, userType);
+    });
+    
+    $("#finish_topic")
+    .click(function () {
+        var board = "topic_div_id";
+        get_topics(board);
+
+        getTopic();
+    });
+    
+    function get_topics(board)
+    {
+        {#document.getElementById("topic_div_id").style.backgroundColor = "orange";#}
+        document.getElementById(board).style.backgroundColor = "orange";
+        {#alert("topic - topic product %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");#}
+        {#var first = document.getElementById("topic_div_id").children;#}
+        var first = document.getElementById(board).children;
+        
+        var i = 0;
+        while (first[i])
+        {
+            catch_topic(first[i], i, board);
+            {#$("#topic_div_id").attr("topics", i);#}
+            $("#"+board).attr("topics", i);
+            {#$("#topic_div_id").attr("topic_member_amount"+i, 0);#}
+            i++;
+        }
+    }
+    
+    
+    function catch_topic(first_123, i, board)
+    {
+        first_123.style.backgroundColor = "blue";
+    
+        var second = first_123.children;
+        
+        second[0].style.backgroundColor = "blue";
+        second[1].style.backgroundColor = "yellow";
+        second[2].style.backgroundColor = "pink";
+        second[3].style.backgroundColor = "red";
+        
+        {#if ($("#topic_div_id").attr("tm_topic") == 0)
+        {
+            var chdu = $("#topic_div_id").attr("tm_topic");
+            chdu++;
+            $("#topic_div_id").attr("tm_topic", chdu);
+        }#}
+        
+        topic_array[i] = new Array();
+        
+        catch_topicMember(second[3], i, board);
+        
+        {#alert(
+            "\n 0 - "+second[0].id+
+            "\n 1 - "+second[1].id+
+            "\n 2 - "+second[2].id+
+            "\n 3 - "+second[3].id
+            );#}
+    }
+    
+    function catch_topicMember(second_4566, imj, board)
+    {
+        var third = second_4566.children;
+        
+        var h = 0;
+        var i = 0;
+        while (third[i])
+        {
+            if (i % 2 == 0)
+            {
+                var keyword_tm = $("#"+third[i].id).attr("keyword");
+                var userType_tm = $("#"+third[i].id).attr("userType");
+                
+                topic_array[imj][h] = new Array();
+                topic_array[imj][h][0] = keyword_tm;
+                topic_array[imj][h][1] = userType_tm;
+                
+                {#alert("\n keyword_tm "+keyword_tm+
+                      "\n userType_tm "+userType_tm+
+                      "\n "+imj+
+                      "\n "+h);#}
+                h++;
+            } else
+            {
+                third[i].style.backgroundColor = "gray";
+            }
+            i++;
+        }
+        {#$("#topic_div_id").attr("topic_member_amount"+imj, h);#}
+        $("#"+board).attr("topic_member_amount"+imj, h);
+        {#alert("1234567890");#}
+    }
+    
+    var topic_div_id = document.getElementById("topic_div_id");
+    topic_div_id.addEventListener("mouseover", function (e) {
+        this.classList.add("visibleScroll");
+        this.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
+    }, false);
+    topic_div_id.addEventListener("mouseout", function (e) {
+        this.classList.remove("visibleScroll");
+        this.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
+    }, false);
+    
+    function getTopic()
+    {
+        var form = $('#get-topic-ajax');
+        var url = form.attr('action');
+        
+        $.post(url, {topic_array: topic_array}, function (data)
+        {
+            var objectCountry = data[0].objectCountry;
+            alert(" - "+objectCountry);
+        }).fail(function () {
+            alert('ERROR get-topic-ajax');
+        });
+    }
+    
+</script>

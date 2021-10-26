@@ -1,0 +1,86 @@
+<div id='stockProduct_environment'> {#environment about upload product#}
+    {{ include('@UploadProduct/Default/stock.html.twig') }}
+</div>
+
+<div id='uploadProduct_environment' {#style="background-color: blueviolet;"#}> {#environment about upload product#}
+    {{ include('@UploadProduct/Default/upload.html.twig') }}
+</div>
+
+<div id='branchProduct_environment'> {#environment about upload product#}
+    {{ include('@UploadProduct/Default/branch.html.twig') }}
+</div>
+
+<div id='shippingProduct_environment'> {#environment about upload product#}
+    
+</div>
+
+
+{#<div class="personalized_header">
+</div>#}
+    <div id='productImage_stockButton' class="relativePosition">
+        STOCK
+    </div>
+
+    <div id='productImage_uploadButton' class="relativePosition">
+        UPLOAD
+    </div>
+
+    <div id='productImage_branchButton' class="relativePosition">
+        BRANCH
+    </div>
+
+    <div id='productImage_shippingButton' class="relativePosition">
+        SHIPPING
+    </div>
+
+
+    
+<script>
+
+    $('#productImage_stockButton').click(function () {
+        document.getElementById("stockProduct_environment").style.display = "block";
+        document.getElementById("uploadProduct_environment").style.display = "none";
+        document.getElementById("branchProduct_environment").style.display = "none";
+        document.getElementById("shippingProduct_environment").style.display = "none";
+    });
+    
+    $('#productImage_uploadButton').click(function () {
+        document.getElementById("stockProduct_environment").style.display = "none";
+        document.getElementById("uploadProduct_environment").style.display = "block";
+        document.getElementById("branchProduct_environment").style.display = "none";
+        document.getElementById("shippingProduct_environment").style.display = "none";
+        var new_env = "topic_uploadProductDiv";
+        var environment = "idfs_4";
+        change_location_environment(new_env, environment);
+    });
+    
+    $('#productImage_branchButton').click(function () {
+        document.getElementById("stockProduct_environment").style.display = "none";
+        document.getElementById("uploadProduct_environment").style.display = "none";
+        document.getElementById("branchProduct_environment").style.display = "block";
+        document.getElementById("shippingProduct_environment").style.display = "none";
+        var new_env = "branchlocation_uploadBranchDiv";
+        var environment = "idfs_2";
+        change_location_environment(new_env, environment);
+    });
+    
+    $('#productImage_shippingButton').click(function () {
+        document.getElementById("stockProduct_environment").style.display = "none";
+        document.getElementById("uploadProduct_environment").style.display = "none";
+        document.getElementById("branchProduct_environment").style.display = "none";
+        document.getElementById("shippingProduct_environment").style.display = "block";
+        
+        var new_env = "shippingProduct_environment";
+        var environment = "idfs_6";
+        change_location_environment(new_env, environment);
+        load_shipping();
+    });
+    
+    function UploadProductBundle()
+    {
+        getStock();{#alert("3");#}
+
+    }
+    
+        
+</script>

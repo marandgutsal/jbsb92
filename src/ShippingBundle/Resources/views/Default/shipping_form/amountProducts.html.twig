@@ -1,0 +1,62 @@
+<style>
+    .amountProducts_input {
+        width: 50px;
+        cursor: text;
+        z-index: 50;
+        {#color: #000;#}
+    }
+</style>
+
+<script>
+    function draw_selectProduct_menu(interaction_id, environment, productId, kindOfList, productImage, topicId, data)
+    {
+        var amountProducts_input = document.createElement("input");
+        amountProducts_input.id = "amountProducts_input" + interaction_id + environment + productId;
+        amountProducts_input.className = "amountProducts_input relativePosition";
+        amountProducts_input.type = "numeric";
+        amountProducts_input.value = 1;
+        amountProducts_input.placeholder = "amount: ";
+        amountProducts_input.addEventListener("paste", function (e) {
+            e.returnValue = false;
+        });
+        amountProducts_input.addEventListener("keypress", function (e) {
+            if (e.keyCode>47 && e.keyCode<58)
+            {
+
+            } else
+            {
+                e.returnValue = false;
+            }
+        });
+        document.getElementById("product_menu" + interaction_id + environment + productId).
+                appendChild(amountProducts_input);
+        
+        
+        var addProduct_btn = document.createElement("img");
+        addProduct_btn.id = "addProduct_btn" + interaction_id + environment + productId;
+        addProduct_btn.className = "boton_personalizado addProduct_btn relativePosition";
+        addProduct_btn.src = "files/images/icons/shoppingCart.png";
+        addProduct_btn.alt = "_"+productImage+"_";
+        addProduct_btn.disabled = true;
+        addProduct_btn.setAttribute('first_click', 0);
+        document.getElementById("product_menu" + interaction_id + environment + productId).appendChild(addProduct_btn);
+
+
+        $("#addProduct_btn" + interaction_id + environment + productId)
+        .click(function () {
+            {#alert("addProduct_btn ... interaction_id "+interaction_id+
+            " environment "+environment+
+            " productId "+productId);#}
+
+            {#document.getElementById("buyCar_btn").style.display = "block";
+            document.getElementById("creditCart_btn").style.display = "none";
+
+            document.getElementById("storeArea-storeBundle").style.display = "none";
+            document.getElementById("paymentArea-storeBundle").style.display = "block";#}
+            var amountProducts = 
+                document.getElementById("amountProducts_input" + interaction_id + environment + productId).value;
+            addToShoppingCart(productId, amountProducts);
+            getSelectedProducts();
+        });
+    }
+</script>

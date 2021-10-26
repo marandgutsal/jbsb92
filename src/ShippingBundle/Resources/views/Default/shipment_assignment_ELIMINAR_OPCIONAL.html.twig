@@ -1,0 +1,225 @@
+<style>
+    #input_departure, 
+    #input_delivery, 
+    #input_funding{
+        position: relative;
+        width: 100px;
+    }
+    
+    #img_funding 
+    {
+        {#position: absolute;
+        top: 0px;
+        left: 250px;#}
+        position: relative;
+        width:30px; 
+        height:30px; 
+        opacity: 0.9; 
+        z-index: 1;
+    }
+    
+    {#.territoriality_btn {
+        position: absolute;
+        top: 0px;
+        left: 250px;
+        width:30px; 
+        height:30px; 
+        opacity: 0.9; 
+        z-index: 1;
+    }#}
+    
+    #shipping_funding {
+        position: absolute;
+        top: 100px;
+        left: 0px;
+        width: 100%;
+        background-color: #0000F0;
+    }
+    
+    #search_shippingUser {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        height: 100px;
+        width: 100%;
+        background-color: #0088cc;
+    }
+    
+    #list_saleDetail {
+        position: absolute;
+        top: 110px;
+        left: 0px;
+        height: 100px;
+        max-height: 100px;
+        width: 100%;
+        background-color: white;
+    }
+    
+    #shipping_funding {
+        position: absolute;
+        top: 220px;
+        left: 0px;
+        height: 400px;
+        width: 100%;
+        background-color: red;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+</style>
+
+{{ form_start(shippingBundle1.shippingBundle2.assign_route_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'assign-route-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.assign_route_form_ajax) }}
+
+{{ form_start(shippingBundle1.shippingBundle2.update_shipping_founding_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'update-shipping-founding-ajax'|default('form')} }) }}
+{{ form_end(shippingBundle1.shippingBundle2.update_shipping_founding_form_ajax) }}
+
+<div id="search_shippingUser">
+    {#rdfghjkl#}
+    SHIPPING_USER LIST . . . . . . . . . . . . .
+    <input id="input_departure" type=number placeholder="departure"/>
+    <input id="input_delivery" type=number placeholder="delivery"/>
+    <input id="input_funding" type=number placeholder="funding"/>
+    <img id="img_funding" src="files/images/icons/playBanner/captions.png" alt="Mountain View">
+    {#<img id="img_funding_international" className="boton_personalizado relativePosition" src="files/images/icons/playBanner/captions.png" alt="Mountain View">
+    <img id="img_funding_continental" className="boton_personalizado relativePosition" src="files/images/icons/playBanner/captions.png" alt="Mountain View">
+    <img id="img_funding_national" className="boton_personalizado relativePosition" src="files/images/icons/playBanner/captions.png" alt="Mountain View">
+    <img id="img_funding_departamntal" className="boton_personalizado relativePosition" src="files/images/icons/playBanner/captions.png" alt="Mountain View">
+    <img id="img_funding_municipal" className="boton_personalizado relativePosition" src="files/images/icons/playBanner/captions.png" alt="Mountain View">
+    <img id="img_funding_communal" className="boton_personalizado relativePosition" src="files/images/icons/playBanner/captions.png" alt="Mountain View">
+    <img id="img_funding_local" className="boton_personalizado relativePosition" src="files/images/icons/playBanner/captions.png" alt="Mountain View">
+    <img id="img_funding_residential" className="boton_personalizado relativePosition" src="files/images/icons/playBanner/captions.png" alt="Mountain View">
+    <img id="img_funding_domiciled" className="boton_personalizado relativePosition" src="files/images/icons/playBanner/captions.png" alt="Mountain View">
+    <img id="img_funding_aditional" className="boton_personalizado relativePosition" src="files/images/icons/playBanner/captions.png" alt="Mountain View">#}
+</div>
+
+<div id="list_saleDetail">
+    4356789vbfhj
+{#    {{ include('@Store/Default/payment/saleDetail.html.twig') }}#}
+</div>
+
+<div id="shipping_funding" interactions=0>
+</div>
+
+<script>
+    var shipping_funding = document.getElementById("shipping_funding");
+    $("#"+shipping_funding.id)
+    .mouseover(function () {shipping_funding.classList.add("visibleScroll");})
+    .mouseout(function () {shipping_funding.classList.remove("visibleScroll");});
+    
+    $("#img_funding")
+    .click(function (e) {
+        var code = "saleDetail_shipment";
+{#        document.getElementById(code).innerHTML = "";#}
+        
+        var sheet = document.getElementById("shipping_funding");
+        
+        var price = document.getElementById("input_funding").value;
+        var departure = document.getElementById("input_departure").value;
+        var delivery = document.getElementById("input_delivery").value;
+        {#var price = 0;
+        var departure = 302;
+        var delivery = 144;#}
+        
+        alert("... img "+price);
+        assignRoute(sheet, code, price, departure, delivery);
+    });
+    
+    function assignRoute(sheet, code, price, departure, delivery)
+    {
+        {#document.getElementById(code).style.backgroundColor = "yellow";#}
+        var form = $('#assign-route-ajax');
+        var url = form.attr('action');
+        
+        alert("code "+code);
+        alert("\n price "+price);
+        
+        $.post(url, {price: price, departure: departure, delivery: delivery}, function (data)
+        {
+            var amount = data[0].amountRecords;
+            alert(" amount "+amount);
+            for (i=0; i<amount; i++)
+            {
+                var trajectory2_id = data[i].trajectory2_id;
+                var node_initial = data[i].node_initial;
+                var node_1 = data[i].node_1;
+                var node_2 = data[i].node_2;
+                var node_3 = data[i].node_3;
+                var node_4 = data[i].node_4;
+                var node_5 = data[i].node_5;
+                var node_6 = data[i].node_6;
+                var node_7 = data[i].node_7;
+                var node_8 = data[i].node_8;
+                var node_9 = data[i].node_9;
+                var node_10 = data[i].node_10;
+                var node_final = data[i].node_final;
+                var departure_size = data[i].departure_size;
+                var delivery_size = data[i].delivery_size;
+                var departure_parent = data[i].departure_parent;
+                var delivery_parent = data[i].delivery_parent;
+                var shippingUser_id = data[i].shippingUser_id;
+                
+                {#'departure_parent' => $departure_parent, 
+                'delivery_parent' => $delivery_parent, #}
+                
+                var amountProducts_input = document.createElement("textArea");
+                amountProducts_input.id = "amountProducts_input" + trajectory2_id;
+                amountProducts_input.className = "relativePosition";
+                amountProducts_input.type = "numeric";
+                amountProducts_input.value = 
+                        "\n -1 " + trajectory2_id +
+                        "\n node_initial " + node_initial + 
+                        "\n departure_size " + departure_size + 
+                        "\n delivery_size " + delivery_size + 
+                        "\n departure_parent " + departure_parent + 
+                        "\n delivery_parent " + delivery_parent + 
+                        "\n node_1 " + node_1 + 
+                        "\n node_2 " + node_2 + 
+                        "\n node_3 " + node_3 + 
+                        "\n node_4 " + node_4 + 
+                        "\n node_5 " + node_5 + 
+                        "\n node_6 " + node_6 + 
+                        "\n node_7 " + node_7 + 
+                        "\n node_8 " + node_8 + 
+                        "\n node_9 " + node_9 + 
+                        "\n node_10 " + node_10 + 
+                        "\n node_final " + node_final + 
+                        "\n shippingUser_id " + shippingUser_id;
+                amountProducts_input.style.width = "530px";
+                amountProducts_input.style.height = "230px";
+                amountProducts_input.placeholder = "amount: ";
+                sheet.appendChild(amountProducts_input);
+                
+                var select_trajectory_btn = document.createElement("img");
+                select_trajectory_btn.id = "select_trajectory_btn" + trajectory2_id;
+                select_trajectory_btn.className = "boton_personalizado relativePosition";
+                select_trajectory_btn.src = "files/images/icons/confirm.png";
+                select_trajectory_btn.setAttribute('first_click', 0);
+                select_trajectory_btn.addEventListener("click", function () {
+                    {#playPauseIconFunction();#}
+                    update_shippingFounding();
+                });
+                sheet.appendChild(select_trajectory_btn);
+            }
+            
+            alert('#assign-route-ajax -------- '+amount);
+        }).fail(function () {
+            alert('ERROR #assign-route-ajax');
+        });
+        {#alert("tastingtyh2222 ..... ");#}
+    }
+    
+    function update_shippingFounding()
+    {
+        var form = $('#update-shipping-founding-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            alert('#update-shipping-founding-ajax');
+        }).fail(function () {
+            alert('ERROR #update-shipping-founding-ajax');
+        });
+        alert("tastingtyh2222 ..... ");
+        {#alert("1234567890");#}
+    }
+</script>

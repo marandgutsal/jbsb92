@@ -1,0 +1,96 @@
+<script>
+    function selectLocation(data)
+    {
+        alert("amountLocations: "+data[0].amountLocations);
+        
+        var amountLocations = data[0].amountLocations;
+        
+        var locationPosition = $("#user_location_signUpDiv").attr('locationPosition');
+        
+        var i = 0;
+        var frame_location = document.createElement("div");
+        frame_location.id = "frame_location" + locationPosition;
+        frame_location.className = "frame_location";
+        frame_location.style.backgroundColor = "red";
+        frame_location.setAttribute('parentId', locationPosition);
+        if (locationPosition == 1)
+        {
+            document.getElementById("locationTool").appendChild(frame_location);
+        } else
+        {
+            var ghjk = locationPosition - 1;
+            {#document.getElementById("frame_location"+ghjk).appendChild(frame_location);#}
+            document.getElementById("locationTool").appendChild(frame_location);
+            {#document.getElementById("frame_location"+ghjk).style.backgroundColor = "blue";#}
+        }
+        var select_location = document.createElement("select");
+        select_location.id = "user_location_signUpSelect" + locationPosition;
+        select_location.className = "relativePosition";
+        select_location.name = "user_location_signUpSelect" + locationPosition;
+        select_location.setAttribute('locationPosition', locationPosition);
+        select_location.setAttribute('selectedLocation', 12345678);
+        document.getElementById("frame_location" + locationPosition).appendChild(select_location);
+
+        while (i < amountLocations)
+        {
+            var locationId = data[i].locationId;
+            var locationName = data[i].locationName;
+            var keywordContent = data[i].keywordContent;
+            
+            {#alert("first name: "+data[0].keywordContent);#}
+            
+            var select_location = document.createElement("option");
+            select_location.id = "location_option" + locationId;
+            select_location.name = "location_option" + locationId;
+            select_location.value = locationId;
+            select_location.textContent = keywordContent;
+            document.getElementById("user_location_signUpSelect" + locationPosition).appendChild(select_location);
+
+            i++;
+        }
+
+        var select_location = document.createElement("option");
+        select_location.id = "location_option" + amountLocations;
+        select_location.name = "location_option" + amountLocations;
+        select_location.value = 0;
+        select_location.textContent = "other";
+        document.getElementById("user_location_signUpSelect" + locationPosition).appendChild(select_location);
+
+
+        var select_location = document.createElement("option");
+        select_location.id = "location_option" + amountLocations+1;
+        select_location.name = "location_option" + amountLocations+1;
+        select_location.value = -1;
+        select_location.selected = true;
+        document.getElementById("user_location_signUpSelect" + locationPosition).appendChild(select_location);
+        
+        $("#user_location_signUpSelect" + locationPosition)
+        .change(function () {
+            var locationPosition_2 = $("#user_location_signUpDiv").attr('locationPosition');
+            var locationPosition_attr = $(this).attr('locationPosition');
+
+            var selectedLocation = document.getElementById("user_location_signUpSelect" + locationPosition_attr).value;
+            var currentLocation = $("#user_location_signUpSelect" + locationPosition_attr).attr("selectedLocation");
+            $("#user_location_signUpSelect" + locationPosition_attr).attr('selectedLocation', selectedLocation);
+
+            if (selectedLocation != currentLocation)
+            {
+                var locationParent_2 = $(this).parents('div').attr('parentId'); // parent
+                {#var locationParent_3 = $(this).parents('div').parents('div').attr('parentId'); // child#}
+
+                if (locationPosition_2 != locationPosition_attr || selectedLocation == -1)
+                {
+                    alert("76758495 a");
+                    eraseChild(locationParent_2);
+                    alert("76758495 z");
+                } else
+                {
+                    alert("76758495 m: "+locationPosition+" ... "+locationPosition_attr+" ... "+selectedLocation);
+                }
+                {#alert("selectedLocation "+selectedLocation+" locationParent_2 "+locationParent_2);#}
+                drawLocation(selectedLocation);
+            }
+        alert("7675849588888888 ... "+locationPosition+" ... "+selectedLocation);
+        });
+    }
+</script>

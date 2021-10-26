@@ -1,0 +1,705 @@
+#window_background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: red;
+    z-index: 2;
+}
+
+#emergentWindow {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 1;
+    position: absolute;
+    transition: 0.6s;
+}
+
+div#presentationArea {
+    background-color: transparent;
+    position: absolute;
+    z-index: 2;
+    right: 180px;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+
+
+
+#searchArea {
+    position: absolute;
+    z-index: 4;
+    right: 0px;
+    bottom: 40px;
+    top: 0px;
+    width: 180px;
+    transition-property: all; 
+    transition-duration: 0.5s;
+}
+
+#sessionMenu {
+    position: absolute;
+    z-index: 4;
+    top: 0px;
+    height: 40px;
+    right: 180px;
+    left: 250px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+/*    background-color: yellowgreen;*/
+    opacity: 1;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+#sessionArea {
+    position: absolute;
+    z-index: 3;
+    top: 40px;
+    bottom: 40px;
+    right: 180px;
+    left: 250px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.0);
+    opacity: 1;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+#SignUpContent_2 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+#ListsContent {
+    position: relative;
+/*    position: absolute;*/
+    width: 100%;
+    height: 500px;
+/*    top: 0px;
+    right: 0px;*/
+    display: block;
+    /*background-color: red;*/
+}
+
+
+#donateArea {
+    position: relative;
+/*    position: absolute;*/
+    height: 100px;
+    width: 100%;
+/*    top: 100px;
+    left: 0px;*/
+    z-index: 2;
+    display: block;
+    cursor: pointer;
+    overflow: scroll;
+}
+
+
+#ProfileContent {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-color: green;
+}
+
+#StoreContent {
+    position: absolute;
+    display: block;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    /*background-color: #1ab7ea;*/
+}
+
+#contentListBundle {
+    position: absolute; 
+    display: none; 
+    width: 100%; 
+    top: 0px; 
+    right: 0px; 
+    bottom: 0px; 
+/*    background-color: yellow;*/
+}
+
+#contentDataminigBundle {
+    position: absolute; 
+    display: block; 
+    width: 100%; 
+    top: 0px; 
+    right: 0px; 
+    bottom: 0px;
+    /*background-color: red;*/
+}
+
+#configurationArea {
+    position: relative;
+/*    position: absolute;*/
+    width: 100%;
+/*    top: 430px;
+    left: 0px;*/
+    z-index: 3;
+    overflow: hidden;
+/*    background-color: orange;*/
+    height: 500px;
+}
+
+#lyricsArea {
+    position: relative;
+/*    position: absolute;*/
+    z-index: 3;
+/*    top: 230px;
+    left: 0px;*/
+    width: 100%;
+    background-color: yellow;
+    height: 200px;
+    overflow: hidden;
+    opacity: 1;
+}
+
+#playBanner {
+    position: absolute;
+/*    opacity: 0.2;*/
+/*    background-color: fuchsia;*/
+    height: 40px;
+    right: 0px; 
+    bottom: 0px;
+    left: 0px;
+    z-index: 5;
+}
+
+
+#configurationBar {
+    position: relative;
+/*    position: absolute;*/
+    z-index: 4;
+    /*left: 100px;*/
+    width: 100%;
+/*    width: 30px;*/
+    /*top: 200px;*/
+    height: 30px;
+/*    background-color: tomato;*/
+    justify-content: center;
+    display: flex;
+}
+
+#currentList {
+    position: relative;
+/*    position: absolute;*/
+    height: 100px;
+    width: 250px;
+/*    top: 0px;
+    left: 0px;*/
+    z-index: 2;
+    display: block;
+}
+
+
+.styles_left_screen {
+/*    color: white;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-color: gray;
+    border-style: solid;
+    border-width: 1px;*/
+    transition-property: all;
+    transition-duration: 0.5s;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+
+/* SCROLLBAR: */
+/* width */
+.visibleScroll::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+/* Track */
+.visibleScroll::-webkit-scrollbar-track {
+    background: white;
+}
+
+/* Handle */
+.visibleScroll::-webkit-scrollbar-thumb {
+    background: #1ab7ea; 
+}
+
+/* Handle on hover */
+.visibleScroll::-webkit-scrollbar-thumb:hover {
+    background: gray; 
+}
+
+
+
+/*@media (min-width: 600px) {
+    body {
+        background-color: green;
+    }
+    
+    
+    #window_background {
+        background-color: green;
+    }
+    
+    #configurationArea_content {
+        color: green;
+    }
+    
+    #sessionArea {
+        color: green;
+    }
+    
+    #searchArea {
+        color: green;
+    }
+    
+}
+
+
+@media (min-width: 800px) {
+    body {
+        background-color: red;
+    }
+    
+    #window_background {
+        background-color: red;
+    }
+    
+    #configurationArea_content {
+        color: red;
+    }
+    
+    #sessionArea {
+        color: red;
+    }
+    
+    #searchArea {
+        color: red;
+    }
+    
+}*/
+
+/*min-width
+max-width*/
+
+
+
+
+
+
+.claro {
+    /*text-transform: uppercase;*/
+    color: rgba(0, 0, 0, 1);
+    font-weight: 600;
+    font-stretch: ultra-expanded;
+    text-shadow: 
+        3px 0 0 rgba(255, 255, 255, 0.1), 
+        -3px 0 0 rgba(255, 255, 255, 0.1), 
+        0 3px 0 rgba(255, 255, 255, 0.1), 
+        0 -3px 0 rgba(255, 255, 255, 0.1), 
+        
+        2px 0 0 rgba(255, 255, 255, 0.1), 
+        -2px 0 0 rgba(255, 255, 255, 0.1), 
+        0 2px 0 rgba(255, 255, 255, 0.1), 
+        0 -2px 0 rgba(255, 255, 255, 0.1), 
+        
+        1px 1px rgba(255, 255, 255, 0.1), 
+        -1px -1px 0 rgba(255, 255, 255, 0.1), 
+        1px -1px 0 rgba(255, 255, 255, 0.1), 
+        -1px 1px 0 rgba(255, 255, 255, 0.1)
+}
+
+.oscuro {
+/*    text-transform: uppercase;*/
+    color: rgba(255, 255, 255, 1);
+    font-weight: 600;
+    font-stretch: ultra-expanded;
+    text-shadow: 
+        3px 0 0 rgba(255, 255, 255, 0.1), 
+        -3px 0 0 rgba(255, 255, 255, 0.1), 
+        0 3px 0 rgba(255, 255, 255, 0.1), 
+        0 -3px 0 rgba(255, 255, 255, 0.1), 
+        
+        2px 0 0 rgba(0, 0, 0, 0.1), 
+        -2px 0 0 rgba(0, 0, 0, 0.1), 
+        0 2px 0 rgba(0, 0, 0, 0.1), 
+        0 -2px 0 rgba(0, 0, 0, 0.1), 
+        
+        1px 1px rgba(0, 0, 0, 0.1), 
+        -1px -1px 0 rgba(0, 0, 0, 0.1), 
+        1px -1px 0 rgba(0, 0, 0, 0.1), 
+        -1px 1px 0 rgba(0, 0, 0, 0.1)
+}
+
+/*//////////////////////////////////////////////////////////////*/
+
+.boton_personalizado{
+    position: absolute;
+    color: #31b0d5;
+    background-color: white;
+    border-radius: 15px;
+    border: 2px solid white;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    opacity: 0.5;
+    cursor: pointer;
+    transition: 0.7s;
+    max-width: 20px;
+    max-height: 20px;
+}
+
+.boton_personalizado:hover{
+    opacity: 1;
+}
+
+.img_boton_personalizado{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    border-radius: 15px;
+}
+
+.lista_personalizada{
+    position: absolute;
+    /*background-color: yellow;*/
+    top: 40px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+
+.standar_input {
+    position: absolute;
+    top: 0px;
+    left: 0px; 
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 0;
+    text-transform: uppercase;
+    align-content: center;
+}
+
+.relativePosition {
+    position: relative;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 0px;
+    margin-top: 5px;
+    flex-wrap: wrap;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.firstColumn_signUpDiv {
+    position: absolute;
+    top: 5px;
+    left: 0px; 
+    width: 120px;
+    text-align: right;        
+}
+
+.secondColumn_signUpDiv {
+    position: absolute;
+    top: 5px; 
+    left: 130px;
+    right: 0px;
+    height: 30px;
+    z-index: 3;
+}
+
+.content_secondColumn_signUpDiv {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    resize: none;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 0px;
+}
+
+.row_signUpDiv {
+    background-color: rgba(255, 255, 255, 0.2);
+    height: 40px;
+}
+
+
+
+.personalized_header {
+    top: 0px;
+    height: 50px;
+    background-color:  red;
+    width: 100%;
+    position: absolute;
+/*    align-content: center;
+    text-align: center;*/
+    justify-content: center;
+    display: flex;
+}
+
+.personalized_foot {
+    bottom: 0px;
+    height: 50px;
+    background-color:  yellowgreen;
+    width: 100%;
+    position: absolute;
+/*    align-content: center;
+    text-align: center;*/
+    justify-content: center;
+    display: flex;
+}
+
+
+
+
+
+#tax_change {
+    position: absolute;
+    z-index: 3;
+    top: 40px;
+    bottom: 40px;
+    right: 180px;
+    left: 250px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.0);
+    opacity: 1;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+
+
+
+
+
+#widgetsArea {
+    position: absolute;
+    z-index: 3;
+    top: 0px;
+    bottom: 40px;
+    width: 250px;
+    left: 0px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+/*    background-color: blueviolet;*/
+    opacity: 1;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+
+
+
+#widgetsArea_3 {
+    position: absolute;
+    z-index: 3;
+    top: 0px;
+    bottom: 40px;
+    margin: 20px;
+    padding: 50px;
+    width: 350px;
+    left: 0px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background-color: red;
+    opacity: 1;
+    transition-property: all;
+    transition-duration: 0.5s;
+    display: inline-block;
+}
+
+#widgetsArea_4 {
+    position: absolute;
+    z-index: 3;
+    top: 0px;
+    bottom: 40px;
+    margin: 20px;
+    padding: 50px;
+    width: 350px;
+    left: 360px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background-color: pink;
+    opacity: 1;
+    transition-property: all;
+    transition-duration: 0.5s;
+    display: inline-block;
+}
+
+#idfa_1, #idfa_2, #idfa_3, #idfa_4, #idfa_5,
+#idfb_1, #idfb_2, #idfb_3, #idfb_4, #idfb_5{
+    position: relative;
+    width: 100%;
+/*    height: auto;*/
+    height:max-content;
+/*    max-height: 30px;*/
+    background-color: blue;
+    display: block;
+    margin: 30px;
+    padding: 30px;
+    /*overflow-x: hidden;*/
+/*    overflow-y: scroll;*/
+}
+
+/*    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip: auto;*/
+
+.buttonDescription {
+/*    background-color: grey;*/
+    width: max-content;
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+.buttonDescription:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+/*    color: #1ab7ea;*/
+}
+
+.headerList {
+    width: 100%;
+    height: 50px;
+}
+
+
+.contentList {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    background-color: yellowgreen;
+    margin: 0px;
+    padding: 20px;
+    overflow-y: scroll;
+    cursor: pointer;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+
+/*
+        reach_location.style.backgroundColor = "gray";
+        reach_location.style.width = "max-content";
+        reach_location.style.padding = "10px";
+        reach_location.style.margin = "10px";
+        reach_location.style.cursor = "pointer";
+        
+
+        reach_originLocation.style.backgroundColor = "red";
+        reach_originLocation.style.width = "max-content";
+        reach_originLocation.style.padding = "10px";
+        reach_originLocation.style.margin = "10px";
+        reach_originLocation.style.cursor = "pointer";
+        
+
+        reach_destinyLocation.style.backgroundColor = "blue";
+        reach_destinyLocation.style.width = "max-content";
+        reach_destinyLocation.style.padding = "10px";
+        reach_destinyLocation.style.margin = "10px";
+        reach_destinyLocation.style.cursor = "pointer";
+        */
+        
+        
+
+#setShipping {
+    position: absolute;
+    z-index: 3;
+    top: 40px;
+    bottom: 40px;
+    right: 180px;
+    left: 250px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.8);
+    opacity: 1;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+.border_effect {
+    border-color: gray;
+    border-style: solid;
+    border-width: 1px;
+}
+
+
+#taster_invocations {
+    position: absolute;
+    z-index: 3;
+    top: 40px;
+    bottom: 40px;
+    right: 180px;
+    left: 250px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.0);
+    opacity: 1;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+#bchdhj_cds {
+    position: absolute;
+    display: block;
+    background-color: gray;
+    width: 250px;
+    height: 100%;
+    top: 10px;
+    left: 20px;
+    z-index: 15;
+}

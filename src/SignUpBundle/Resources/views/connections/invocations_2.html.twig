@@ -1,0 +1,55 @@
+<script>
+    function insertLocation_crud()
+    {
+        {#alert("vdfjkvfbdnjk");#}
+        var board = document.getElementById("invocations_signUp");
+        var titleLocation_child = board.children; // title_location
+        {#alert("vdfjkvfbdnjk");#}
+        var i = 0;
+        while(titleLocation_child[i])
+        {
+            var c_child = titleLocation_child[i].children;
+            {#var j = 0;
+            while(c_child[j])
+            {
+                alert(" - - - - - - - - "+c_child);
+                j++;
+            }#}
+            //c_child[0].id; // #send_location : button
+            //c_child[1].id; // #user_location_signUpSelect : select
+{#            alert(" - "+c_child[0].id+" - "+c_child[1].id);#}
+            
+            var keywordLocation = $("#" + c_child[0].id).attr("keywordLocation");
+            
+            if (keywordLocation == -2) // insert new location 
+            {
+                var array_keywordLocation = get_keywordAttribute(c_child);
+                {#alert("a");#}
+            } else
+            {
+                $("#" + c_child[0].id).attr("p_location");
+                {#alert("b");#}
+            }
+            
+            alert("title_location "+titleLocation_child[i].id+
+                  "\n keywordLocation "+keywordLocation+
+                  "\n c_child[0].id "+c_child[0].id);
+            i++;
+        }
+    }
+    
+    function get_keywordAttribute(c_child)
+    {
+        {#cbhjcds cbhjcdsc bhjcd scbhjcds cbhjcds#}
+        var array_keywordLocation = new Array();
+        var i = 0;
+        while ("#" + c_child[0].id).attr("keywordLocation"+i))
+        {
+            var atribute_topic_member_1 = $("#" + c_child[0].id).attr("keywordLocation"+i);
+            {#alert("\n .... " + i + " " +atribute_topic_member_1+"\n ");#}
+            array_keywordLocation[i] = atribute_topic_member_1;
+            i++;
+        }
+        return array_keywordLocation;
+    }
+</script>

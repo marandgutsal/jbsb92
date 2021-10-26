@@ -1,0 +1,243 @@
+<style>
+    #payment_options {
+        position: absolute; 
+        top: 0px; 
+        left: 60px; 
+        right: 0px;
+    }
+    
+    #product_list {
+        background-color: pink;
+        display: none;
+    }
+    
+    #boardDisplayStoreBundle {
+        position: absolute;
+    }
+    
+    #paymentArea-storeBundle {
+        position: absolute;
+        background-color: gray;
+        z-index: 1;
+        width: 50%;
+        {#height: 100%;#}
+        {#height: 400px;#}
+        height: auto;
+        right: 0px;
+        display: block;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    
+    #a_111 {
+        {#padding: 20px;#}
+        position: relative;
+        height: auto;
+        {#max-height: 50%;#}
+        background-color: yellow;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    
+    #b_222 {
+        {#margin-top: 20px;#}
+        position: relative;
+        height: auto;
+        {#max-height: 50%;#}
+        background-color: violet;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    
+    #storeArea-storeBundle {
+        position: absolute;
+        background-color: greenyellow; 
+        z-index: 1;
+        width: 50%;
+        height: 100%;
+        left: 0px;
+        display: block;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+</style>
+
+<div id="product_list_icon" class="animatedButton">
+    <img 
+        style="width: 100%; height: 100%;" 
+        src='files/images/icons/store.png' 
+        alt='Mountain View' 
+    >
+</div>
+
+<div id="shipping_icon" class="animatedButton">
+    <img 
+        style="width: 100%; height: 100%;" 
+        src='files/images/icons/shipping.png' 
+        alt='Mountain View' 
+    >
+</div>
+
+<div id="payment_options">
+    {{ include('@Paypal/Default/index.html.twig') }}
+</div>
+    
+<div id="product_list">
+    <div id="paymentArea-storeBundle">
+        <div id="a_111">
+            {{ include('@Store/Default/payment/payment.html.twig') }}
+        </div>
+        <div id="b_222">
+            {{ include('@Store/Default/payment/saleDetail.html.twig') }}
+        </div>
+    </div>
+    <div id="storeArea-storeBundle">
+        <img id='artistBtn-storeBundle' class="boton_personalizado relativePosition" 
+        src="files/images/icons/store/artist.png" alt="Mountain View">
+        <img id='locationBtn-storeBundle' class="boton_personalizado relativePosition" 
+        src="files/images/icons/store/location.png" alt="Mountain View">
+        <img id='userBtn-storeBundle' class="boton_personalizado relativePosition" 
+        src="files/images/icons/store/user.png" alt="Mountain View">
+        <img id='homeBtn-storeBundle' class="boton_personalizado relativePosition" 
+        src="files/images/icons/store/all.png" alt="Mountain View">
+        <img id='searchBtn-storeBundle' class="boton_personalizado relativePosition" 
+        src="files/images/icons/store/search.png" alt="Mountain View">
+        
+        <div id="searchMenu-storeBundle">
+            {{ include('@Store/Default/menu/select.html.twig') }}
+        </div>
+        <div id="searchArea-storeBundle">
+            {{ include('@Store/Default/store/search.html.twig') }}
+        </div>
+        <div id="locationArea-storeBundle">
+            {{ include('@Store/Default/store/location.html.twig') }}
+        </div>
+        <div id="userArea-storeBundle">
+            {{ include('@Store/Default/store/user.html.twig') }}
+        </div>
+        <div id="artistArea-storeBundle">
+            {{ include('@Store/Default/store/artist.html.twig') }}
+        </div>
+        <div id="homeArea-storeBundle">
+            {{ include('@Store/Default/store/home.html.twig') }}
+        </div>
+    </div>
+</div>
+
+<div id="availableRoutes" style="background-color: orange; display: block;">
+    {{ include('@Shipping/Default/index.html.twig') }}
+</div>
+    
+{#{{ include('@Store/Default/insertTopic.html.twig') }}#}
+    
+{{ include('@Store/Default/getProducts.html.twig') }}
+{{ include('@Store/Default/drawProduct.html.twig') }}
+{{ include('@Store/Default/loadStoreDivs.html.twig') }}
+    
+<script>
+    function StoreBundle()
+    {
+        getSelectedProducts(); // StoreBundle->shoppingCar_environment.html
+        identifyKeyword(); // StoreBundle->searchList_environment.html
+    }
+    
+    $('#product_list_icon')
+    .click(function () {
+        document.getElementById("product_list").style.display = "block";
+        document.getElementById("availableRoutes").style.display = "none";
+    });
+    
+    $('#shipping_icon')
+    .click(function () {
+        document.getElementById("product_list").style.display = "none";
+        document.getElementById("availableRoutes").style.display = "block";
+    });
+    
+    
+    $('#product_list')
+    .scroll(function () {
+    })
+    .mouseover(function () {
+        var product_list = document.getElementById("product_list");
+        product_list.classList.add("visibleScroll");
+    })
+    .mouseout(function () {
+        var product_list = document.getElementById("product_list");
+        product_list.classList.remove("visibleScroll");
+    });
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    $('#artistBtn-storeBundle')
+    .click(function () {
+        document.getElementById("searchArea-storeBundle").style.display = "none";
+        document.getElementById("locationArea-storeBundle").style.display = "none";
+        document.getElementById("userArea-storeBundle").style.display = "none";
+        document.getElementById("artistArea-storeBundle").style.display = "block";
+        document.getElementById("homeArea-storeBundle").style.display = "none";
+        getProducts("artist", "artistList-storeBundle", "");
+    });
+    
+    $('#locationBtn-storeBundle')
+    .click(function () {
+        document.getElementById("searchArea-storeBundle").style.display = "none";
+        document.getElementById("locationArea-storeBundle").style.display = "block";
+        document.getElementById("userArea-storeBundle").style.display = "none";
+        document.getElementById("artistArea-storeBundle").style.display = "none";
+        document.getElementById("homeArea-storeBundle").style.display = "none";
+        getProducts("location", "locationList-storeBundle", "");
+    });
+    
+    $('#userBtn-storeBundle')
+    .click(function () {
+        document.getElementById("searchArea-storeBundle").style.display = "none";
+        document.getElementById("locationArea-storeBundle").style.display = "none";
+        document.getElementById("userArea-storeBundle").style.display = "block";
+        document.getElementById("artistArea-storeBundle").style.display = "none";
+        document.getElementById("homeArea-storeBundle").style.display = "none";
+        getProducts("user", "userList-storeBundle", "");
+    });
+    
+    $('#searchBtn-storeBundle')
+    .click(function () {
+        document.getElementById("searchArea-storeBundle").style.display = "block";
+        document.getElementById("locationArea-storeBundle").style.display = "none";
+        document.getElementById("userArea-storeBundle").style.display = "none";
+        document.getElementById("artistArea-storeBundle").style.display = "none";
+        document.getElementById("homeArea-storeBundle").style.display = "none";
+        loadSearchStoreDiv_menu();
+    });
+    
+    $('#homeBtn-storeBundle')
+    .click(function () {
+        document.getElementById("searchArea-storeBundle").style.display = "none";
+        document.getElementById("locationArea-storeBundle").style.display = "none";
+        document.getElementById("userArea-storeBundle").style.display = "none";
+        document.getElementById("artistArea-storeBundle").style.display = "none";
+        document.getElementById("homeArea-storeBundle").style.display = "block";
+        getProducts("home", "homeList-storeBundle", "");
+    });
+    
+    {#var a_111 = document.getElementById("a_111");
+    var b_222 = document.getElementById("b_222");
+    
+    $("#"+a_111.id)
+    .mouseover(function () {a_111.classList.add("visibleScroll");})
+    .mouseout(function () {a_111.classList.remove("visibleScroll");});
+
+    $("#"+b_222.id)
+    .mouseover(function () {b_222.classList.add("visibleScroll");})
+    .mouseout(function () {b_222.classList.remove("visibleScroll");});#}
+
+</script>

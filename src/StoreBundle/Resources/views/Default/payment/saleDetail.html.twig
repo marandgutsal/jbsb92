@@ -1,0 +1,138 @@
+<style>
+    #e_5123 {
+        {#position: absolute;
+        top: 0px;
+        left: 0px;#}
+        {#width: 100%;
+        height: 100%;
+        background-color: orange;
+        overflow-y: scroll;
+        overflow-x: hidden;#}
+    }
+</style>
+
+{#height: max-content;
+max-height: 100px;#}
+
+{{ form_start(storeBundle1.storeBundle2.get_saleDetail_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-saleDetail-ajax'|default('form')} }) }}
+{{ form_end(storeBundle1.storeBundle2.get_saleDetail_form_ajax) }}
+
+<div id="e_5123">
+{#    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>#}
+    sale detail 1111
+</div>
+
+<script>
+    {#$('#e_5123')
+    .click(function () {
+        document.getElementById("e_5123").innerHTML = "";
+        getSaleDetail();
+    });#}
+    
+    window.onload = getSaleDetail();
+    
+    function getSaleDetail()
+    {
+        var form = $('#get-saleDetail-ajax');
+        var url = form.attr('action');
+
+        var parameter_1 = "e_5123";
+        
+        if ($("#"+parameter_1).attr("topic_me_") != 1)
+        {
+            $("#"+parameter_1).attr("topic_me_", 1);
+
+            $.post(url, function (data)
+            {
+                var amount = data[0].amountSelectedProducts;
+                for(i=0; i<amount; i++)
+                {
+                    {#var saleDetail_id = data[i].saleDetail_id;
+                    var store_id = data[i].store_id;
+                    var saleDetail_amount = data[i].saleDetail_amount;
+                    var product_id = data[i].product_id;
+                    var product_name = data[i].product_name;
+                    var product_description = data[i].product_description;
+                    var product_image = data[i].product_image;
+                    var price_id = data[i].price_id;
+                    var price_amount = data[i].price_amount;
+                    var currency_id = data[i].currency_id;
+                    var currency_name = data[i].currency_name;
+                    var currency_value = data[i].currency_value;
+                    var checked_price = data[i].checked_price;
+                    var amountRecords = data[i].amountRecords;#}
+
+{#                pr1.amount as productPrice_amount, 
+                cu1.currencyValue as productPrice_currencyValue, 
+                cu1.currencyName as productPrice_currency, 
+
+                pr2.amount as stockPrice_amount, 
+                cu2.currencyValue as stockPrice_currencyValue, 
+                cu2.currencyName as stockPrice_currency, 
+
+                pr3.amount as selectedproductPrice_amount, 
+                cu3.currencyValue as selectedproductPrice_currencyValue, 
+                cu3.currencyName as selectedproductPrice_currency #}
+
+
+                    var selectedproductId = data[i].selectedproductId;
+                    var selectedproductDate = data[i].selectedproductDate;
+                    var selectedproductAmount = data[i].selectedproductAmount;
+                    var productId = data[i].productId;
+                    var productName = data[i].productName;
+                    var productDescription = data[i].productDescription;
+                    var productImage = data[i].productImage;
+                    var productPrice_amount = data[i].productPrice_amount;
+                    var productPrice_currencyValue = data[i].productPrice_currencyValue;
+                    var productPrice_currency = data[i].productPrice_currency;
+                    var stockPrice_amount = data[i].stockPrice_amount;
+                    var stockPrice_currencyValue = data[i].stockPrice_currencyValue;
+                    var stockPrice_currency = data[i].stockPrice_currency;
+                    var selectedproductPrice_amount = data[i].selectedproductPrice_amount;
+                    var selectedproductPrice_currencyValue = data[i].selectedproductPrice_currencyValue;
+                    var selectedproductPrice_currency = data[i].selectedproductPrice_currency;
+
+                    {#
+                    $sendata[] = array(
+                        'saleDetail_id' => 0,
+                        'store_id' => 0,
+                        'saleDetail_amount' => 0,
+                        'product_id' => 0,
+                        'product_name' => "",
+                        'product_description' => "",
+                        'product_image' => "",
+                        'price_id' => "",
+                        'price_amount' => "",
+                        'currency_id' => "",
+                        'currency_name' => "",
+                        'currency_value' => "",
+                        'store_location_id' => 0,
+                        'customer_location_id' => 0,
+                        'checked_price' => 0,
+                        'amountRecords' => $amountRecords
+                    );
+                    #}
+
+
+    {#                checked_price + " " + currency_name, #}
+
+                    drawProduct_List(
+                        selectedproductId, 
+                        selectedproductId, 
+                        productName, 
+                        selectedproductId + " * " + selectedproductId, 
+                        data[i], 
+                        productImage, 
+                        0, 
+                        "saleDetail_checking", 
+                        selectedproductAmount, 
+                        parameter_1 
+                    );
+                }
+                alert('#get-saleDetail-ajax '+amount);
+            }).fail(function () {
+                alert('ERROR #get-saleDetail-ajax');
+            });
+        }
+    }
+</script>

@@ -1,0 +1,19 @@
+get_keywordUsers_form:
+    path:     /getKeywordUsers
+    defaults: { _controller: DataminingBundle:Default:getKeywordUsers }
+    methods:  POST
+    
+get_videosPerKeywordUsers_form:
+    path:     /getVideosPerKeywordUsers
+    defaults: { _controller: DataminingBundle:Default:getVideosPerKeywordUsers }
+    methods:  POST
+    
+delete_keyword_user_form:
+    path:     /deleteKeywordUser
+    defaults: { _controller: DataminingBundle:Default:deleteKeywordUser }
+    methods:  POST
+    
+get_datamining_location_form:
+    path:     /getDataminingLocation
+    defaults: { _controller: DataminingBundle:Default:getDataminingLocation }
+    methods:  POST

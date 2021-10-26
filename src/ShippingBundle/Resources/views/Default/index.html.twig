@@ -1,0 +1,28 @@
+<style>
+    #reach_div {
+        position: absolute;
+{#        background-color: #007bb6;#}
+        width: 50%;
+        display: block;
+        left: 0px;
+        {#background-color: pink;#}
+    }
+    
+    #shipping_div {
+        position: absolute;
+{#        background-color: tomato;#}
+        width: 50%;
+        display: block;
+        right: 0px;
+        {#background-color: orange;#}
+    }
+</style>
+
+<div id="reach_div">{{ include('@Shipping/Default/reach.html.twig') }}</div>
+<div id="shipping_div">{{ include('@Shipping/Default/shipping.html.twig') }}</div>
+
+<script>
+    
+</script>
+
+{{ include('@Store/Default/drawProduct.html.twig') }}

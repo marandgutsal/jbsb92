@@ -1,0 +1,102 @@
+{{ form_start(get_product_details_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-product-details-ajax'|default('form')} }) }}
+{{ form_end(get_product_details_form_ajax) }}
+
+<div>
+    driver
+</div>
+
+<script>
+    function draw_photos_menu(interaction_id, environment, productId, kindOfList, productImage, topicId, data)
+    {
+        var photos_product_btn = document.createElement("img");
+        photos_product_btn.id = "photos_product_btn" + interaction_id + environment + productId;
+        photos_product_btn.className = "photos_product_btn boton_personalizado relativePosition";
+        photos_product_btn.src = "files/images/icons/photos.png";
+        photos_product_btn.alt = "_"+productImage+"_";
+        photos_product_btn.disabled = true;
+        photos_product_btn.setAttribute('first_click', 0);
+        photos_product_btn.addEventListener("click", function (e) {
+            var identity = new Array();
+            identity[0] = interaction_id;
+            identity[1] = environment;
+            identity[2] = productId;
+            
+            var object = document.getElementById("product_panel" + interaction_id + environment + productId);
+            var code = "photos";
+            
+            manage_panelEnvironment(identity, photos_product_btn, object, code);
+            $("#photos_product_btn" + interaction_id + environment + productId).attr('first_click', 1);
+            var sheet = document.getElementById("sheet_environment" + interaction_id + environment + productId + code);
+            
+            if($("#"+sheet.id).attr(code) != 1)
+            {
+                $("#"+sheet.id).attr(code, 1);
+                draw_photos_panel(interaction_id, environment, productId, productImage, data, sheet);
+            }
+        });
+        document.getElementById("product_menu" + interaction_id + environment + productId).appendChild(photos_product_btn);
+    }
+    
+    function draw_photos_panel(interaction_id, environment, productId, productImage, data, sheet)
+    {
+        var photosProduct_panel_div = document.createElement("div");
+        photosProduct_panel_div.id = "photosProduct_panel_div" + interaction_id + environment + productId;
+        photosProduct_panel_div.className = "photosProduct_panel_div";
+        photosProduct_panel_div.style.overflow = "scroll";
+        sheet.appendChild(photosProduct_panel_div);
+        draw_product_details(productId, interaction_id, environment, sheet);
+        var complement = interaction_id + environment + productId;
+        draw_product_data(data, sheet, complement);
+    }
+    
+    function draw_product_details(productId, interaction_id, environment, sheet)
+    {
+        var identity = new Array();
+        identity[0] = interaction_id;
+        identity[1] = environment;
+        identity[2] = productId;
+
+        var form = $('#get-product-details-ajax');
+        var url = form.attr('action');
+        
+        
+        $.post(url, {productId: productId}, function (data)
+        {
+            var amountImages = data[0].amountImages;
+            
+            for (i=0; i<amountImages; i++)
+            {
+                var productimageId = data[i].productimageId;
+                var productimageImage = data[i].productimageImage;
+                var userId = data[i].userId;
+                
+                var buy_product_image = document.createElement("img");
+                buy_product_image.id = "buy_product_image" + environment + productimageId;
+                buy_product_image.className = "buy_product_image";
+                buy_product_image.src = "files/products/secondaryImages/" + userId + "/" + productId + "/" + productimageImage;
+                buy_product_image.alt = "_"+productimageImage+"_";
+                buy_product_image.style.width = "100%";
+                {#document.getElementById("product_panel" + interaction_id + environment + productId).appendChild(buy_product_image);#}
+                sheet.appendChild(buy_product_image);
+            }
+        }).fail(function () {
+            alert('ERROR get-product-details-ajax');
+        });
+    }
+    
+    function draw_product_data(data, sheet, complement)
+    {
+        var i = 0;
+        while(data.alias[i])
+        {
+            data.alias[i];
+            var jhbcdhj = data.alias[i];
+            var label = data.alias[i] + "" + complement;
+            var label_value = data.alias[i]+": ";
+            var row = data.alias[i] + complement;
+            draw_raw(label, label_value, data[""+jhbcdhj+""], row, sheet);
+            i++;
+        }
+    }
+    
+</script>

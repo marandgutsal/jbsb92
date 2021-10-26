@@ -1,0 +1,59 @@
+<style>
+    #idfs_1, #idfs_2, #idfs_3, #idfs_4, #idfs_5 {
+        height: max-content;
+        position: relative;
+    }
+</style>
+
+<div id="TRtgtrgtr">
+    <div id="idfs_1" previous_id="TRtgtrgtr">
+        {#{{ include('@Store/Default/payment/a.html.twig') }}#}{{ include('@SignUp/Default/index.html.twig') }}
+    </div>
+    
+    <div id="idfs_2" previous_id="TRtgtrgtr">
+{#        {{ include('@Store/Default/payment/b.html.twig') }}#}{{ include('@SignUp/connections/invocations.html.twig') }}
+    </div>
+    
+    <div id="idfs_3" previous_id="TRtgtrgtr">
+{#        {{ include('@Store/Default/payment/c.html.twig') }}#}{{ include('@SignUp/connections/language.html.twig') }}
+    </div>
+    
+    <div id="idfs_4" previous_id="TRtgtrgtr">
+{#        {{ include('@Store/Default/payment/d.html.twig') }}#}{{ include('@Store/Default/topic.html.twig') }}
+    </div>
+    
+    <div id="idfs_5" previous_id="TRtgtrgtr">
+        {#{{ include('@Store/Default/payment/e.html.twig') }}#}{{ include('@Shipping/Default/packageMessenger_menu.html.twig') }}
+    </div>
+    
+    <div id="idfs_6" previous_id="TRtgtrgtr">
+        {{ include('@UploadProduct/Default/shipping.html.twig') }}
+    </div>
+</div>
+
+<script>
+    function change_location_environment(new_env, environment)
+    {
+        var temp = $("#"+environment).attr("new_id");
+        $("#"+environment).attr("new_id", new_env);
+        $("#"+environment).attr("previous_id", temp);
+        
+        var new_id = $("#"+environment).attr("new_id");
+        var previous_id = $("#"+environment).attr("previous_id");
+        if (new_id == previous_id)
+        {
+            {#alert("equal "+" - new_id: " + new_id + " - previous_id: " + previous_id + 
+                  "\n new_env "+new_env + 
+                  "\n environment "+environment);#}
+            
+        } else
+        {
+            {#alert("diferent "+" - new_id: " + new_id + " - previous_id: " + previous_id + 
+                  "\n new_env "+new_env + 
+                  "\n environment "+environment);#}
+            var nbcdjncdj = document.getElementById(environment);
+            document.getElementById(previous_id).removeChild(nbcdjncdj);
+            document.getElementById(new_id).appendChild(nbcdjncdj);
+        }
+    }
+</script>

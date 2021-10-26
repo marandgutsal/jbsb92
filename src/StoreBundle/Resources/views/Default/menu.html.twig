@@ -1,0 +1,89 @@
+<script>
+    var environment = "";
+    if (kindOfList === "shoppingList")
+    {
+        environment = "shopping_list";
+        var selectedproductDate = document.createElement("input"); 
+        selectedproductDate.id = "selectedproductDate" + environment + productId;
+        selectedproductDate.className = "selectedproductDate";
+        selectedproductDate.value = aditionalInfo[1];
+        selectedproductDate.disabled = true;
+        selectedproductDate.type = "text";
+        var selectedproductAmount = document.createElement("input"); 
+        selectedproductAmount.id = "selectedproductAmount" + environment + productId;
+        selectedproductAmount.className = "selectedproductAmount";
+        selectedproductAmount.value = aditionalInfo[2];
+        selectedproductAmount.disabled = true;
+        selectedproductAmount.type = "number";
+        var decline_saleItem = document.createElement("div"); 
+        decline_saleItem.id = "decline_saleItem" + environment + productId;
+        decline_saleItem.className = "decline_saleItem";
+        decline_saleItem.name = "decline_saleItem" + environment + productId;
+        var decline_saleItem_image = document.createElement("img"); 
+        decline_saleItem_image.id = "decline_saleItem_image" + environment + productId;
+        decline_saleItem_image.className = "decline_saleItem_image";
+        decline_saleItem_image.src = "files/images/icons/delete.png";
+        decline_saleItem_image.alt = "_"+productImage+"_";
+        decline_saleItem_image.style.height = "20px";
+        decline_saleItem_image.style.width = "20px";
+        document.getElementById("product_frame_information" + environment + productId).appendChild(selectedproductDate);
+        document.getElementById("product_frame_information" + environment + productId).appendChild(selectedproductAmount);
+        document.getElementById("product_frame_information" + environment + productId).appendChild(decline_saleItem);
+        document.getElementById("decline_saleItem" + environment + productId).appendChild(decline_saleItem_image);
+    } else if (kindOfList === "searchList")
+    {
+        environment = "search_list"; 
+        var amount_products = document.createElement("input"); 
+        amount_products.id = "amount_products" + environment + productId;
+        amount_products.className = "amount_products";
+        amount_products.value = 1;
+        amount_products.disabled = false;
+        amount_products.type = "number";
+        var buy_product = document.createElement("div"); 
+        buy_product.id = "buy_product" + environment + productId;
+        buy_product.className = "buy_product";
+        buy_product.name = "buy_product" + environment + productId;
+        var buy_product_image = document.createElement("img"); 
+        buy_product_image.id = "buy_product_image" + environment + productId;
+        buy_product_image.className = "buy_product_image";
+        buy_product_image.src = "files/images/icons/shoppingCart.png";
+        buy_product_image.alt = "_"+productImage+"_";
+        buy_product_image.style.height = "20px";
+        buy_product_image.style.width = "20px";
+
+
+        if(session_userId === 0)
+        {
+            {#alert("la sesion no esta iniciada");#}
+            buy_product.style.display = "none";
+        } else
+        {
+            {#alert("la sesion se encuentra iniciada");#}
+            buy_product.style.display = "block";
+        }
+
+        document.getElementById("product_frame_information" + environment + productId).appendChild(amount_products);
+        document.getElementById("product_frame_information" + environment + productId).appendChild(buy_product);
+        document.getElementById("buy_product" + environment + productId).appendChild(buy_product_image);
+    }
+
+    $('#decline_saleItem'+ environment +productId)
+    .click(function () {
+        deleteSelectedProduct(environment, productId);
+    });
+
+    $('#buy_product'+ environment +productId)
+    .click(function () {
+        var amountProducts = document.getElementById("amount_products" + environment + productId).value;
+
+        if (amountProducts==='')
+        {
+            amountProducts = 1;
+        }
+
+        addToShoppingCart(productId, amountProducts, topicmemberId);
+
+        modestoreId2 = 4; // 1: shoppingList, 4: storeList 
+        editWindowStore();
+    });
+</script>

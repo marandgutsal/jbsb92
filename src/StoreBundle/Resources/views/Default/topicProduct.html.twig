@@ -1,0 +1,39 @@
+<style>
+
+</style>
+
+{{ form_start(storeBundle1.storeBundle2.insert_topic_product_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'insert-topic-product-ajax'|default('form')} }) }}
+{{ form_end(storeBundle1.storeBundle2.insert_topic_product_form_ajax) }}
+
+<script>
+    
+    function insert_topic_product(productId)
+    {
+        {#alert("ghb");#}
+        var form = $('#insert-topic-product-ajax');
+        var url = form.attr('action');
+        
+{#        var productId = $("#contentUploadProduct").attr("productId");#}
+        {#var productId = 1;#}
+        {#var topic_array = 1;
+        
+        alert(productId + " --- " + topic_array);#}
+        
+        $.post(url, {topic_array: topic_array, product_id: productId}, function (data)
+        {
+            var locationName_1 = data[0].locationName;
+            
+            
+            {#$locationData[] = array(
+                'locationId' => ":::",
+                'locationName' => ":::",
+                'amountLocations' => ":::"
+            );#}
+            
+            alert('#insert-topic-product-ajax');
+        }).fail(function () {
+            alert('ERROR #insert-topic-product-ajax');
+        });
+    }
+    
+</script>

@@ -1,0 +1,59 @@
+{{ form_start(insert_keywordProduct_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'insert-keywordProduct-ajax'|default('form')} }) }}
+{{ form_end(insert_keywordProduct_form_ajax) }}
+
+<style>
+    .newTopic {
+        position: relative;
+        background-color: transparent;
+        width: 100%;
+        height: auto;
+        margin: 5px;
+        padding: 5px;
+    }
+</style>
+
+{{ form_start(uploadproductBundle1.uploadproductBundle2.select_currency_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'select-currency-ajax'|default('form')} }) }}
+{{ form_end(uploadproductBundle1.uploadproductBundle2.select_currency_form_ajax) }}
+
+<div id="formUploadProduct">
+</div>
+
+<script>
+    
+    function selectCurrency(productId, data_2)
+    {
+        var form = $('#select-currency-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+        var amountBranch = data_2[0].amountBranch;
+        for (j=0; j<amountBranch; j++)
+        {
+            var branchId = data_2[j].branchId;
+            
+            var amountCurrencies = data[0].amountCurrencies;
+            for (i=0; i<amountCurrencies; i++)
+            {
+                var currencyId = data[i].currencyId;
+                var currencyName = data[i].currencyName;
+                var currencyValue = data[i].currencyValue;
+                {#alert(currencyId+" - "+currencyName+" - "+currencyValue);#}
+var option_currency = document.createElement("option");
+option_currency.id = "option_currency" + productId + branchId + currencyId;
+option_currency.className = "option_currency";
+option_currency.name = "option_currency" + productId + branchId + currencyId;
+option_currency.value = currencyId;
+option_currency.textContent = currencyName + " (" + currencyValue + ") ";
+document.getElementById("branch_list_currency" + productId + branchId).appendChild(option_currency);
+            }
+        }
+            
+            {#alert('#select-currency-ajax '+amountCurrencies);#}
+        }).fail(function () {
+            alert('ERROR #select-currency-ajax');
+        });
+        {#alert("tastingtyh2222 ..... ");#}
+    }
+    
+</script>

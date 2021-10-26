@@ -1,0 +1,75 @@
+<style>
+    #same_concurrence_btn {
+        top: 140px;
+        left: 5px;
+        display: block;
+    }
+    
+    #more_concurrence_btn {
+        top: 140px;
+        left: 5px;
+        display: none;
+    }
+    
+    #stop_refreshing_btn {
+        top: 160px;
+        left: 5px;
+        display: block;
+    }
+    
+    #keep_refreshing_btn {
+        top: 160px;
+        left: 5px;
+        display: none;
+    }
+</style>
+
+<img 
+    class='boton_personalizado' 
+    id='same_concurrence_btn' 
+    src="files/images/icons/store/same_concurrence.png" alt="">
+<img 
+    class='boton_personalizado' 
+    id='more_concurrence_btn' 
+    src="files/images/icons/store/more_concurrence.png" alt="">
+
+<img 
+    class='boton_personalizado' 
+    id='stop_refreshing_btn' 
+    src="files/images/icons/store/stop_refreshing.png" alt="">
+<img 
+    class='boton_personalizado' 
+    id='keep_refreshing_btn' 
+    src="files/images/icons/store/keep_refreshing.png" alt="">
+    
+<script>
+    
+    $('#same_concurrence_btn')
+    .click(function () {
+        document.getElementById("same_concurrence_btn").style.display = "none";
+        document.getElementById("more_concurrence_btn").style.display = "block";
+        concurrenceStore = 0;
+    });
+    
+    $('#more_concurrence_btn')
+    .click(function () {
+        document.getElementById("same_concurrence_btn").style.display = "block";
+        document.getElementById("more_concurrence_btn").style.display = "none";
+        concurrenceStore = 1;
+    });
+    
+    $('#stop_refreshing_btn')
+    .click(function () {
+        document.getElementById("stop_refreshing_btn").style.display = "none";
+        document.getElementById("keep_refreshing_btn").style.display = "block";
+        refreshingStore = 0;
+    });
+    
+    $('#keep_refreshing_btn')
+    .click(function () {
+        document.getElementById("stop_refreshing_btn").style.display = "block";
+        document.getElementById("keep_refreshing_btn").style.display = "none";
+        refreshingStore = 1;
+    });
+    
+</script>

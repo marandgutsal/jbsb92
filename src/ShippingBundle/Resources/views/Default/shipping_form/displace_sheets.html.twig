@@ -1,0 +1,261 @@
+<style>
+    #displace_sheets {
+        position: absolute;
+        {#background-color: yellow;#}
+    }
+    
+    #d1, #d2, #d3, #d4, #d5 {
+        position: relative;
+        {#background-color: purple;#}
+        padding: 15px;
+        margin: 5px;
+    }
+    
+    .btn_img {
+        position: absolute; width: 100%; height: 100%; top: 0px; left: 0px;
+    }
+    
+    #displace_sheets_12 {
+        {#background-color: purple;#}
+    }
+    
+    #btn_menu {
+        {#background-color: green;#}
+        width: auto;
+        height: 100px;
+    }
+
+</style>
+
+{#<div id="main_sheet">
+    <button>
+    <img class="btn_img" src="files/images/icons/displace_to_left.png" alt="Mountain View">
+    </button>
+</div>#}
+
+<div id="btn_menu">
+<button id="btn_1" class="boton_personalizado relativePosition">
+    <img class="btn_img" src="files/images/icons/displace_to_left.png" alt="Mountain View">
+</button>
+
+<button id="btn_2" class="boton_personalizado relativePosition">
+    <img class="btn_img" src="files/images/icons/displace_to_left.png" alt="Mountain View">
+</button>
+
+<button id="btn_3" class="boton_personalizado relativePosition">
+    <img class="btn_img" src="files/images/icons/displace_to_left.png" alt="Mountain View">
+</button>
+
+<button id="btn_4" class="boton_personalizado relativePosition">
+    <img class="btn_img" src="files/images/icons/displace_to_left.png" alt="Mountain View">
+</button>
+
+<button id="btn_5" class="boton_personalizado relativePosition">
+    <img class="btn_img" src="files/images/icons/displace_to_left.png" alt="Mountain View">
+</button>
+</div>
+    
+<div id="displace_sheets" current_sheet="0">
+    <button id="d1" class="displace_sheets">
+    e 1
+    </button>
+    <button id="d2" class="displace_sheets">
+    e 2
+    </button>
+    <button id="d3" class="displace_sheets">
+    e 3
+    </button>
+    <button id="d4" class="displace_sheets">
+    e 4
+    </button>
+    <button id="d5" class="displace_sheets">
+    e 5
+    </button>
+</div>
+
+<button id="displace_sheet_left" class="boton_personalizado relativePosition">
+<img class="btn_img" src="files/images/icons/displace_to_left.png" alt="Mountain View">
+</button>
+
+<button id="displace_sheet_right" class="boton_personalizado relativePosition">
+<img class="btn_img" src="files/images/icons/displace_to_right.png" alt="Mountain View">
+</button>
+
+<script>
+    $("#displace_sheet_left")
+    .click(function () {
+        var parent_div = document.getElementById("displace_sheets");
+        displace_sheets("prev", parent_div);
+    });
+    
+    $("#displace_sheet_right")
+    .click(function () {
+        var parent_div = document.getElementById("displace_sheets");
+        displace_sheets("next", parent_div);
+    });
+    
+    function displace_sheets(direction, parent_div)
+    {
+        document.getElementById(parent_div.id).style.backgroundColor = "yellowgreen";
+        var current_parent_id = parent_div.id;
+        
+        var storage = $("#"+current_parent_id).attr("current_sheet");
+        {#alert("storage ---- "+storage);#}
+        
+        var total_sheets = get_total_sheets(parent_div);
+        {#alert("total_sheets "+total_sheets);#}
+         
+        var current = get_respectly_sheet(parent_div, storage, total_sheets, direction);
+        {#alert("current "+current.id);#}
+        
+        {#
+        var storage = $("#"+current_parent_id).attr("current_sheet");
+        1, 2, 3, 4 --- 1, 2, 3, 4 --- 
+        #}
+        
+                
+        
+        if (current.previousElementSibling)
+        {
+            var previous = current.previousElementSibling;
+{#            previous.style.backgroundColor = "yellow";#}
+            previous.style.display = "none";
+            var previous_id = previous.id;
+            {#alert(" ... prev "+previous_id);#}
+        } else
+        {
+            var previous = parent_div.lastElementChild;
+{#            previous.style.backgroundColor = "yellow";#}
+            previous.style.display = "none";
+            var previous_id = previous.id;
+            {#alert(" ... PREV "+previous_id);#}
+        }
+        
+        if (current.nextElementSibling)
+        {
+            var next = current.nextElementSibling;
+{#            next.style.backgroundColor = "yellow";#}
+            next.style.display = "none";
+            var next_id = next.id;
+            {#alert(" ... next "+next_id);#}
+        } else
+        {
+            var next = parent_div.firstElementChild;
+{#            next.style.backgroundColor = "yellow";#}
+            next.style.display = "none";
+            var next_id = next.id;
+            {#alert(" ... NEXT "+next_id);#}
+        }
+        
+{#        current.style.backgroundColor = "pink";#}
+        current.style.display = "block";
+    }
+    
+    function get_total_sheets(parent)
+    {
+        var i = 0;
+        var current = parent.firstElementChild;
+        while (current)
+        {
+            current = current.nextElementSibling;
+            i++;
+        }
+        return i;
+    }
+    
+    function get_respectly_sheet(parent, position, total_sheets, direction)
+    {
+        if (direction == "prev")
+        {
+            if (position==0)
+            position = total_sheets - 1;
+            else
+            position--;
+        }
+        else if (direction == "next")
+        {
+            if (position==total_sheets - 1)
+            position = 0;
+            else
+            position++;
+        }
+        
+        if (position < total_sheets)
+        {
+            for (i=0; i<=position; i++)
+            {
+                if (i == 0)
+                var current = parent.firstElementChild;
+                else
+                var current = current.nextElementSibling;
+            }
+            {#alert("position ... "+position);#}
+        }
+        $("#"+parent.id).attr("current_sheet", position);
+        return current;
+    }
+</script>
+
+
+
+
+
+<script>
+    function rename_sheets()
+    {
+        var btn_menu = document.getElementById("btn_menu");
+        var link_id = $("#btn_menu").attr("link_id");
+        
+        if($("#btn_menu").attr("link_id") != 1)
+        {
+            var this_id = $("#btn_1").attr("link_id");
+            $("#btn_menu").attr("link_id", this_id);
+            
+        }
+        
+        
+        
+        
+        
+        
+        //////////////////////////
+        
+        var board_environment = document.getElementById("board_div" + interaction_id + environment + productId);
+        
+        var prev = $("#"+board_environment.id).attr("over");
+        var next = document.getElementById("sheet_environment" + interaction_id + environment + productId + code);
+        
+        var interaction_id = identity[0];
+        var environment = identity[1];
+        var productId = identity[2];
+        
+        alert(" prev "+prev+"\n next "+next);
+        
+        recover_to_sheet(prev, next, board_environment);
+    }
+
+    function recover_to_sheet(prev, next, board_environment)
+    {
+        {#
+        $("#"+board_environment.id).attr(code, 1);
+        var sheet_environment = document.createElement("div");
+        sheet_environment.id = "sheet_environment" + interaction_id + environment + productId + code;
+        sheet_environment.className = "sheet_environment";
+        sheet_environment.textContent = code;
+        sheet_environment.addEventListener("click", function (e) {
+
+        });
+        board_environment.appendChild(sheet_environment);
+        #}
+        
+        if($("#"+board_environment.id).attr("over") != 1)
+        {
+            $("#"+board_environment.id).attr("over", 1);
+        } else
+        {
+            $("#"+board_environment.id).attr("over", next);
+            prev.style.zIndex = "1";
+            next.style.zIndex = "2";
+        }
+    }
+</script>

@@ -1,0 +1,16 @@
+<script>
+    function check_UserType_selecter(id)
+    {
+        var selecter = "";
+        
+        var UserType_selecter = document.getElementById(id).value;
+        
+        if (UserType_selecter == "location")
+        {
+            selecter = "child_searchLocation";
+        } else
+        {
+            selecter = "searchStore";
+        }
+    }
+</script>

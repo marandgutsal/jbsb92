@@ -1,0 +1,385 @@
+<style>
+    .slideChild_frame {
+        {#background-color: purple;#}
+        position: relative;
+        z-index: 3; /* -> because .product_event z-index: 2 */
+        {#top: 70px;
+        left: 10px;#}
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        
+        justify-content: center;
+        display: flex;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    .left_btn {
+        position: absolute;
+        top: 100px;
+        left: 0px;
+        z-index: 3;
+    }
+    
+    .right_btn {
+        position: absolute;
+        top: 100px;
+        right: 0px;
+        z-index: 3;
+    }
+    
+    
+    
+    .board_div {
+        position: relative;
+{#        position: absolute;#}
+        z-index: 2;
+        width: 70%;
+        height: auto;
+        {#height: 70%;#}
+        {#background-color: yellow;#}
+        margin-bottom: 50px;
+    }
+    
+    
+    
+    
+    .count_div {
+        position: absolute;
+        z-index: 3;
+        width: 50px;
+        height: 30px;
+        bottom: 0px;
+        {#background-color: green;#}
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    .tool_environment {
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.7);
+        width: 100%;
+        height: 100%;
+        {#height: 50%;#}
+        z-index: 2;
+        justify-content: center;
+        display: flex;
+    }
+    
+    .sheet_environment {
+        {#background-color: pink;#}
+        {#position: relative;#}
+        position: absolute;
+        
+        {#width: 90%;
+        height: 90%;#}
+        
+        width: 100%;
+        height: 200px;
+        top: 0px;
+        left: 0px;
+        z-index: 1;
+        margin: 5px;
+    }
+</style>
+
+<script>
+    {#
+    var object = document.getElementById("product_panel" + interaction_id + environment + productId);
+    var code = "saleDetail_shipment";
+    add_sheet_environment(object, identity, code);
+    #}
+        
+    function manage_panelEnvironment(identity, photos_product_btn, object, code)
+    {
+        manage_panel(identity, photos_product_btn);
+        add_sheet_environment(object, identity, code);
+    }
+    
+    function add_sheet_environment(product_panel, identity, code)
+    {
+        var interaction_id = identity[0];
+        var environment = identity[1];
+        var productId = identity[2];
+        
+        check_slide(product_panel, identity);
+        var board_environment = document.getElementById("board_div" + interaction_id + environment + productId);
+        var product_frame = document.getElementById("product_frame" + interaction_id + environment + productId);
+        
+        {#alert(" ... board_environment.id "+board_environment.id+" code "+code+
+                "\ninteraction_id "+interaction_id+
+                "\nenvironment "+environment+
+                "\nproductId "+productId+
+                "\nproduct_panel "+product_panel.id);#}
+        
+        $("#" + product_frame.id).attr("prev_div", $("#" + product_frame.id).attr("current_div"));
+        $("#" + product_frame.id).attr("current_div", code);
+        
+        {#alert($("#"+board_environment.id).attr(code)+
+              "\n prev "+$("#" + product_frame.id).attr("prev_div")+
+              "\n current "+$("#" + product_frame.id).attr("current_div"));#}
+        
+        var prev = $("#" + product_frame.id).attr("prev_div");
+        var current = $("#" + product_frame.id).attr("current_div");
+        
+        if($("#"+product_frame.id).attr(code) != 1)
+        {
+            {#alert("first time "+$("#"+product_frame.id).attr(code));#}
+            $("#" + product_frame.id).attr(code, 1);
+
+            var sheet_environment = document.createElement("div");
+            sheet_environment.id = "sheet_environment" + interaction_id + environment + productId + code;
+            sheet_environment.className = "sheet_environment";
+            sheet_environment.textContent = code;
+            sheet_environment.addEventListener("click", function (e) {
+                {#alert("sheet_environment code: " + code);#}
+            });
+            board_environment.appendChild(sheet_environment);
+
+            sheet_environment.style.backgroundColor = "blue";
+            sheet_environment.style.overflowX = "hidden";
+            sheet_environment.style.overflowY = "scroll";
+            sheet_environment.style.zIndex = 1;
+            $("#"+sheet_environment.id)
+            .mouseover(function () {sheet_environment.classList.add("visibleScroll");})
+            .mouseout(function () {sheet_environment.classList.remove("visibleScroll");});
+        }
+        
+        var prev_sheet_id = "sheet_environment" + interaction_id + environment + productId + prev;
+        var current_sheet_id = "sheet_environment" + interaction_id + environment + productId + current;
+        
+        var prev_sheet = document.getElementById(prev_sheet_id);
+        var current_sheet = document.getElementById(current_sheet_id);
+        
+        prev_sheet.style.zIndex = 1;
+        current_sheet.style.zIndex = 2;
+    }
+</script>
+
+<script>
+    function check_slide(product_panel, identity)
+    {
+        var interaction_id = identity[0];
+        var environment = identity[1];
+        var productId = identity[2];
+        
+        if($("#"+product_panel.id).attr('slide') != 1)
+        {
+            $("#"+product_panel.id).attr('slide', 1);
+            draw_slide(product_panel, identity);
+            draw_tool_environment(identity);
+        }
+    }
+    
+    function draw_slide(product_panel, identity)
+    {
+        var interaction_id = identity[0];
+        var environment = identity[1];
+        var productId = identity[2];
+        
+        var slideChild_frame = document.createElement("div");
+        slideChild_frame.id = "slideChild_frame" + interaction_id + environment + productId;
+        slideChild_frame.className = "slideChild_frame";
+        slideChild_frame.setAttribute("slider_position", 0);
+        slideChild_frame.setAttribute("current_slider", 0);
+        slideChild_frame.addEventListener("click", function (e) {
+            {#alert("slideChild_frame");#}
+        });
+        product_panel.appendChild(slideChild_frame);
+    }
+    
+    function draw_tool_environment(identity)
+    {
+        var interaction_id = identity[0];
+        var environment = identity[1];
+        var productId = identity[2];
+        var slideChild_frame = document.getElementById("slideChild_frame" + interaction_id + environment + productId);
+        
+        var tool_environment = document.createElement("div");
+        tool_environment.id = "tool_environment" + interaction_id + environment + productId;
+        tool_environment.className = "tool_environment";
+        tool_environment.setAttribute("arrow", 0);
+        tool_environment.setAttribute("count", 0);
+        tool_environment.setAttribute("board", 0);
+        tool_environment.addEventListener("click", function (e) {
+            
+        });
+        tool_environment.addEventListener("mouseover", function (e) {
+            {#tool_environment.style.display = "none";#}
+        });
+        tool_environment.addEventListener("mouseout", function (e) {
+            {#tool_environment.style.display = "block";#}
+        });
+        slideChild_frame.appendChild(tool_environment);
+        
+        
+        var arrow = $("#"+tool_environment.id).attr('arrow');
+        if (arrow == 0)
+        {
+            add_arrow(tool_environment, identity);
+        } 
+        
+        var count = $("#"+tool_environment.id).attr('count');
+        if (count == 0)
+        {
+            add_count(tool_environment, identity);
+        } 
+        
+        var board = $("#"+tool_environment.id).attr('board');
+        if (board == 0)
+        {
+            add_board(tool_environment, identity);
+        }
+    }
+    
+    
+    
+    function add_count(tool_environment, identity)
+    {
+        $("#"+tool_environment.id).attr('count', 1);
+        
+        var interaction_id = identity[0];
+        var environment = identity[1];
+        var productId = identity[2];
+        
+        var count_div = document.createElement("div");
+        count_div.id = "count_div" + interaction_id + environment + productId;
+        count_div.className = "count_div";
+        count_div.setAttribute("sheet_amount", 0);
+        count_div.addEventListener("click", function (e) {
+            {#alert("displace to left "+interaction_id + environment + productId);#}
+        });
+        tool_environment.appendChild(count_div);
+    }
+    
+    function add_arrow(tool_environment, identity)
+    {
+        $("#"+tool_environment.id).attr('arrow', 1);
+        
+        var interaction_id = identity[0];
+        var environment = identity[1];
+        var productId = identity[2];
+        
+        var left_btn = document.createElement("img");
+        left_btn.id = "left_btn" + interaction_id + environment + productId;
+        left_btn.className = "left_btn boton_personalizado";
+        left_btn.src = "files/images/icons/displace_to_left.png";
+        left_btn.alt = "_";
+        left_btn.addEventListener("click", function (e) {
+            {#alert("displace to left "+interaction_id + environment + productId);#}
+            {#displace_sheet();#}
+            
+            
+            {#var current = document.getElementById("board_div" + interaction_id + environment + productId).firstElementChild;
+            current.previousElementSibling.style.backgroundColor = "fuchsia";#}
+            
+            
+            
+            var current_div = document.getElementById("board_div" + interaction_id + environment + productId);
+            {#current_div.style.backgroundColor = "blue";#}
+            
+            
+            displace_sheets("prev", current_div);
+        });
+        tool_environment.appendChild(left_btn);
+        
+        
+        
+        
+        var right_btn = document.createElement("img");
+        right_btn.id = "right_btn" + interaction_id + environment + productId;
+        right_btn.className = "right_btn boton_personalizado";
+        right_btn.src = "files/images/icons/displace_to_right.png";
+        right_btn.alt = "_";
+        right_btn.addEventListener("click", function (e) {
+            {#alert("displace to right " + interaction_id + environment + productId);#}
+            {#displace_sheet();#}
+            
+            
+            {#var current = document.getElementById("board_div" + interaction_id + environment + productId).firstElementChild;
+            current.nextElementSibling.style.backgroundColor = "fuchsia";#}
+            
+            
+            var current_div = document.getElementById("board_div" + interaction_id + environment + productId);
+            {#current_div.style.backgroundColor = "yellowgreen";#}
+            
+            
+            displace_sheets("next", current_div);
+        });
+        tool_environment.appendChild(right_btn);
+    }
+    
+    function add_board(tool_environment, identity)
+    {
+        $("#"+tool_environment.id).attr('board', 1);
+        
+        var interaction_id = identity[0];
+        var environment = identity[1];
+        var productId = identity[2];
+        
+        var board_div = document.createElement("div");
+        board_div.id = "board_div" + interaction_id + environment + productId;
+        board_div.className = "board_div";
+        board_div.setAttribute("current_sheet", 0);
+        board_div.addEventListener("click", function (e) {
+            {#alert("board_div " + interaction_id + " " + environment + " " + productId);#}
+        });
+        tool_environment.appendChild(board_div);
+    }
+    
+    
+    
+    function increase_sheet_amount(board_environment, identity)
+    {
+        var interaction_id = identity[0];
+        var environment = identity[1];
+        var productId = identity[2];
+        
+        var count_div = document.getElementById("count_div" + interaction_id + environment + productId);
+        
+        var sheet_amount = ($("#"+count_div.id).attr('sheet_amount'));
+        sheet_amount++;
+        count_div.setAttribute("sheet_amount", sheet_amount);
+        count_div.textContent = sheet_amount;
+    }
+</script>
